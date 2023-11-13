@@ -9,12 +9,14 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
+  body-footer: |
+    Links:
+    [GitHub](https://github.com/rpomponio) |
+    [Google Scholar](https://scholar.google.com/citations?user=TxEcZMMAAAAJ&hl=en)
 
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
-
-
 
