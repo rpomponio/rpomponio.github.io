@@ -7,10 +7,10 @@ title: "About Me"
 * Graduated May 2023, Master of Science in Biostatistics: **University of Colorado** (Denver, CO).
 * Bachelor of Science in Economics: **University of Pennsylvania - Wharton** (W' 2018, Magna Cum Laude).
 * Expertise in longitudinal data analysis and advanced statistical computing using `R`, SAS, and `python`.
-* Past work includes data science experiences in Sports Analytics, Marketing, Neuroimaging, and Pulmonary/Critical Care Medicine.
+* Past experience includes work in sports analytics, marketing, neuroimaging, and pulmonary/critical care medicine.
 * Originally from Philadelphia, PA.
 * Currently living in Shadyside (**Pittsburgh, PA**).
 * For contacting me, please reach me at: raymond.pomponio (at) outlook.com.
-* For freelance or part-time data science work, hire me on [Upwork](https://www.upwork.com/freelancers/~01bb85ee6f09078536).
+* For freelance or part-time data science work, you can hire me on [Upwork](https://www.upwork.com/freelancers/~01bb85ee6f09078536).
 
 ---
