@@ -105,10 +105,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#current-work-sabr-analytics" id="toc-current-work-sabr-analytics" class="nav-link active" data-scroll-target="#current-work-sabr-analytics">Current Work: SABR Analytics</a>
+  <li><a href="#work-in-progress" id="toc-work-in-progress" class="nav-link active" data-scroll-target="#work-in-progress">Work-in-Progress</a>
   <ul class="collapse">
-  <li><a href="#executive-summary" id="toc-executive-summary" class="nav-link" data-scroll-target="#executive-summary">Executive Summary</a></li>
+  <li><a href="#modeling-the-timing-of-starting-pitcher-replacements-in-postseason-games" id="toc-modeling-the-timing-of-starting-pitcher-replacements-in-postseason-games" class="nav-link" data-scroll-target="#modeling-the-timing-of-starting-pitcher-replacements-in-postseason-games">Modeling the timing of starting pitcher replacements in postseason games</a>
+  <ul class="collapse">
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background">Background</a></li>
+  <li><a href="#motivating-example" id="toc-motivating-example" class="nav-link" data-scroll-target="#motivating-example">Motivating Example</a></li>
+  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology">Methodology</a></li>
   <li><a href="#results-overview" id="toc-results-overview" class="nav-link" data-scroll-target="#results-overview">Results Overview</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -133,41 +139,56 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="current-work-sabr-analytics" class="level1">
-<h1>Current Work: SABR Analytics</h1>
-<p>The following work has been submitted for consideration at the <a href="https://sabr.org/analytics">2024 SABR Analytics Conference</a> in Arizona.</p>
-<p>The (working) title of the project is, <em>To take him out, or not: Modeling the timing of starting pitcher replacements in postseason games</em>.</p>
-<section id="executive-summary" class="level2">
-<h2 class="anchored" data-anchor-id="executive-summary">Executive Summary</h2>
-<p>In game seven of the 2003 ALCS, the Red Sox held a two-run lead in the eighth inning when manager Grady Little visited the mound<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Starting pitcher Pedro Martínez was still in the game, with Hideki Matsui at the plate. Little decided to leave Martínez in for both Matsui and Jorge Posada, resulting in the loss of the lead and ultimately the game in 11 innings. At the time of Little’s mound visit, how likely was Martínez’s replacement? The following model suggests that Martínez would be pulled in 60.4% of games with similar circumstances. In postseason play, the timing of pulling a starter is the most crucial in-game decision faced by managers<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Recent sabermetrics work has identified a trend towards earlier starting pitcher replacements in regular season<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> <a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> and postseason play<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> <a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. Previous work on the topic modeled the in-game performance of starting pitchers, using short-term forecasts to evaluate managerial decisions, and found that managers were too often leaving starters in the game longer than warranted by analytics<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. More recently, an evaluation of managers’ decisions found no biases in pulling pitchers too early or too late when considering effects on win probability<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>. Other work has identified important in-game factors that predict a starter’s replacement, such as the strike count, pitch count, number of outs, total batters faced, and current home runs conceded<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>. However, pitching replacements have not been modeled as time-to-event outcomes; instead, they have often been modeled as binary outcomes, as in machine learning<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> <a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>. The advantage of timing models is that the cumulative effect of time is inherent; certain factors can expedite, or delay, the timing of the event. This process is more realistic than a binary outcomes model, which considers each event independently. I modeled the time-to-replacement for starting pitchers with time as the number of batters faced, using all postseason games from 2000-2019 (source: <a href="https://www.retrosheet.org/">RetroSheet.org</a>). I used a flexible modeling approach that controls for in-game strikeout rate, pitching volume, runners in scoring position, and home runs conceded, as well as differences across season eras and leagues. I found that postseason starters in the 2015-2019 era were far more likely to be replaced while facing any given batter, compared to starters in the 2000-2004 era (Cox adjusted Hazard Ratio<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>: 2.69, 95% CI: 2.29 – 3.16). To illustrate the magnitude of this effect, consider a hypothetical pitcher playing in both eras. Assuming typical starter performance (3.8 pitches per batter faced, strikeout rate of 20%), this pitcher has a 70.3% chance of pitching a third time through the order in 2000-2004 but only a 38.8% chance of doing so in 2015-2019. With a runner in scoring position, these probabilities decline to 60.5% and 25.8%, respectively (with one home run conceded, the probabilities are similar). This work quantifies trends in starting pitcher replacements that have been formerly described, but not modeled in a time-to-event fashion. The model has drawbacks, in that it does not capture head-to-head matchup history or differing styles of management, but those factors will be included in future work.</p>
-<p><strong>Research focus:</strong> pitcher replacements, bullpen strategy, managerial decision-making.</p>
+<section id="work-in-progress" class="level1">
+<h1>Work-in-Progress</h1>
+<section id="modeling-the-timing-of-starting-pitcher-replacements-in-postseason-games" class="level2">
+<h2 class="anchored" data-anchor-id="modeling-the-timing-of-starting-pitcher-replacements-in-postseason-games">Modeling the timing of starting pitcher replacements in postseason games</h2>
+<p><em>The following work has been submitted for consideration at the 2024 SABR Analytics Conference in Phoenix, Arizona:</em> <a href="https://sabr.org/analytics">conference page</a>.</p>
+<section id="background" class="level3">
+<h3 class="anchored" data-anchor-id="background">Background</h3>
+<p>Recently a number of research papers have emerged examining the effects of starting pitcher replacements in Major League Baseball (MLB).<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> This past year, the time through the order penalty (TTOP) was analyzed in a Bayesian framework and results were published in the Journal of Quantiative Analysis in Sports.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> There remain many questions about starting pitcher strategies, particularly in the postseason when managers’ decisions are hyper-scrutinized.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> Despite a trend towards earlier starting pitcher replacements in both regular season<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> <a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> and postseason<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> <a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> play, I am not aware of any analysis that has considered the replacement of the starting pitcher as a time-to-event phenomenon. The field of biostatistics has benefited greatly from the ability to model time-to-event outcomes, such as all-cause mortality, within a regression framework outlined by the late David Cox.<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> Cox’s proportional hazards model is convenient for several reasons. It permits the formal modeling of a relationship between time and the event of interest; it incorporates covariates that increase or reduce the risk of the event; and, with modern software one can easily estimate the probability of an event occurring within a pre-specified time window. All of these characteristics are useful in the context of analyzing starting pitcher replacements. I will make the case that Cox’s model is more suitable for modeling pitcher replacements than alternative approaches using classification or supervised machine learning techniques.</p>
 </section>
-<section id="results-overview" class="level2">
-<h2 class="anchored" data-anchor-id="results-overview">Results Overview</h2>
-<p>I grouped seasons into five-year eras, then analyzed the time-to-replacement in terms of total batters faced (TBF) for all starting pitchers in the postseason. I found that pitchers in the 2015-2019 era were far more likely to be replaced earlier in the game, versus their counterparts in previous seasons.</p>
+<section id="motivating-example" class="level3">
+<h3 class="anchored" data-anchor-id="motivating-example">Motivating Example</h3>
+<p>In game seven of the 2003 ALCS, the Red Sox held a two-run lead in the eighth inning when manager Grady Little visited the mound.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a> Starting pitcher Pedro Martínez was still in the game, with Hideki Matsui at the plate. Little decided to leave Martínez in for both Matsui and Jorge Posada, resulting in the loss of the lead and ultimately the game in 11 innings. At the time of Little’s mound visit, how likely was Martínez’s replacement? The model that is developed below suggests that Martínez would be pulled in <strong>60.4%</strong> of games with similar circumstances.</p>
+</section>
+<section id="methodology" class="level3">
+<h3 class="anchored" data-anchor-id="methodology">Methodology</h3>
+<p>Other work has identified important in-game factors that predict a starter’s replacement, such as the strike count, pitch count, number of outs, total batters faced, and current home runs conceded. However, pitching replacements have not been modeled as time-to-event outcomes; instead, they have often been modeled as binary outcomes. The advantage of timing models is that the cumulative effect of time is inherent; certain factors can expedite, or delay, the timing of the event. This process is more realistic than a binary outcomes model, which considers each event independently.</p>
+<p>I modeled the time-to-replacement for starting pitchers with time in terms of total batters faced (TBF), using all postseason games from 2000-2019 (source: <a href="https://www.retrosheet.org/">RetroSheet.org</a>). I used Cox’s proportional hazards modeling approach and controlled for in-game strikeout rate, pitching volume (pitches thrown per batter faced), runners in scoring position, and home runs conceded, as well as differences across season eras and leagues.</p>
+<p>All of the factors included as model covariates were computed sequentially for each batter faced, i.e., I did not use data from later in the game to inform a prediction earlier in the game. I grouped seasons into five-year eras, then analyzed the time-to-replacement for all starting pitchers in the postseason.</p>
+</section>
+<section id="results-overview" class="level3">
+<h3 class="anchored" data-anchor-id="results-overview">Results Overview</h3>
+<p>I found that pitchers in the 2015-2019 era were far more likely to be replaced earlier in the game, versus their counterparts in previous seasons.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="Kaplan-Meier Postseason Starters.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">Kaplan Meier curves illustrating probabilities of remaining in-game for starting pitchers in postseason games 2000-2019. The result of the log-rank test suggests a difference across season-eras.</figcaption>
 </figure>
 </div>
-<p>Next I fit a model to the postseason data, with the outcome as time-to-replacement, and included several important competitive factors such as pitching volume (pitches thrown per batter faced), strikeout rate, runners in scoring position, and handedness (differing handedness between batter and pitcher). All of the factors were computed cumulatively, i.e., I did not use data from later in the game to predict a starter’s replacement when facing a given batter. Additionally, I included season-eras and usage of designated hitters as factors in the model.</p>
+<p>Below are the model estimates for the effect of each covariate. The Cox adjusted Hazard Ratio of Season era 2015-2019 (versus 2000-2004) was 2.69 (95% CI: 2.29 – 3.16).</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="Cox Adjusted Model.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">Estimated hazard ratios for the ‘replacement factors’ of starting pitchers. The replacement factors are thought to influence the timing of pitcher replacements in the postseason. A hazard ratio greater than one indicates a higher likelihood of pitcher replacement.</figcaption>
 </figure>
 </div>
-<p>Finally, using the above model I estimated the chance of pitching a third time through the order (TTO) for two hypothetical starters in separate eras. The first pitcher is in the 2000-2004 era, when starters were expected to pitch relatively late in the game. The second pitcher is in the 2015-2019 era, when starters were replaced sooner in the game. The probabilities below reflect two scenarios, with the baseline scenario being no runners in scoring position (RISP) and no home runs conceded.</p>
+<p>To illustrate the magnitude of the season effect, consider a hypothetical pitcher playing in both eras. Assuming typical starter performance (3.8 pitches per batter faced, strikeout rate of 20%), this pitcher has a 70.3% chance of pitching a third time through the order in 2000-2004 but only a 38.8% chance of doing so in 2015-2019. With a runner in scoring position, these probabilities decline to 60.5% and 25.8%, respectively (with one home run conceded, the probabilities are similar). The probabilities below reflect the two scenarios, with the baseline scenario being no runners in scoring position (RISP) and no home runs conceded.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="Cox Predicted Probabilities.png" class="img-fluid figure-img"></p>
 <figcaption class="figure-caption">Predicted probabilities of pitching a third time through the order for two hypothetical pitchers. The only difference between the pitchers is the era in which they play. The RISP scenario means at least one runner is in scoring position.</figcaption>
 </figure>
 </div>
+</section>
+<section id="conclusions" class="level3">
+<h3 class="anchored" data-anchor-id="conclusions">Conclusions</h3>
+<p>This work quantifies trends in starting pitcher replacements that have been formerly described, but not modeled in a time-to-event fashion. The model has drawbacks, in that it does not capture head-to-head matchup history or differing styles of management, but those factors will be included in future work.</p>
 <hr>
 
 
+</section>
 </section>
 </section>
 
@@ -175,19 +196,16 @@ ul.task-list li input[type="checkbox"] {
 <p>Links: <a href="https://github.com/rpomponio">GitHub</a> | <a href="https://scholar.google.com/citations?user=TxEcZMMAAAAJ&amp;hl=en">Google Scholar</a></p><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>D. Shaughnessy, “Heartbreak again: Yankees beat Red Sox, 6-5, on 11th-inning homer to capture AL pennant,” Boston Globe, 17 October 2003. [Online]. Available: http://articles.boston.com/. [Accessed November 2023].<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>J. Stark, “The book on hooks,” ESPN.com Baseball, 10 May 2004. [Online]. Available: https://www.espn.com/. [Accessed November 2023].<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>D. Finigan, B. M. Mills and D. F. Stone, “Pulling starters,” Journal of Behavioral and Experimental Economics, vol.&nbsp;89, 2020.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>R. Houston, “Call to the Bullpen: More Often and More Effective,” Samford University, 20 April 2018. [Online]. Available: https://www.samford.edu/sports-analytics. [Accessed November 2023].<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>M. Orwin and C. Tien, “Call to the Bullpen: The Increase in MLB Reliever Usage,” Bruin Sports Analytics, 31 March 2022. [Online]. Available: https://www.bruinsportsanalytics.com/. [Accessed November 2023].<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>J. Jaffe, “Postseason Starting Pitching Ain’t What It Used to Be, After All,” FanGraphs, 27 October 2023. [Online]. Available: https://blogs.fangraphs.com/. [Accessed November 2023].<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>J. Jaffe, “The Incredible Shrinking Postseason Starter,” FanGraphs, 18 October 2021. [Online]. Available: https://blogs.fangraphs.com/. [Accessed November 2023].<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn8"><p>G. Ganeshapillai and J. Guttag, “A Data-driven Method for In-game Decision Making in MLB,” MIT Sloan Sports Analytics Conference, vol.&nbsp;8, 2014.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn9"><p>D. Finigan, B. M. Mills and D. F. Stone, “Pulling starters,” Journal of Behavioral and Experimental Economics, vol.&nbsp;89, 2020.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn10"><p>M. Woodham, J. Hawkins, A. Singh and S. Chakraborty, “When to Pull Starting Pitchers in Major League Baseball? A Data Mining Approach,” IEEE International Conference On Machine Learning And Applications, vol.&nbsp;18, pp.&nbsp;426-431, 2019.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn11"><p>D. Finigan, B. M. Mills and D. F. Stone, “Pulling starters,” Journal of Behavioral and Experimental Economics, vol.&nbsp;89, 2020.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn12"><p>M. Woodham, J. Hawkins, A. Singh and S. Chakraborty, “When to Pull Starting Pitchers in Major League Baseball? A Data Mining Approach,” IEEE International Conference On Machine Learning And Applications, vol.&nbsp;18, pp.&nbsp;426-431, 2019.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn13"><p>J. D. Kalbfleisch and D. E. Schaubel, “Fifty Years of the Cox Model,” Annual Review of Statistics and Its Application, vol.&nbsp;10, pp.&nbsp;1-23, 2023.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>D. Finigan, B. M. Mills and D. F. Stone, “Pulling starters,” Journal of Behavioral and Experimental Economics, vol.&nbsp;89, 2020.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>M. Woodham, J. Hawkins, A. Singh and S. Chakraborty, “When to Pull Starting Pitchers in Major League Baseball? A Data Mining Approach,” IEEE International Conference On Machine Learning And Applications, vol.&nbsp;18, pp.&nbsp;426-431, 2019.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Brill, R., Deshpande, S. &amp; Wyner, A. “A Bayesian analysis of the time through the order penalty in baseball.” Journal of Quantitative Analysis in Sports, 19(4), 245-262, 2023.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>J. Stark, “The book on hooks,” ESPN.com Baseball, 10 May 2004. [Online]. Available: https://www.espn.com/. [Accessed November 2023].<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>R. Houston, “Call to the Bullpen: More Often and More Effective,” Samford University, 20 April 2018. [Online]. Available: https://www.samford.edu/sports-analytics. [Accessed November 2023].<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>M. Orwin and C. Tien, “Call to the Bullpen: The Increase in MLB Reliever Usage,” Bruin Sports Analytics, 31 March 2022. [Online]. Available: https://www.bruinsportsanalytics.com/. [Accessed November 2023].<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>J. Jaffe, “Postseason Starting Pitching Ain’t What It Used to Be, After All,” FanGraphs, 27 October 2023. [Online]. Available: https://blogs.fangraphs.com/. [Accessed November 2023].<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>J. Jaffe, “The Incredible Shrinking Postseason Starter,” FanGraphs, 18 October 2021. [Online]. Available: https://blogs.fangraphs.com/. [Accessed November 2023].<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>J. D. Kalbfleisch and D. E. Schaubel, “Fifty Years of the Cox Model,” Annual Review of Statistics and Its Application, vol.&nbsp;10, pp.&nbsp;1-23, 2023.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>D. Shaughnessy, “Heartbreak again: Yankees beat Red Sox, 6-5, on 11th-inning homer to capture AL pennant,” Boston Globe, 17 October 2003. [Online]. Available: http://articles.boston.com/. [Accessed November 2023].<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
