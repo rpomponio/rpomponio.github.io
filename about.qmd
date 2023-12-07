@@ -2,7 +2,7 @@
 title: "About"
 ---
 
-# Ray Pomponio
+## Ray Pomponio
 
 * Graduated May 2023, Master of Science in Biostatistics: **University of Colorado** (Denver, CO).
 * Bachelor of Science in Economics: **University of Pennsylvania - Wharton** (W' 2018, Magna Cum Laude).
