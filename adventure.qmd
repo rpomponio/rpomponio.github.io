@@ -1,0 +1,10 @@
+---
+title: "Adventure"
+image: climbing.jpg
+---
+
+I am an avid rock climber and mountaineer. I've kept logs of some of my larger adventures. Below are links to published trip reports.
+
+![Rock climbing in Boulder Canyon, Colorado.](climbing.jpg){width=90%}
+
+

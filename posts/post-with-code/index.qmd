@@ -1,0 +1,67 @@
+---
+title: "Starting Pitcher Replacements in the Postseason: Time for survival methods?"
+author: "Ray Pomponio"
+date: "2023-12-18"
+categories: [news, code, analysis]
+image: "image.jpg"
+---
+
+# Outline
+
+*Focus on how this analysis works, rather than on statistical conclusions.*
+
+* [ ] Trend in baseball: earlier starting pitcher replacements
+* [x] Survival analysis: time to event
+* [x] Data: 2000-2019 MLB postseason
+* [ ] Event: starting pitcher replaced
+* [ ] Time: batters faced
+* [ ] Censoring: starting pitcher not replaced
+* [ ] Kaplan-Meier estimator
+* [ ] Cox proportional hazards model
+* [ ] Hazard ratios: interpretations
+* [ ] Limitations and next steps
+
+## Survival Analysis: A brief overview
+
+The goal of survival analysis is to understand the factors that lead to earlier (or later) event times. In a medical context, the event is often mortality (i.e., death of the patient). In this sense, medical researchers are typically most-concerned with the factors that lead to earlier mortality, or *longer* survival, hence the name 'survival' analysis.
+
+![Figure 1: The Kaplan-Meier method illustrates the survival probabilities of two cohorts in a randomized trial (treatment and control). The NCSS software website provided this figure, along with a helpful overview of survival analysis. Source: <https://www.ncss.com/software/ncss/survival-analysis-in-ncss/>](ncss.png)
+
+Survival analysis is particularly useful when studying time-related phenomena with many possible risk factors, and when observational data are available. In professional sports, risk factors might be understood as game situations, i.e., what situations lead to a higher chance of the outcome? Data availability is usually not an issue, since events are now tracked to the play-level, and sometimes even greater levels of granularity.
+
+There aren't many examples of survival analysis applied to baseball, though one example studied how the length of player careers varied based upon the handedness of the player.[^1] In that example, the event of interest was the end of the player's career; the unit of time was days. This analysis could help questions like, which throwing handedness tends to yield longer careers in the major leagues? (Spoiler: the author found that right-handed throwers teneded to last a little longer than lefties, on average).
+
+[^1]: Micah Melling. "Survival Analysis: How Long Do Careers Last?." *Baseball Data Science.* <https://www.baseballdatascience.com/survival-analysis-how-long-do-careers-last/>
+
+Survival analysis includes a lot of the same features of linear regression. Linear regression is used in advanced metrics to adjust for factors like league-to-leage variability or positional differences.[^2] Importantly, survival analysis extends that framework to study events that are time-dependent, like the length of a player's career. Studying career lengths with linear regression might be prone to certain kinds of bias, since career lengths are not normally-distributed.[^3]
+
+In the next section I will describe the data that were prepared to analyze starting pitcher replacements in the postseason.
+
+[^2]: Piper Slowinski. "What is WAR?". *FanGraphs.* <https://library.fangraphs.com/misc/war/>
+
+[^3]: *Wikipedia.* Normal Distribution. <https://en.wikipedia.org/wiki/Normal_distribution>
+
+## Data: Play-by-play from Retrosheet
+
+For this analysis, I used play-by-play data from Retrosheet[^4] to construct a set of starting pitcher histories in the postseason. This required parsing the play-by-play events to identify game situations, such as the number of runners on base. It also required processing roster information to identify the handedness of the pitchers and batters they faced. In fact this data cleaning process was a heavy lift, since the play-by-play data are minimally-structured and contain only enough information to re-create the context of a particular game once a considerable amount of processing has been applied. Documentation for the play-by-play files is available[^5] and was extremely helpful in this early stage of the analysis.
+
+I chose to focus on the twenty postseasons between 2000 and 2019. This was for a few reasons. First, the more-recent postseasons since 2019 have been impacted by COVID-19 and major rule changes. I wanted to ensure my analysis was not complicated by any of those impacts. Secondly, the postseasons before 2000 are now so long ago that strategies around managing a starting pitcher are substantially different. Thus, I focus on 2000-2019 as a relatively stable, modern 'era' of postseason play. Within this window there were 611 postseason games available to analyze.
+
+Here's what every postseason game log contains, after data processing was performed:
+
+* League (e.g., NL/AL/World Series)
+* Playoff round
+* Playoff game number
+* The starting pitcher for each team
+* A record of all plate appearances facing each starter, and outcomes (e.g., home-run, fly out)
+* A running tally of the number of pitches thrown by each starter
+* A running tally of the number of strikeouts achieved by each starter
+* The handedness of the pitcher and batter
+
+The above list is incomplete since it does not contain crucial variables like the matchup history between a given batter and pitcher. However, I felt that the list was sufficient for beginning an inquiry into starting pitchers and the factors that affect their replacement. In the next few sections, I will define the key variables of interest for the analysis.
+
+![Figure 2: An example of the game log for the 2019 NLCS (STL vs. WSH, game 4). Patrick Corbin was on the mound for the Nationals when Yadier Molina solo homer'd in the fourth inning. The Nats went on to win 7-4 behind Corbin's 12-strikeout start.](nlcs.png)
+
+[^4]: *Retrosheet.* Play-by-Play Data Files: Post-Season Event Files. <https://www.retrosheet.org/game.htm#Post-Season%20Games>
+
+[^5]: *Retrosheet.* The Event File. <https://www.retrosheet.org/eventfile.htm>

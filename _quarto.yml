@@ -1,22 +1,20 @@
 project:
   type: website
-  output-dir: docs
 
 website:
   title: "rpomponio.github.io"
   navbar:
-    left:
-      - href: index.qmd
-        text: Home
+    right:
       - about.qmd
-  body-footer: |
-    Links:
-    [GitHub](https://github.com/rpomponio) |
-    [Google Scholar](https://scholar.google.com/citations?user=TxEcZMMAAAAJ&hl=en)
-
+      - adventure.qmd
+      - icon: github
+        href: https://github.com/rpomponio
+      - icon: google
+        href: https://scholar.google.com/citations?user=TxEcZMMAAAAJ&hl=en
 format:
   html:
-    theme: cosmo
+    theme: sandstone
     css: styles.css
-    toc: true
+
+
 

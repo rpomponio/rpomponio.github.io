@@ -1,16 +1,19 @@
 ---
 title: "About"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: person-fill-up
+      text: Upwork
+      href: https://www.upwork.com/freelancers/~01bb85ee6f09078536
+    - icon: google
+      text: Google Scholar
+      href: https://scholar.google.com/citations?user=TxEcZMMAAAAJ&hl=en
+    - icon: github
+      text: Github
+      href: https://github.com/rpomponio
+
 ---
 
-## Ray Pomponio
-
-* Graduated May 2023, Master of Science in Biostatistics: **University of Colorado** (Denver, CO).
-* Bachelor of Science in Economics: **University of Pennsylvania - Wharton** (W' 2018, Magna Cum Laude).
-* Expertise in longitudinal data analysis and advanced statistical computing using `R`, SAS, and `python`.
-* Past experience includes work in sports analytics, marketing, neuroimaging, and critical care medicine.
-* Originally from Philadelphia, PA.
-* Currently lives in Shadyside (**Pittsburgh, PA**).
-* To contact me, please reach me at: raymond.pomponio (at) outlook.com.
-* For freelance data science work, you can hire me on [Upwork](https://www.upwork.com/freelancers/~01bb85ee6f09078536).
-
----
+About this blog
