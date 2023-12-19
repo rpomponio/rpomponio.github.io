@@ -3,7 +3,7 @@ title: "Starting Pitcher Replacements in the Postseason: Time for survival metho
 author: "Ray Pomponio"
 date: "2023-12-18"
 categories: [news, code, analysis]
-image: "image.jpg"
+image: "snell.jpg"
 ---
 
 # Outline
@@ -13,7 +13,7 @@ image: "image.jpg"
 * [ ] Trend in baseball: earlier starting pitcher replacements
 * [x] Survival analysis: time to event
 * [x] Data: 2000-2019 MLB postseason
-* [ ] Event: starting pitcher replaced
+* [x] Event: starting pitcher replaced
 * [ ] Time: batters faced
 * [ ] Censoring: starting pitcher not replaced
 * [ ] Kaplan-Meier estimator
@@ -65,3 +65,22 @@ The above list is incomplete since it does not contain crucial variables like th
 [^4]: *Retrosheet.* Play-by-Play Data Files: Post-Season Event Files. <https://www.retrosheet.org/game.htm#Post-Season%20Games>
 
 [^5]: *Retrosheet.* The Event File. <https://www.retrosheet.org/eventfile.htm>
+
+## Defining the Event of Interest
+
+In the playoffs, the timing of replacing the starting pitcher is one of the most crucial decisons faced by managers. Here is what sportswriter Jasyon Stark wrote about "hooks" in the wake of a catastrophic collapse of the Red Sox's pitching in game seven of the 2003 ALCS:
+
+> For managers and the pitchers they manage, this is *the* question: Take him out, or leave him in? It is the question that hangs over every manager every game of every season. It is the question that leaves canyons under their eyes and fault lines in their forehead.[^6]
+
+Red Sox manager Grady Little had just been fired after the team ended their season on a blown lead against the Yankees. Little's decision to leave Pedro Martinez on the mound in the eighth inning was the turning point that contributed to their loss.
+
+![Figure 3: Kevin Cash's decision to pull Blake Snell in game six of the 2020 World Series ultimately backfired. Managers face consequential decisions like this throughout the playoffs, especially in high leverage situations. Photo: Tim Heitman (USA Today).](snell.jpg)
+
+In the modern era, complete games are increasingly rare. In the dataset described in the previous section, of the 1218 starts analyzed, only 33 (2.7%) resulted in complete games. Thus managers are usually grappling with *when* to pull the starter, not *if* they should pull the starter. Of course, in the heat of the moment of a playoff game, this decision can resemble the form of a binary choice for each batter faced. In that sense, it's like flipping a coin at the beginning of each plate appearance; the coin in this analogy has a low probability of coming up tails. The manager keeps flipping the coin, and it continues to show heads, until a later moment in the game when it shows tails. The first time this happens, the starter is pulled.
+
+I'm not suggesting that managers are actually flipping coins to guide their highly consequential decisions, but to an outside observer, the process of starting pitcher replacements can be modeled as a series of random coin tosses. That is what I will do in this analysis. I will define the event of interest as the replacement of the starter, and I will model the timing of that event using information available throughout the game, including the in-game performance of the pitcher and the opposing team's offense.
+
+Next I will define the unit of time that's used to measure how late into the game a starter will last.
+
+
+[^6]: Jayson Stark. "The book on hooks." *ESPN.com: Baseball .* <https://www.espn.com/mlb/columns/story?columnist=stark_jayson&id=1798057>

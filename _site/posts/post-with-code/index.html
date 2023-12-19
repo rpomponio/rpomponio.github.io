@@ -159,7 +159,7 @@ ul.task-list li input[type="checkbox"] {
 <li><input type="checkbox">Trend in baseball: earlier starting pitcher replacements</li>
 <li><input type="checkbox" checked="">Survival analysis: time to event</li>
 <li><input type="checkbox" checked="">Data: 2000-2019 MLB postseason</li>
-<li><input type="checkbox">Event: starting pitcher replaced</li>
+<li><input type="checkbox" checked="">Event: starting pitcher replaced</li>
 <li><input type="checkbox">Time: batters faced</li>
 <li><input type="checkbox">Censoring: starting pitcher not replaced</li>
 <li><input type="checkbox">Kaplan-Meier estimator</li>
@@ -203,6 +203,23 @@ ul.task-list li input[type="checkbox"] {
 <figcaption class="figure-caption">Figure 2: An example of the game log for the 2019 NLCS (STL vs.&nbsp;WSH, game 4). Patrick Corbin was on the mound for the Nationals when Yadier Molina solo homer’d in the fourth inning. The Nats went on to win 7-4 behind Corbin’s 12-strikeout start.</figcaption>
 </figure>
 </div>
+</section>
+<section id="defining-the-event-of-interest" class="level2">
+<h2 class="anchored" data-anchor-id="defining-the-event-of-interest">Defining the Event of Interest</h2>
+<p>In the playoffs, the timing of replacing the starting pitcher is one of the most crucial decisons faced by managers. Here is what sportswriter Jasyon Stark wrote about “hooks” in the wake of a catastrophic collapse of the Red Sox’s pitching in game seven of the 2003 ALCS:</p>
+<blockquote class="blockquote">
+<p>For managers and the pitchers they manage, this is <em>the</em> question: Take him out, or leave him in? It is the question that hangs over every manager every game of every season. It is the question that leaves canyons under their eyes and fault lines in their forehead.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+</blockquote>
+<p>Red Sox manager Grady Little had just been fired after the team ended their season on a blown lead against the Yankees. Little’s decision to leave Pedro Martinez on the mound in the eighth inning was the turning point that contributed to their loss.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="snell.jpg" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure 3: Kevin Cash’s decision to pull Blake Snell in game six of the 2020 World Series ultimately backfired. Managers face consequential decisions like this throughout the playoffs, especially in high leverage situations. Photo: Tim Heitman (USA Today).</figcaption>
+</figure>
+</div>
+<p>In the modern era, complete games are increasingly rare. In the dataset described in the previous section, of the 1218 starts analyzed, only 33 (2.7%) resulted in complete games. Thus managers are usually grappling with <em>when</em> to pull the starter, not <em>if</em> they should pull the starter. Of course, in the heat of the moment of a playoff game, this decision can resemble the form of a binary choice for each batter faced. In that sense, it’s like flipping a coin at the beginning of each plate appearance; the coin in this analogy has a low probability of coming up tails. The manager keeps flipping the coin, and it continues to show heads, until a later moment in the game when it shows tails. The first time this happens, the starter is pulled.</p>
+<p>I’m not suggesting that managers are actually flipping coins to guide their highly consequential decisions, but to an outside observer, the process of starting pitcher replacements can be modeled as a series of random coin tosses. That is what I will do in this analysis. I will define the event of interest as the replacement of the starter, and I will model the timing of that event using information available throughout the game, including the in-game performance of the pitcher and the opposing team’s offense.</p>
+<p>Next I will define the unit of time that’s used to measure how late into the game a starter will last.</p>
 
 
 </section>
@@ -217,6 +234,7 @@ ul.task-list li input[type="checkbox"] {
 <li id="fn3"><p><em>Wikipedia.</em> Normal Distribution. <a href="https://en.wikipedia.org/wiki/Normal_distribution" class="uri">https://en.wikipedia.org/wiki/Normal_distribution</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p><em>Retrosheet.</em> Play-by-Play Data Files: Post-Season Event Files. <a href="https://www.retrosheet.org/game.htm#Post-Season%20Games" class="uri">https://www.retrosheet.org/game.htm#Post-Season%20Games</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p><em>Retrosheet.</em> The Event File. <a href="https://www.retrosheet.org/eventfile.htm" class="uri">https://www.retrosheet.org/eventfile.htm</a><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Jayson Stark. “The book on hooks.” <em>ESPN.com: Baseball .</em> <a href="https://www.espn.com/mlb/columns/story?columnist=stark_jayson&amp;id=1798057" class="uri">https://www.espn.com/mlb/columns/story?columnist=stark_jayson&amp;id=1798057</a><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
