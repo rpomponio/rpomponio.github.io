@@ -82,5 +82,20 @@ I'm not suggesting that managers are actually flipping coins to guide their high
 
 Next I will define the unit of time that's used to measure how late into the game a starter will last.
 
+[^6]: Jayson Stark. "The book on hooks." *ESPN.com: Baseball.* <https://www.espn.com/mlb/columns/story?columnist=stark_jayson&id=1798057>
 
-[^6]: Jayson Stark. "The book on hooks." *ESPN.com: Baseball .* <https://www.espn.com/mlb/columns/story?columnist=stark_jayson&id=1798057>
+## Defining the Unit of Time
+
+In most survival analyses, the unit of time is apparent from the context. For example, in a study of biomedical treatments for cancer, it would make sense to measure time in years, since patients would be expected to survive for multiple years after receiving treatment.
+
+In the previously mentioned analysis of players' career lengths, time was measured in days. Whether days or years are used doesn't really matter. The point is that time was measured measured in actual chronological clock time.
+
+Contrast this with starting pitcher performances, where it doesn't make sense to measure time in minutes or hours, because the baseball is not a sport with a running clock like football or basketball. What is the obvious choice for a unit of time in measuring how long a starter lasts? Innings pitched? Batters faced? Pitches thrown? The answer is not so obvious, and the choice of the unit of time requires some nuance.
+
+Consider that most starting pitchers are evaluated on innings pitched. You'd like to see a workhorse starter throw for more innings, on average. But in baseball, there is no uniform length of an inning. In fact, two different starters pitching 6 innings may actually throw substantially different numbers of pitches. That's because the length of inning is determined by offensive and defensive events. For that reason, innings pitched is not the most appropriate unit of time for this analysis.
+
+Instead of innings pitched, the number of batters faced is a reasonable proxy of in-game time. Pitchers may throw different numbers of pitches, but you can generally expect a pitcher to throw about 3.8 pitches per batter faced in the long run. Additionally, pitchers are often replaced before facing a new batter, not mid-way through an at-bat.[^7] Lastly, the number of batters faced can easily be converted to times through the order; simply divide the number of batters by nine. Thus the number of batters faced is a sensible choice for the unit of time.
+
+What does the number of batters faced look like for the 1218 playoff starts in the dataset? The histogram below shows the distribution of batters faced for all playoff starts.
+
+[^7]: Alden Woods. "Girardi makes pitching change mid-at-bat." *MLB.com.* <https://www.mlb.com/news/joe-girardi-makes-pitching-change-mid-at-bat/c-141252666>
