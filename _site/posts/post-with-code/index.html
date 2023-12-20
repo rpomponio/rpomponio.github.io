@@ -160,12 +160,13 @@ ul.task-list li input[type="checkbox"] {
 <li><input type="checkbox" checked="">Survival analysis: time to event</li>
 <li><input type="checkbox" checked="">Data: 2000-2019 MLB postseason</li>
 <li><input type="checkbox" checked="">Event: starting pitcher replaced</li>
-<li><input type="checkbox">Time: batters faced</li>
-<li><input type="checkbox">Censoring: starting pitcher not replaced</li>
+<li><input type="checkbox" checked="">Time: batters faced</li>
+<li><input type="checkbox" checked="">Censoring: starting pitcher not replaced</li>
 <li><input type="checkbox">Kaplan-Meier estimator</li>
 <li><input type="checkbox">Cox proportional hazards model</li>
 <li><input type="checkbox">Hazard ratios: interpretations</li>
-<li><input type="checkbox">Limitations and next steps</li>
+<li><input type="checkbox">Hypothetical example</li>
+<li><input type="checkbox">Real-world examples: Actual vs.&nbsp;Predicted</li>
 </ul>
 <section id="survival-analysis-a-brief-overview" class="level2">
 <h2 class="anchored" data-anchor-id="survival-analysis-a-brief-overview">Survival Analysis: A brief overview</h2>
@@ -225,9 +226,22 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="defining-the-unit-of-time">Defining the Unit of Time</h2>
 <p>In most survival analyses, the unit of time is apparent from the context. For example, in a study of biomedical treatments for cancer, it would make sense to measure time in years, since patients would be expected to survive for multiple years after receiving treatment.</p>
 <p>In the previously mentioned analysis of players’ career lengths, time was measured in days. Whether days or years are used doesn’t really matter. The point is that time was measured measured in actual chronological clock time.</p>
-<p>Contrast this with starting pitcher performances, where it doesn’t make sense to measure time in minutes or hours, because the baseball is not a sport with a running clock like football or basketball. What is the obvious choice for a unit of time in measuring how long a starter lasts? Innings pitched? Batters faced? Pitches thrown? The answer is not so obvious, and the choice of the unit of time requires some nuance.</p>
-<p>Consider that most starting pitchers are evaluated on innings pitched. You’d like to see a workhorse starter throw for more innings, on average. But in baseball, there is no uniform length of an inning. In fact, two different starters pitching 6 innings may actually throw substantially different numbers of pitches. That’s because the length of inning is determined by offensive and defensive events. For that reason, innings pitched is not the most appropriate unit of time for this analysis.</p>
-<p>Instead of innings pitched, the number of batters faced is a reasonable proxy of in-game time. Pitchers may throw different numbers of pitches, but you can generally expect a pitcher to throw about 3.8 pitches per batter faced in the long run. Additionally, pitchers are often replaced before facing a new batter, not mid-way through an at-bat.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> Thus the number of batters faced is a sensible choice for the unit of time.</p>
+<p>Contrast this with starting pitcher performances, where it doesn’t make sense to measure time in minutes or hours, because baseball is not a sport with a running clock like football or basketball. What is the obvious choice for a unit of time in measuring how long a starter lasts? Innings pitched? Batters faced? Pitches thrown? The answer is not so obvious, and the choice time units requires some careful thinking.</p>
+<p>Consider that most starting pitchers are evaluated on innings pitched. You’d like to see a workhorse starter throw for more innings, on average. But in baseball, there is no uniform length of an inning. In fact, two different starters pitching 6 innings may actually throw substantially different numbers of pitches. That’s because the length of the inning is determined by relative offensive and defensive performance. For that reason, innings pitched is not the most appropriate unit of time for this analysis.</p>
+<p>Instead of innings pitched, the number of batters faced is a reasonable proxy of in-game time. Pitchers may throw different numbers of pitches, but you can generally expect a pitcher to throw about 3.8 pitches per batter faced in the long run. Additionally, pitchers are often replaced before facing a new batter, not mid-way through an at-bat.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> Lastly, the number of batters faced can easily be converted to times through the order (TTO); simply divide the number of batters by nine. Thus the number of batters faced is a sensible choice for the unit of time.</p>
+<p>The following plot shows the distribution of the number of total batters faced (TBF) for all of the playoff starters in the dataset. The small number of complete games is illustrated by the tightly-grouped cluster at the right end of the distribution. Overall, starters tended to face between 20 and 30 batters, and rarely faced more than 35 batters. However, there was a substantial amount of starters that were pulled early, i.e., between 10 and 20 batters faced.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="TBF.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figure 4: Number of batters faced by all starters in the 2000-2019 postseasons. There were 1,218 starts, of which 33 resulted in complete games (2.7%).</figcaption>
+</figure>
+</div>
+</section>
+<section id="censoring-handling-complete-games" class="level2">
+<h2 class="anchored" data-anchor-id="censoring-handling-complete-games">Censoring: Handling complete games</h2>
+<p>When using survival analysis methods, one has to consider the possibility that the event does not occur within the observation window. In medical contexts, this might be good news for the patient; fewer events mean fewer deaths. Fortunately for this analysis, the replacement of a starting pitcher in the postseason is extremely common. The small number of complete games means we could probably ignore them altogether without much of an effect on the results.</p>
+<p>However, what if we wanted to include complete games in our analysis anyways? The methods of survival analysis are well-equipped to handle these observations. In the context of this analysis, complete games are considered ‘censored’ observations, because the game ended before the starting pitcher was replaced. Survival analysis will not ignore the censored observations, it turns out, and instead the models will use data from complete games to inform our understanding of what makes a starter more likely to get pulled.</p>
+<p>I should mention, the implicit assumption of censoring is that the event would have occurred if we were to continue observing the phenomenon into perpetuity. In baseball, this assumption is somewhat questionable since complete games necessarily mean that the starter could not have been replaced. But imagine if the opposing team were to tie the game and send it into extra innings. Then, it would be more likely that we would witness the replacement of the starter, even if he is pitching very well, because of fatigue and injury risk.</p>
 
 
 </section>
