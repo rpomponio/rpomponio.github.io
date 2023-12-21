@@ -16,7 +16,7 @@ image: "snell.jpg"
 * [x] Event: starting pitcher replaced
 * [x] Time: batters faced
 * [x] Censoring: starting pitcher not replaced
-* [ ] Kaplan-Meier estimator
+* [x] Kaplan-Meier estimator
 * [ ] Cox proportional hazards model
 * [ ] Hazard ratios: interpretations
 * [ ] Hypothetical example
@@ -110,6 +110,24 @@ When using survival analysis methods, one has to consider the possibility that t
 However, what if we wanted to include complete games in our analysis anyways? The methods of survival analysis are well-equipped to handle these observations. In the context of this analysis, complete games are considered 'censored' observations, because the game ended before the starting pitcher was replaced. Survival analysis will not ignore the censored observations, it turns out, and instead the models will use data from complete games to inform our understanding of what makes a starter more likely to get pulled.
 
 I should mention, the implicit assumption of censoring is that the event would have occurred if we were to continue observing the phenomenon into perpetuity. In baseball, this assumption is somewhat questionable since complete games necessarily mean that the starter could not have been replaced. But imagine if the opposing team were to tie the game and send it into extra innings. Then, it would be more likely that we would witness the replacement of the starter, even if he is pitching very well, because of fatigue and injury risk.
+
+## Kaplan-Meier Method for Replacing Starters
+
+The Kaplan-Meier procedure[^8] helps to estimate the speed of a 'survival' process, like the process of replacing starting pitchers described earlier in this post. The Kaplan-Meier method is usually illustrated with one or more 'curves'. The curves in this case are functions that represent estimated probabilities of survival at various stages in the process. The higher the estimated probability, the more likely one is to survive until that particular point in time.
+
+Before jumping to the Kaplan-Meier curves for this dataset, it's worth considering what variable to stratify by; there are a number of choices including league, series, and pitcher handedness. The point of stratification is to examine whether survival patterns vary between different sub-groups of the overall dataset. In this case I will stratify by season, but I will group seasons into 5-year eras starting with 2000-2004. Therefore there are a total of four sub-groups: 2000-2004, 2005-2009, 2010-2014, and 2015-2019.
+
+The following plot shows the Kaplan-Meier curve for the probability of a starting pitcher being replaced in the postseason, stratified by season era. The curves are plotted against the number of batters faced, which is the unit of time that was chosen earlier. The curves start at zero on the $x$-axis, because it is impossible for a starter to be replaced before facing a batter. The curve ends at about 40, because that was the largest number of total batters faced in any postseason game during this period.
+
+![Figure 5: Kaplan-Meier curves illustrating the probability of remaining in a postseason game, for starters in the 2000-2019 era. Curves are stratified by 5-year windows. The unit of time is the number of total batters faced (TBF).](curves.png){width=90%}
+
+The most obvious pattern in the above picture is that the purple curve, representing 2015-2019, is shifted to the left of the other three curves. This era is the last of the dataset, and the shifted curve suggests that starters tended to be replaced earlier in the game during the last five seasons. Another cue is taken from the point where the curves cross a probability of 50% (when the $y$-axis reads 0.5); this is the estimated median survival time. For the season eras between 2000 and 2014, the median number of batters faced was 26. For the 2015-2019, however, the median TBF was 23. That suggests pitchers were pulled about three batters earlier in the game during the latter era, compared with the earlier era.
+
+Is a difference of three batters meaningful? I'd argue yes, since a lot can happen in high-leverage moments that can change the outcome of a game, and momentum swings can sometimes happen in just one or two batters. But another important question is whether the difference is statistically significant. The Kaplan-Meier method answers that question, too. I applied the log-rank test which assesses whether there is a difference between the four curves. The p-value of the test was very tiny (< 0.001), which suggests the difference is statistically significant.
+
+Although this preliminary analysis suggests an interesting finding, that starting pitchers did not last as long during the 2015-2019 era as they did previously, there are additional factors that we might consider relevant. For example, did something else change in the style of play that made managers more likely to pull their starters early? In the next section I will address the possibility of confounding factors using a statistical model.
+
+[^8]: E.L. Kaplan & Paul Meier. "Nonparametric Estimation from Incomplete Observations." *Journal of the American Statistical Association.* <https://doi.org/10.1080/01621459.1958.10501452>
 
 
 
