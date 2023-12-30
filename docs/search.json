@@ -11,7 +11,7 @@
     "href": "posts/research-summary/index.html",
     "title": "A Summary of My Research in Stats and Medicine",
     "section": "",
-    "text": "In this post, I attempt to review the beginnings of my research career and distill everything into three themes spanning topics in the biomedical sciences and applied statistics."
+    "text": "In this post, I review the beginning of my research career and distill everything into three themes spanning topics in the biomedical sciences and applied statistics."
   },
   {
     "objectID": "posts/research-summary/index.html#theme-1-computational-research",
@@ -51,9 +51,9 @@
   {
     "objectID": "adventure.html",
     "href": "adventure.html",
-    "title": "Adventure",
+    "title": "Trips",
     "section": "",
-    "text": "I am an avid rock climber and mountaineer. I’ve kept logs of some of my larger adventures. Below are links to published trip reports.\n\n\n\nRock climbing in Boulder Canyon, Colorado."
+    "text": "Ray climbing at one of his favorite granite crags in Boulder Canyon, Colorado.\n\n\nOutside of my work as a data scientist and applied statistician, I’m an avid rock climber and mountaineer. I’ve compiled a list of some of my best trip reports, which I hope to revise and publish on SummitPost.\n\n  \n    \n      Summiting the Grand Teton via Exum Ridge\n      August 12, 2021\n    \n    My first real mountaineering trip, in which I climbed the Grand Teton using a classic rock climbing route to the summit.\n    Partner: Donnie K.\n  \n  \n    \n      Climbing the Sharkstooth of Rocky Mountain NP\n      July 17, 2022\n    \n    A day-long adventure in Colorado's most famous national park. We encountered a steep snow field on our approach to the Sharkstooth Ridge.\n    Partner: Jason K.\n  \n  \n    \n      Alpine Training in West Virginia's Wilderness\n      July 17, 2022\n    \n    An outing with the Explorer's Club of Pittsburgh. We hiked through the night to reach our rock climbing objective at Seneca Rocks, WV. We summitted and bivied atop the rocks.\n    Partners: Evren G., Dan K."
   },
   {
     "objectID": "about.html",
@@ -61,5 +61,12 @@
     "title": "About",
     "section": "",
     "text": "Ray’s expertise is in longitudinal data analysis and advanced statistical computing using R and python. He received a Master’s in Biostatistics at the University of Colorado (Denver, CO) and Bachelor’s in Economics, magna cum laude, from the University of Pennsylvania - Wharton (Philadelphia, PA).\nHis past experience includes data science work in marketing analytics, sports, medical imaging, and critical care medicine. He is originally from Philadelphia, PA, and currently lives in Shadyside (a neighborhood in Pittsburgh, PA).\nPlease reach out using any of the links below, or reach me at raymond.pomponio (at) outlook.com."
+  },
+  {
+    "objectID": "adventure.html#section",
+    "href": "adventure.html#section",
+    "title": "Trips",
+    "section": "",
+    "text": "Ray climbing at one of his favorite granite crags in Boulder Canyon, Colorado."
   }
 ]

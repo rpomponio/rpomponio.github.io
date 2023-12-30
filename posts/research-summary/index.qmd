@@ -5,7 +5,7 @@ date: "2023-12-30"
 categories: [news]
 ---
 
-*In this post, I attempt to review the beginnings of my research career and distill everything into three themes spanning topics in the biomedical sciences and applied statistics.*
+*In this post, I review the beginning of my research career and distill everything into three themes spanning topics in the biomedical sciences and applied statistics.*
 
 # 2018 to 2023: Five years of research, Three themes
 

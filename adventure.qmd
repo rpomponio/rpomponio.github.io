@@ -1,10 +1,41 @@
 ---
-title: "Adventure"
+title: "Trips"
 image: climbing.jpg
 ---
 
-I am an avid rock climber and mountaineer. I've kept logs of some of my larger adventures. Below are links to published trip reports.
+![Ray climbing at one of his favorite granite crags in Boulder Canyon, Colorado.](climbing.jpg)
 
-![Rock climbing in Boulder Canyon, Colorado.](climbing.jpg){width=90%}
+Outside of my work as a data scientist and applied statistician, I'm an avid rock climber and mountaineer. I've compiled a list of some of my best trip reports, which I hope to revise and publish on [SummitPost](https://www.summitpost.org/). 
+
+```{=html}
+<div class="list-group">
+  <a href="https://docs.google.com/document/d/e/2PACX-1vRqXtRpEbvU42-6EtdEUbRAv947dCRpbimIO8Y2UStIqlXm5QTaRJHXKG1NX4rBuxGm6cjiqI7BVQqW/pub" class="list-group-item list-group-item-action flex-column align-items-start active">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Summiting the Grand Teton via Exum Ridge</h5>
+      <small>August 12, 2021</small>
+    </div>
+    <p class="mb-1">My first real mountaineering trip, in which I climbed the Grand Teton using a classic rock climbing route to the summit.</p>
+    <small>Partner: Donnie K.</small>
+  </a>
+  <a href="https://docs.google.com/document/d/e/2PACX-1vQxIOTZMYrYCj3ST0wiT67RzPZ-4ZwvzpunRHPphIUeHOeiHmlfXBYTpQ4WJ14m6vJcwhSKzr1rWJxM/pub" class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Climbing the Sharkstooth of Rocky Mountain NP</h5>
+      <small class="text-muted">July 17, 2022</small>
+    </div>
+    <p class="mb-1">A day-long adventure in Colorado's most famous national park. We encountered a steep snow field on our approach to the Sharkstooth Ridge.</p>
+    <small class="text-muted">Partner: Jason K.</small>
+  </a>
+  <a href="https://docs.google.com/document/d/e/2PACX-1vSZauGIJFXF2jLoW-fTkqXOIIe2URjdsNjREkNfeHRlQkjdlUbwgXoGhFeuuToh0DCYfxjN4U6AHEt7/pub" class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">Alpine Training in West Virginia's Wilderness</h5>
+      <small class="text-muted">July 17, 2022</small>
+    </div>
+    <p class="mb-1">An outing with the Explorer's Club of Pittsburgh. We hiked through the night to reach our rock climbing objective at Seneca Rocks, WV. We summitted and bivied atop the rocks.</p>
+    <small class="text-muted">Partners: Evren G., Dan K.</small>
+  </a>
+</div>
+```
+
+
 
 
