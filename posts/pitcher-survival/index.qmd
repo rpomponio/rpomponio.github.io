@@ -130,5 +130,4 @@ Although this preliminary analysis suggests an interesting finding, that startin
 
 [^8]: E.L. Kaplan & Paul Meier. "Nonparametric Estimation from Incomplete Observations." *Journal of the American Statistical Association.* <https://doi.org/10.1080/01621459.1958.10501452>
 
-
-
+## The Cox proportional hazards model
