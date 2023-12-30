@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Tristan O’Malley">
-<meta name="dcterms.date" content="2023-12-15">
+<meta name="author" content="Ray Pomponio">
+<meta name="dcterms.date" content="2023-12-30">
 
-<title>rpomponio.github.io - Welcome To My Blog</title>
+<title>rpomponio.github.io - A Summary of My Research in Stats and Medicine</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -87,6 +87,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="../../about.html" rel="" target="">
  <span class="menu-text">About</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../adventure.html" rel="" target="">
+ <span class="menu-text">Adventure</span></a>
+  </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/rpomponio" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
@@ -108,7 +112,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Welcome To My Blog</h1>
+      <h1 class="title">A Summary of My Research in Stats and Medicine</h1>
                                 <div class="quarto-categories">
                 <div class="quarto-category">news</div>
               </div>
@@ -121,14 +125,14 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Tristan O’Malley </p>
+               <p>Ray Pomponio </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">December 15, 2023</p>
+        <p class="date">December 30, 2023</p>
       </div>
     </div>
     
@@ -146,13 +150,201 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>This is the first post in a Quarto blog. Welcome!</p>
-<p><img src="thumbnail.jpg" class="img-fluid"></p>
-<p>Since this post doesn’t specify an explicit <code>image</code>, the first image in the post will be used in the listing page of posts.</p>
+<p><em>In this post, I attempt to distill my research career into three themes spanning topics in biomedical sciences and statistical methodology.</em></p>
+<section id="to-2023-five-years-of-research-three-themes" class="level1">
+<h1>2018 to 2023: Five years of research, Three themes</h1>
+<p>As we’re nearing the end of the calendar year, I found it a good opportunity to present my research in a blog post and identify three different themes across the statistical and biomedical applications that I’ve worked on. Those themes are <strong>computational</strong>, <strong>clinical</strong>, and <strong>missing data</strong> methods. I’ve been fortunate to co-author a number of published papers over the past five years, and I’ve included links to relevant articles where they fit within the above themes. I’ll cover each theme in more detail below.</p>
+<section id="theme-1-computational-research" class="level2">
+<h2 class="anchored" data-anchor-id="theme-1-computational-research">Theme 1: Computational Research</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="trends.jpeg" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption class="figure-caption">Figure from Pomponio et al.&nbsp;(2020): Age trends for selected brain volumes using a statistically harmonized dataset with 18 studies spanning the age range 3–96.</figcaption>
+</figure>
+</div>
+<section id="computational-neuroimaging-research" class="level3">
+<h3 class="anchored" data-anchor-id="computational-neuroimaging-research">Computational Neuroimaging Research</h3>
+<p>In 2018, I began working at <a href="https://www.med.upenn.edu/cbica/">CBICA</a>, a computational neuroimaging lab at the University of Pennsylvania, led by Dr.&nbsp;Christos Davatzikos. At CBICA, I developed an early expertise in statistical image analysis, particularly in the challenges of normalizing imaging-derived features over multiple scanners and geographic sites. In the imaging literature, this is referred to as <a href="https://www.sciencedirect.com/science/article/pii/S1053811922006851#:~:text=Harmonization%20is%20typically%20performed%20to,downstream%20application%20performance%20during%20harmonization.">harmonization</a>, and there are a growing number of techniques available to implement harmonization techniques. My major contribution was to develop a tool that adapted the popular ComBat<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> algorithm to lifespan datasets encompassing vast age ranges, with potentially complex age trends in brain volumetry. Today, that tool is available on <a href="https://github.com/rpomponio/neuroHarmonize">GitHub</a> as a python package, and it is used by neuroimaging researchers to handle common harmonization tasks like removing site effects.</p>
+<p>In addition to my work on harmonization, I assisted with image analysis in several other projects that resulted in peer-reviewed publications by the following first authors:</p>
+<ul>
+<li><a href="https://www.med.upenn.edu/apps/faculty/index.php/g20000440/p9094">Dr.&nbsp;Ilya M. Nasrallah</a>, Associate Professor of Radiology at the Hospital of the University of Pennsylvania</li>
+<li><a href="https://www.nallab.org/pi">Dr.&nbsp;Mohamad Habes</a>, Assistant Professor, Departments of Radiology and Epidemiology at the University of Texas Health Science Center San Antonio</li>
+<li>Dr.&nbsp;Ganesh Chand, Assistant Professor at Washington University in St.&nbsp;Louis</li>
+<li>Vishnu M. Bashyam, PhD student at the University of Pennsylvania</li>
+</ul>
+</section>
+<section id="published-papers" class="level3">
+<h3 class="anchored">Published Papers</h3>
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header anchored" id="headingOne" data-anchor-id="published-papers">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        Harmonization of large MRI datasets for the analysis of brain imaging patterns throughout the lifespan (NeuroImage 2020)
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+      <div class="accordion-body">
+        Co-Authors: <strong>Raymond Pomponio</strong>, Guray Erus, Mohamad Habes, Jimit Doshi, Dhivya Srinivasan, Elizabeth Mamourian, Vishnu Bashyam, Ilya M Nasrallah, Theodore D Satterthwaite, Yong Fan, Lenore J Launer, Colin L Masters, Paul Maruff, Chuanjun Zhuo, Henry Völzke, Sterling C Johnson, Jurgen Fripp, Nikolaos Koutsouleris, Daniel H Wolf, Raquel Gur, Ruben Gur, John Morris, Marilyn S Albert, Hans J Grabe, Susan M Resnick, R Nick Bryan, David A Wolk, Russell T Shinohara, Haochang Shou, Christos Davatzikos. <br>
+        <br>
+        DOI: <a href="https://doi.org/10.1016/j.neuroimage.2019.116450">Click to read article</a>.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header anchored" id="headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        Two distinct neuroanatomical subtypes of schizophrenia revealed using machine learning (Brain, 2020)
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        Co-Authors: Ganesh B Chand, Dominic B Dwyer, Guray Erus, Aristeidis Sotiras, Erdem Varol, Dhivya Srinivasan, Jimit Doshi, <strong>Raymond Pomponio</strong>, Alessandro Pigoni, Paola Dazzan, Rene S Kahn, Hugo G Schnack, Marcus V Zanetti, Eva Meisenzahl, Geraldo F Busatto, Benedicto Crespo-Facorro, Christos Pantelis, Stephen J Wood, Chuanjun Zhuo, Russell T Shinohara, Haochang Shou, Yong Fan, Ruben C Gur, Raquel E Gur, Theodore D Satterthwaite, Nikolaos Koutsouleris, Daniel H Wolf, Christos Davatzikos. <br>
+        <br>
+        DOI: <a href="https://doi.org/10.1093/brain/awaa025">Click to read article</a>.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header anchored" id="headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        MRI signatures of brain age and disease over the lifespan based on a deep brain network and 14,468 individuals worldwide (Brain, 2020)
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        Co-Authors: Vishnu M Bashyam, Guray Erus, Jimit Doshi, Mohamad Habes, Ilya M Nasrallah, Monica Truelove-Hill, Dhivya Srinivasan, Liz Mamourian, <strong>Raymond Pomponio</strong>, Yong Fan, Lenore J Launer, Colin L Masters, Paul Maruff, Chuanjun Zhuo, Henry Völzke, Sterling C Johnson, Jurgen Fripp, Nikolaos Koutsouleris, Theodore D Satterthwaite, Daniel Wolf, Raquel E Gur, Ruben C Gur, John Morris, Marilyn S Albert, Hans J Grabe, Susan Resnick, R Nick Bryan, David A Wolk, Haochang Shou, Christos Davatzikos. <br>
+        <br>
+        DOI: <a href="https://doi.org/10.1093/brain/awaa160">Click to read article</a>.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header anchored" id="headingFour">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+        The Brain Chart of Aging: Machine-learning analytics reveals links between brain aging, white matter disease, amyloid burden, and cognition in the iSTAGING consortium of 10,216 harmonized MR scans (Alzheimer's &amp; Dementia, 2020)
+      </button>
+    </h2>
+    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        Co-Authors: Mohamad Habes, <strong>Raymond Pomponio</strong>, Haochang Shou, Jimit Doshi, Elizabeth Mamourian, Guray Erus, Ilya Nasrallah, Lenore J Launer, Tanweer Rashid, Murat Bilgel, Yong Fan, Jon B Toledo, Kristine Yaffe, Aristeidis Sotiras, Dhivya Srinivasan, Mark Espeland, Colin Masters, Paul Maruff, Jurgen Fripp, Henry Völzk, Sterling C Johnson, John C Morris, Marilyn S Albert, Michael I Miller, R Nick Bryan, Hans J Grabe, Susan M Resnick, David A Wolk, Christos Davatzikos, iSTAGING consortium, the Preclinical AD consortium, the ADNI, and the CARDIA studies. <br>
+        <br>
+        DOI: <a href="https://doi.org/10.1002/alz.12178">Click to read article</a>.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header anchored" id="headingFive">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+        Association of Intensive vs Standard Blood Pressure Control With Magnetic Resonance Imaging Biomarkers of Alzheimer Disease: Secondary Analysis of the SPRINT MIND Randomized Trial (JAMA Neurology, 2021)
+      </button>
+    </h2>
+    <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        Co-Authors: Ilya M Nasrallah, Sarah A Gaussoin, <strong>Raymond Pomponio</strong>, Sudipto Dolui, Guray Erus, Clinton B Wright, Lenore J Launer, John A Detre, David A Wolk, Christos Davatzikos, Jeff D Williamson, Nicholas M Pajewski, R Nick Bryan, Paul Whelton, Karen C Johnson, Joni Snyder, Diane Bild, Denise Bonds, Nakela Cook, Jeffrey Cutler, Lawrence Fine, Peter Kaufmann, Paul Kimmel, Lenore Launer, Claudia Moy, William Riley, Laurie Ryan, Eser Tolunay, Song Yang, David Reboussin, Walter T Ambrosius, William Applegate, Greg Evans, Capri Foy, Barry I Freedman, Dalane Kitzman, Mary Lyles, Steve Rapp, Scott Rushing, Neel Shah, Kaycee M Sink, Mara Vitolins, Lynne Wagenknecht, Valerie Wilson, Letitia Perdue, Nancy Woolard, Tim Craven, Katelyn Garcia, Sarah Gaussoin, Laura Lovato, Jill Newman, James Lovato, Lingyi Lu, Chris McLouth, Greg Russell, Bobby Amoroso, Patty Davis, Jason Griffin, Darrin Harris, Mark King, Kathy Lane, Wes Roberson, Debbie Steinberg, Donna Ashford, Phyllis Babcock, Dana Chamberlain, Vickie Christensen, Loretta Cloud, Christy Collins, Delilah Cook, Katherine Currie, Debbie Felton, Stacy Harpe, Marjorie Howard, Michelle Lewis, Pamela Nance, Nicole Puccinelli-Ortega, Laurie Russell, Jennifer Walker, Brenda Craven, Candace Goode, Margie Troxler, Janet Davis, Sarah Hutchens, Anthony A Killeen, Anna M Lukkari, Robert Ringer, Brandi Dillard, Norbert Archibeque, Stuart Warren, Mike Sather, James Pontzer, Zach Taylor, Elsayed Z Soliman, Zhu-Ming Zhang, Yabing Li, Chuck Campbell, Susan Hensley, Julie Hu, Lisa Keasler, Mary Barr, Tonya Taylor, Ilya Nasrallah, Lisa Desiderio, Mark Elliott, Ari Borthakur, Harsha Battapady, Alex Smith, Ze Wang, Jimit Doshi, Jackson T Wright Jr, Mahboob Rahman, Alan J Lerner, Carolyn H Still, Alan Wiggers, Sara Zamanian, Alberta Bee, Renee Dancie, George Thomas, Martin Schreiber Jr, Sankar Dass Navaneethan, John Hickner, Michael Lioudis, Michelle Lard, Susan Marczewski, Jennifer Maraschky, Martha Colman, Andrea Aaby, Stacey Payne, Melanie Ramos, Carol Horner, Paul E Drawz, Pratibha P Raghavendra, Scott Ober, Ronda Mourad, Muralidhar Pallaki, Peter Russo, Paul Fantauzzo, Lisa Tucker, Bill Schwing, John R Sedor, Edward J Horwitz, Jeffrey R Schellling, John F O’Toole, Lisa Humbert, Wendy Tutolo, Suzanne White, Alishea Gay, Walter Clark Jr, Robin Hughes. <br>
+        <br>
+        DOI: <a href="https://doi.org/10.1001/jamaneurol.2021.0178">Click to read article</a>.
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+</section>
+<section id="theme-2-clinical-research" class="level2">
+<h2 class="anchored" data-anchor-id="theme-2-clinical-research">Theme 2: Clinical Research</h2>
+<section id="pulmonary-and-critical-care-research" class="level3">
+<h3 class="anchored" data-anchor-id="pulmonary-and-critical-care-research">Pulmonary and Critical Care Research</h3>
+<p>In 2021, under Dr.&nbsp;Ryan Peterson, I joined the Colorado School of Public Health’s <a href="https://medschool.cuanschutz.edu/pulmonary/research/ptrac">PTraC</a> Group, which specializes in translational research services for the Division of Pulmonary and Critical Care Medicine at Colorado. I was fortunate to work with excellent clinical collaborators at PTraC, including several specialists in lung transplant, severe asthma, and pulmonary hypertension. My work was characterized by generalist applications of regression models to observational data. Data types were highly heterogeneous and included electronic health records, insurance claims, and a national registry. Among the most common methods I used were survival analysis and longitudinal modeling, two popular frameworks for fitting regressions to biomedical datasets. While at PTraC, I was selected to present a lightning talk on my work at the 2022 <a href="https://ww2.amstat.org/meetings/sdss/2022/onlineprogram/AbstractDetails.cfm?AbstractID=310166">Symposium on Statistics and Data Science</a> in Pittsburgh.</p>
+</section>
+<section id="published-and-accepted-papers" class="level3">
+<h3 class="anchored">Published and Accepted Papers</h3>
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header anchored" id="headingOne" data-anchor-id="published-and-accepted-papers">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2One" aria-expanded="false" aria-controls="collapse2One">
+        Impact of the COVID‐19 pandemic on chronic disease management and patient reported outcomes in patients with pulmonary hypertension: The Pulmonary Hypertension Association Registry (Pulmonary Circulation 2023)
+      </button>
+    </h2>
+    <div id="collapse2One" class="accordion-collapse collapse" aria-labelledby="heading2One" data-bs-parent="#accordionExample" style="">
+      <div class="accordion-body">
+        Co-Authors: Megan Mayer, David B Badesch, Kelly H Nielsen, Steven Kawut, Todd Bull, John J Ryan, Jeffrey Sager, Sula Mazimba, Anna Hemnes, James Klinger, James Runo, John W McConnell, Teresa De Marco, Murali M Chakinala, Delphine Yung, Jean Elwing, Adolfo Kaplan, Rahul Argula, <strong>Raymond Pomponio</strong>, Ryan Peterson, Peter Hountras. <br>
+        <br>
+        DOI: <a href="https://doi.org/10.1002/pul2.12233">Click to read article</a>.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header anchored" id="headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2Two" aria-expanded="false" aria-controls="collapse2Two">
+        Prevalence of Alcohol Use Characterized by Phosphatidylethanol in Patients with Respiratory Failure Before and During the COVID-19 Pandemic (CHEST Critical Care, 2024)
+      </button>
+    </h2>
+    <div id="collapse2Two" class="accordion-collapse collapse" aria-labelledby="heading2Two" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>Note:</strong> This article has been accepted but is not yet published.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header anchored" id="headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2Three" aria-expanded="false" aria-controls="collapse2Three">
+        Extraneous Load, Patient Census, and Patient Acuity Correlate with Cognitive Load during Intensive Care Unit Rounds (CHEST, 2024)
+      </button>
+    </h2>
+    <div id="collapse2Three" class="accordion-collapse collapse" aria-labelledby="heading2Three" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>Note:</strong> This article has been accepted but is not yet published.
+      </div>
+    </div>
+  </div>
+</div></section>
+</section>
+<section id="theme-3-missing-data" class="level2">
+<h2 class="anchored" data-anchor-id="theme-3-missing-data">Theme 3: Missing Data</h2>
+<p>The last theme of my research deals with missing data. Missing data are common yet complicated by enormous heterogeneity; missing data can arise at various stages within a study, and they present so many challenges that practitioners often ignore missing data altogether. In my work at Colorado, I encountered missing data in observational studies usually due to participant dropout or morbidity. When working with this kind of missing data, I typically used multiple imputation by chained equations<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> to replace missing values with values that would be realistic given the remaining data. This technique works well under certain assumptions and is well-implemented in<code>R</code> by the <a href="https://github.com/amices/mice">mice</a> package.</p>
+<p>However, another kind of missing data can arise in studies investigating pre-post differences that fail to collect unique identifiers for each participant. For my master’s thesis, I analyzed techniques to handle this particular case of statistical inference, which we refer to as ‘partially matched’ data. My work on this subject is currently under review, but the pre-print is below, co-authored by my thesis committee:</p>
+<ul>
+<li><a href="https://petersonr.github.io">Dr.&nbsp;Ryan A. Peterson</a>, Assistant Professor of Biostatistics and Informatics at the Colorado School of Public Health</li>
+<li><a href="https://www.baileyfosdick.com">Dr.&nbsp;Bailey K. Fosdick</a>, Associate Professor in the Department of Biostatistics and Informatics in the Colorado School of Public Health</li>
+<li><a href="http://juliawrobel.com">Dr.&nbsp;Julia Wrobel</a>, Assistant Professor of Biostatistics at Emory University</li>
+</ul>
+<section id="preprint-papers" class="level3">
+<h3 class="anchored">Preprint Papers</h3>
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header anchored" id="headingOne" data-anchor-id="preprint-papers">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3One" aria-expanded="false" aria-controls="collapse3One">
+        Mistaken identities lead to missed opportunities: Testing for mean differences in partially matched data (Under Review)
+      </button>
+    </h2>
+    <div id="collapse3One" class="accordion-collapse collapse" aria-labelledby="heading3One" data-bs-parent="#accordionExample" style="">
+      <div class="accordion-body">
+        Co-Authors: <strong>Raymond Pomponio</strong>, Bailey K. Fosdick, Julia Wrobel, Ryan A. Peterson. <br>
+        <br>
+        DOI: <a href="https://doi.org/10.48550/arXiv.2312.14689">Click to read preprint</a>.
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+</section>
+<section id="conclusions-and-next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions-and-next-steps">Conclusions and Next Steps</h2>
+<p>Looking back at the past five years, it’s clear I’ve primarily worked on academic research projects with investigations into biomedical diseases and health interventions. Broadly, I’ve developed an expertise as a biostatistician and data scientist in medical research contexts.</p>
+<p>If I were to speculate on the direction of the next five years, I would predict much of the same kinds of work, but with expansions into new contexts such as business and sports analytics. These areas excite me with an opportunity to integrate my undergraduate business experience with cutting edge data science skills. I’ve begun to work in these areas as an independent consultant through <a href="https://www.upwork.com/freelancers/~01bb85ee6f09078536">Upwork</a>, and I hope that I can continue to find clients who value my insight on diverse and wide-ranging projects.</p>
+<p>Lastly, I look forward to beginning as a data scientist at <a href="https://www.sygnamap.com">SygnaMap</a>, a bio-tech startup based in San Antonio. At SygnaMap I will be helping to develop novel biomarkers using metabolomic profiles, which will draw on many of my past experiences in the themes above to deal with computational complexity, clinical utility, and challenges arising from missing data.</p>
 
 
+</section>
+</section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>W.E. Johnson, C. Li, A. Rabinovic. Adjusting batch effects in mircoarray expression data using empirical Bayes methods. <em>Biostatistics</em>, 8 (2007), pp.&nbsp;118-127. <a href="https://doi.org/10.1093/biostatistics/kxj037" class="uri">https://doi.org/10.1093/biostatistics/kxj037</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Azur, M.J., Stuart, E.A., Frangakis, C. and Leaf, P.J. (2011), Multiple imputation by chained equations: what is it and how does it work?. <em>Int. J. Methods Psychiatr. Res.</em>, 20: 40-49. <a href="https://doi.org/10.1002/mpr.329" class="uri">https://doi.org/10.1002/mpr.329</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
