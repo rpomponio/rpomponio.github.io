@@ -1,19 +1,26 @@
 ---
 title: "About"
+subtitle: "Ray Pomponio"
 image: profile.jpg
 about:
   template: jolla
   links:
-    - icon: person-fill-up
-      text: Upwork
-      href: https://www.upwork.com/freelancers/~01bb85ee6f09078536
     - icon: google
       text: Google Scholar
       href: https://scholar.google.com/citations?user=TxEcZMMAAAAJ&hl=en
     - icon: github
       text: Github
       href: https://github.com/rpomponio
-
+    - icon: linkedin
+      text: LinkedIn
+      href: www.linkedin.com/in/ray-pomponio-7229302a5
+    - icon: person-fill-up
+      text: Upwork
+      href: https://www.upwork.com/freelancers/~01bb85ee6f09078536
 ---
 
-About this blog
+Ray's expertise is in longitudinal data analysis and advanced statistical computing using `R` and `python`. He received a Master's in Biostatistics at the **University of Colorado** (Denver, CO) and Bachelor's in Economics, *magna cum laude*, from the **University of Pennsylvania - Wharton** (Philadelphia, PA).
+
+His past experience includes data science work in marketing analytics, sports, medical imaging, and critical care medicine. He is originally from **Philadelphia, PA**, and currently lives in Shadyside (a neighborhood in **Pittsburgh, PA**).
+
+Please reach out using any of the links below, or reach me at raymond.pomponio (at) outlook.com.

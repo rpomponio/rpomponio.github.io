@@ -1,5 +1,6 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "rpomponio.github.io"
@@ -9,7 +10,7 @@ website:
       - adventure.qmd
       - icon: github
         href: https://github.com/rpomponio
-      - icon: google
+      - icon: linkedin
         href: https://scholar.google.com/citations?user=TxEcZMMAAAAJ&hl=en
 format:
   html:

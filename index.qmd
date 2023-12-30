@@ -1,5 +1,5 @@
 ---
-title: "Ray's Blog"
+title: "Ray Pomponio"
 listing:
   contents: posts
   sort: "date desc"
