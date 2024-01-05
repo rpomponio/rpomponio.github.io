@@ -1,0 +1,16 @@
+---
+title: "ECommerce Transactions to Lifetime Value Modeling"
+author: "Ray Pomponio"
+date: "2024-01-05"
+categories: [news, code, analysis]
+draft: true
+---
+
+# Outline
+
+*Focus on managerial decision making.*
+
+* [ ] Explain the transaction log, synthetic data generation
+* [ ] How to go from transaction log to customer lifetime value?
+* [ ] What to do with CLV? Examine trends by product line
+* [ ] How to enable better decisions with CLV metrics?
