@@ -2,8 +2,10 @@
 title: "A Summary of My Research in Stats and Medicine"
 author: "Ray Pomponio"
 date: "2023-12-30"
-categories: [news]
+categories: [personal, reflections]
 ---
+
+### Introduction
 
 In this post, I review progress in my research so far, and distill my work into three themes spanning topics in biomedical sciences and applied statistics.
 
@@ -17,7 +19,7 @@ As we're nearing the end of the calendar year, I found it a good opportunity to 
 
 ### Computational Neuroimaging and Related Challenges
 
-In 2018, I began working at [CBICA](https://www.med.upenn.edu/cbica/), a computational neuroimaging lab at the University of Pennsylvania, led by Dr. Christos Davatzikos. At CBICA, I developed an early expertise in statistical image analysis, particularly in normalizing imaging-derived features over multiple scanners and diverse geographic sites. In the imaging literature, this is referred to as [harmonization](https://www.sciencedirect.com/science/article/pii/S1053811922006851#:~:text=Harmonization%20is%20typically%20performed%20to,downstream%20application%20performance%20during%20harmonization.), and there are a growing number of techniques available to implement harmonization. My most significant contribution was in developing a tool that adapted the popular ComBat[^1] algorithm to lifespan datasets encompassing broad age ranges, with potentially complex age trends in brain volumetry. Today, that tool is available on [GitHub](https://github.com/rpomponio/neuroHarmonize) as a `python` package, and it is used by neuroimaging researchers to handle common harmonization tasks like removing site effects in regional brain volumes data.
+In 2018, I began working at [CBICA](https://www.med.upenn.edu/cbica/), a computational neuroimaging lab at the University of Pennsylvania, led by Dr. Christos Davatzikos. At CBICA, I developed an early interest in statistical image analysis, particularly in normalizing imaging-derived features over multiple scanners and diverse geographic sites. In the imaging literature, this is referred to as [harmonization](https://www.sciencedirect.com/science/article/pii/S1053811922006851#:~:text=Harmonization%20is%20typically%20performed%20to,downstream%20application%20performance%20during%20harmonization.), and there are a growing number of techniques available to implement harmonization. My most significant contribution was in developing a tool that adapts the popular ComBat[^1] algorithm to lifespan datasets encompassing broad age ranges, with potentially complex age trends in brain volumetry. Today, that tool is available on [GitHub](https://github.com/rpomponio/neuroHarmonize) as a `python` package, and it is used by neuroimaging researchers to handle common harmonization tasks like removing site effects in regional brain volumes data.
 
 In addition to my work on harmonization, I assisted with image analysis in several other projects that resulted in peer-reviewed publications from the following first authors:
 
@@ -109,7 +111,7 @@ In addition to my work on harmonization, I assisted with image analysis in sever
 
 ### Pulmonary and Critical Care Collaborations
 
-In 2021, under Dr. Ryan Peterson, I joined Colorado School of Public Health's [PTraC](https://medschool.cuanschutz.edu/pulmonary/research/ptrac) Team, which specializes in statistical research services for the Division of Pulmonary and Critical Care Medicine at Colorado. I was fortunate to work with excellent clinical collaborators at PTraC, including several specialists in lung transplant, severe asthma, and pulmonary hypertension. My work was characterized by generalist applications of regression models to observational data. Data types were highly heterogeneous and included electronic health records, insurance claims, and a national disease registry. Among the more common methods I used were survival analysis and longitudinal modeling, two popular frameworks for fitting regressions to biomedical datasets. While at PTraC, I was selected to present a lightning talk on my work at the 2022 [Symposium on Statistics and Data Science](https://ww2.amstat.org/meetings/sdss/2022/onlineprogram/AbstractDetails.cfm?AbstractID=310166) in Pittsburgh.
+In 2021, under Dr. Ryan Peterson, I joined Colorado School of Public Health's [PTraC](https://medschool.cuanschutz.edu/pulmonary/research/ptrac) Team, which specializes in statistical research services for the Division of Pulmonary and Critical Care Medicine at Colorado. I was fortunate to work with excellent clinical collaborators at PTraC, including specialists in lung transplant, severe asthma, and pulmonary hypertension. My work was characterized by general applications of regression models to observational data, meaning data were collected by recording clinical events (as opposed to data collected from controlled experiments). Data types were highly heterogeneous and included electronic health records, insurance claims, and a national disease registry. Among the more common methods I used were survival analysis and longitudinal modeling, two popular frameworks for fitting regressions to biomedical datasets. While at PTraC, I was selected to present a lightning talk on my work at the 2022 [Symposium on Statistics and Data Science](https://ww2.amstat.org/meetings/sdss/2022/onlineprogram/AbstractDetails.cfm?AbstractID=310166) in Pittsburgh.
 
 ### Published and Accepted Papers
 
@@ -158,9 +160,11 @@ In 2021, under Dr. Ryan Peterson, I joined Colorado School of Public Health's [P
 
 ## Theme 3: Missing Data Methods
 
-The last theme of my research deals with missing data. Missing data are common yet complicated by enormous heterogeneity; missing data can arise at various stages within a study, and they present so many challenges that practitioners often ignore missing data altogether. In my work at Colorado, I encountered missing data in observational studies due to participant dropout or early mortality. When working with this kind of missing data, I often used multiple imputation by chained equations[^2] to replace missing observations with values that would be realistic given the remaining data. This technique works well when certain assumptions are met and is conveniently implemented in`R` by the [mice](https://github.com/amices/mice) package.
+![Figure from Pomponio et al. (2023): Diagram illustrating matched data, partially matched data, and unmatched data scenarios.](diagram.png){width=95%}
 
-However, another kind of missing data can arise in studies investigating pre-post differences that fail to collect unique identifiers for each participant. For my master's thesis at Colorado, I analyzed techniques to handle this particular case of paired inference, which we refer to as 'partially matched' data. My work on this subject is currently under review, but the pre-print is below, co-authored by my thesis committee:
+The last theme of my research deals with missing data. Missing data are common yet complicated by enormous heterogeneity; missing data can arise at various stages within a study, and they present so many challenges that practitioners often ignore missing data altogether. In my time at Colorado, I encountered missing data in observational studies due to participant dropout or early mortality. When working with this kind of missing data, I often used multiple imputation by chained equations[^2] to replace missing observations with values that would be realistic given the remaining data. This technique works well when certain assumptions are met and is conveniently implemented in`R` by the [mice](https://github.com/amices/mice) package.
+
+However, another kind of missing data can arise in studies investigating pre-post differences that fail to collect unique identifiers for each participant. For my master's thesis at Colorado, I analyzed techniques to handle this particular case of paired inference, which we refer to as 'partially matched' data. My work on this subject is currently under review, but the pre-print is linked below, co-authored by the following members of my thesis committee:
 
 * [Dr. Ryan A. Peterson](https://petersonr.github.io), Assistant Professor of Biostatistics and Informatics at the Colorado School of Public Health
 * [Dr. Bailey K. Fosdick](https://www.baileyfosdick.com), Associate Professor in the Department of Biostatistics and Informatics in the Colorado School of Public Health
@@ -192,9 +196,9 @@ However, another kind of missing data can arise in studies investigating pre-pos
 
 ## Conclusions and Next Steps
 
-Looking back at the past five years, it's clear that I've primarily worked on academic research projects focusing on biomedical diseases and potential health interventions. Broadly, I've developed an expertise as a biostatistician and data scientist in many medical research contexts.
+Looking back at the past five years, it's clear that I've primarily worked on academic research projects focusing on biomedical diseases and health interventions. Broadly, I've developed an expertise as a biostatistician and data scientist in the medical research context.
 
-If I am to speculate on the direction of the next five years, I would predict much of the same kind of work, but with expansions into new contexts such as business and sports analytics. These areas excite me by presenting an opportunity to integrate my undergraduate business experience with cutting-edge data science methods. I've begun to work a little in these areas as an independent consultant through [Upwork](https://www.upwork.com/freelancers/~01bb85ee6f09078536), and I hope that I can continue to find clients valuing my insight on diverse and wide-ranging projects.
+If I am to speculate on the direction of the next five years, I would predict much of the same kind of work, but with expansions into new contexts such as business and sports analytics. These areas excite me by presenting an opportunity to integrate my undergraduate business experience with cutting-edge data science methods. I've begun to work a little in these areas as an independent consultant through Upwork (a freelancing platform), and I hope that I can continue to find work with clients who value my insight in diverse and wide-ranging projects.
 
-In 2024, I look forward to beginning a new position as a data scientist at [SygnaMap](https://www.sygnamap.com), a bio-tech startup based in San Antonio. At SygnaMap I will be helping to develop novel biomarkers using metabolomic profiles, which will draw on many of my past experiences including computational complexity, clinical utility, and challenges arising from missing data.
+In 2024, I look forward to beginning a new position as a data scientist at [SygnaMap](https://www.sygnamap.com), a bio-tech startup based in San Antonio. At SygnaMap I will be helping to develop novel biomarkers using metabolomic profiles, which will draw on many of my past experiences including the three themes of computational complexity, clinical utility, and challenges arising from missing data.
 
