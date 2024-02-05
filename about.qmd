@@ -1,10 +1,13 @@
 ---
-title: "About Me"
+title: "About"
 subtitle: "Ray Pomponio, MS"
 image: profile.jpg
 about:
   template: jolla
   links:
+    - icon: file-font
+      text: Current CV
+      href: https://drive.google.com/file/d/1XoGeGJnlmwvz46lImtNQmXJ4vMeSfkgl/view?usp=sharing
     - icon: google
       text: Google Scholar
       href: https://scholar.google.com/citations?user=TxEcZMMAAAAJ&hl=en
@@ -19,8 +22,8 @@ about:
       href: https://www.upwork.com/freelancers/~01bb85ee6f09078536
 ---
 
-Ray's expertise is in longitudinal data analysis and advanced statistical computing using `R` and `python`. He completed a Master's in Biostatistics at the **University of Colorado** (Denver, CO) and Bachelor's in Economics, *magna cum laude*, from the **University of Pennsylvania - Wharton** (Philadelphia, PA).
+Ray's expertise is in longitudinal data analysis and advanced statistical computing using `R` and `python`. He completed a Master's in Biostatistics at the **University of Colorado** (Denver, CO) and Bachelor's in Economics from the **University of Pennsylvania - Wharton** (Philadelphia, PA).
 
-His past experience includes data science work in marketing analytics, sports, medical imaging, and critical care medicine. He is originally from **Philadelphia, PA**, and currently lives in Shadyside (a neighborhood in **Pittsburgh, PA**).
+His past experience includes data science work in marketing analytics, sportsbetting, medical imaging, and critical care medicine. He is originally from **Philadelphia, PA**, and currently lives in Shadyside (a neighborhood in **Pittsburgh, PA**).
 
 Please reach out using any of the links below, or reach out via email at: raymond.pomponio (at) outlook.com.

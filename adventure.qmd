@@ -1,11 +1,11 @@
 ---
-title: "Trip Reports"
+title: "Adventures"
 image: climbing.jpg
 ---
 
 ![Ray climbing at one of his favorite granite crags in Boulder Canyon, Colorado.](climbing.jpg)
 
-Outside of my work as a data scientist and applied statistician, I'm an avid rock climber and mountaineer. I've compiled a list of some of my best trip reports, which I aim to revise and publish on [SummitPost](https://www.summitpost.org/). 
+Outside of my work as a data scientist and statistician, I'm an avid rock climber and aspiring mountaineer. I've compiled a list of some of my best trip reports, which I aim to revise and publish on [SummitPost](https://www.summitpost.org/). 
 
 ```{=html}
 <div class="list-group">
