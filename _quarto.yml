@@ -8,7 +8,7 @@ website:
     right:
       - about.qmd
       - adventure.qmd
-      - icon: file-font
+      - text: resume
         href: https://drive.google.com/file/d/1XoGeGJnlmwvz46lImtNQmXJ4vMeSfkgl/view?usp=sharing
       - icon: github
         href: https://github.com/rpomponio

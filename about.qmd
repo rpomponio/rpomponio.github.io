@@ -5,7 +5,7 @@ image: profile.jpg
 about:
   template: jolla
   links:
-    - icon: file-font
+    - icon: cloud-arrow-up-fill
       text: Current CV
       href: https://drive.google.com/file/d/1XoGeGJnlmwvz46lImtNQmXJ4vMeSfkgl/view?usp=sharing
     - icon: google
@@ -17,7 +17,7 @@ about:
     - icon: linkedin
       text: LinkedIn
       href: https://www.linkedin.com/in/ray-pomponio
-    - icon: person-fill-up
+    - icon: briefcase-fill
       text: Upwork
       href: https://www.upwork.com/freelancers/~01bb85ee6f09078536
 ---
