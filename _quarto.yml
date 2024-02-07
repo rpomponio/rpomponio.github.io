@@ -6,10 +6,10 @@ website:
   title: "rpomponio.github.io"
   navbar:
     right:
-      - about.qmd
-      - adventure.qmd
       - text: resume
         href: https://drive.google.com/file/d/1XoGeGJnlmwvz46lImtNQmXJ4vMeSfkgl/view?usp=sharing
+      - about.qmd
+      - adventure.qmd
       - icon: github
         href: https://github.com/rpomponio
       - icon: linkedin
