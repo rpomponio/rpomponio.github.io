@@ -5,7 +5,7 @@ image: climbing.jpg
 
 ![Ray climbing at one of his favorite granite crags in Boulder Canyon, Colorado.](climbing.jpg){width=95%}
 
-Outside of my work as a data scientist and statistician, I'm an avid rock climber and aspiring mountaineer. I've compiled a list of some of my best trip reports below, some of which are unpublished.
+Outside of my work as a data scientist and statistician, I'm an avid rock climber and aspiring mountaineer. I've compiled a list of my best trip reports below, some of which are unpublished.
 
 ## Trip Reports
 
