@@ -3,9 +3,9 @@ title: "Adventures"
 image: climbing.jpg
 ---
 
-![Ray climbing at one of his favorite granite crags in Boulder Canyon, Colorado.](climbing.jpg){width=95%}
+![Ray climbing at one of his favorite granite crags in Boulder Canyon, Colorado.](climbing.jpg){width=80%}
 
-Outside of my work as a data scientist and statistician, I'm an avid rock climber and aspiring mountaineer. I've compiled a list of my best trip reports below, some of which are unpublished.
+Outside of my work as a data scientist and statistician, I'm an avid rock & alpine climber. I've climbed in **12 US states** as well as Mexico, totaling over **1,000 pitches** since I began outdoor climbing in 2019. Below, I've compiled a list of my best trip reports below, some of which are unpublished.
 
 ## Trip Reports
 
