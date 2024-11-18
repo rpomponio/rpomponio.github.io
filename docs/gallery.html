@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fall in West Virginia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f7f7f7;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 20px;
+        }
+        .gallery-item {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            font-size: 18px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover .caption {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="gallery">
+        <div class="gallery-item">
+            <a href="gallery/pages/image1.html">
+                <img src="gallery/images/IMG_1774.JPG" alt="Image 1">
+                <div class="caption">Above Endless Wall, late October</div>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <a href="gallery/pages/image2.html">
+                <img src="gallery/images/IMG_1793.JPG" alt="Image 2">
+                <div class="caption">Summersville Lake, early morning</div>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <a href="gallery/pages/image2.html">
+                <img src="gallery/images/IMG_1742.JPG" alt="Image 3">
+                <div class="caption">The New River Gorge Bridge</div>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <a href="gallery/pages/image4.html">
+                <img src="gallery/images/IMG_1710.JPG" alt="Image 4">
+                <div class="caption">The Idol Point Arete (Endless Wall)</div>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <a href="gallery/pages/image5.html">
+                <img src="gallery/images/IMG_1811.JPG" alt="Image 5">
+                <div class="caption">Fantasy Rappel, November morning</div>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <a href="gallery/pages/image6.html">
+                <img src="gallery/images/IMG_1698.JPG" alt="Image 6">
+                <div class="caption">Climber on 'Exoduster', Party Buttress</div>
+            </a>
+        </div>
+        <!-- Add more images as needed -->
+    </div>
+</body>
+</html>

@@ -1,6 +1,9 @@
 project:
   type: website
   output-dir: docs
+  resources: 
+    - "gallery/pages/*"
+    - "gallery/images/*"
 
 website:
   title: "rpomponio.github.io"
