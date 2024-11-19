@@ -7,7 +7,7 @@ about:
   links:
     - icon: cloud-arrow-down-fill
       text: Current CV
-      href: https://drive.google.com/file/d/1XoGeGJnlmwvz46lImtNQmXJ4vMeSfkgl/view?usp=sharing
+      href: RAY-POMPONIO_cv.pdf
     - icon: google
       text: Publications
       href: https://scholar.google.com/citations?user=TxEcZMMAAAAJ&hl=en
