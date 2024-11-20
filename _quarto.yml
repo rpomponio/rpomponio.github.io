@@ -2,9 +2,9 @@ project:
   type: website
   output-dir: docs
   resources: 
-    - "gallery/pages/*"
-    - "gallery/images/*"
-    - "cv.pdf"
+    - "wv-24-gallery/pages/*"
+    - "wv-24-gallery/images/*"
+    - "RAY-POMPONIO_cv.pdf"
 
 website:
   title: "rpomponio.github.io"

@@ -90,5 +90,5 @@ Outside of my job as a data scientist, I am an avid rock & alpine climber. I've 
 I am beginning to share some of my photos from rock climbing adventures.
 
 ```{=html}
-<a href="/gallery.html"</a>West Virginia, Fall 2024</a>
+<a href="/wv-24-gallery.html"</a>Fall in West Virginia, 2024</a>
 ```

@@ -1,10 +1,24 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
+    "objectID": "adventure.html",
+    "href": "adventure.html",
+    "title": "Adventures",
     "section": "",
-    "text": "Ray Pomponio is a statistician with a specialty in biomedical applications. His expertise is in longitudinal data analysis and advanced statistical computing using R and python. He received his Master’s in Biostatistics from the University of Colorado (Denver, CO) and his Bachelor’s in Economics from the University of Pennsylvania - Wharton (Philadelphia, PA). He currently lives in Shadyside (a neighborhood in Pittsburgh, PA).\nHis work has been published in a variety of clinical and scientific journals including Brain, Alzheimer’s and Dementia, NeuroImage, Pulmonary Circulation, and CHEST Critical Care.\nPlease reach out using any of the links below, or via email: raymond.pomponio (at) outlook.com."
+    "text": "Outside of my job as a data scientist, I am an avid rock & alpine climber. I’ve climbed in 12 US states as well as in Mexico, tallying over 1,000 pitches since I began outdoor climbing. Below, I’ve compiled a list of my best trip reports below, some of which are unpublished.\n\n  \n  \n    \n    \n  \n  \n  \n  \n    \n    A day-long adventure in Colorado's most famous national park. We encountered a steep snow field on our approach to the Sharkstooth Ridge.\n    \n  \n  \n    Partner: Jason K.\n    Route: Northeast Ridge (5.6, II)\n  \n  \n    Link to Full Trip Report\n  \n  \n    Published 02/08/2024\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    My first real mountaineering trip, in which I climbed the Grand Teton using a classic rock climbing route to the summit.\n    \n  \n  \n    Partner: Donnie K.\n    Route: Exum Ridge (5.5, III)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    An outing with the Explorer's Club of Pittsburgh. We hiked through the night to reach our rock climbing objective at Seneca Rocks, WV. We summitted and bivied atop the rocks.\n    \n  \n  \n    Partners: Evren G., Dan K.\n    Route: Old Man's (5.3)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished"
+  },
+  {
+    "objectID": "adventure.html#trip-reports",
+    "href": "adventure.html#trip-reports",
+    "title": "Adventures",
+    "section": "",
+    "text": "Outside of my job as a data scientist, I am an avid rock & alpine climber. I’ve climbed in 12 US states as well as in Mexico, tallying over 1,000 pitches since I began outdoor climbing. Below, I’ve compiled a list of my best trip reports below, some of which are unpublished.\n\n  \n  \n    \n    \n  \n  \n  \n  \n    \n    A day-long adventure in Colorado's most famous national park. We encountered a steep snow field on our approach to the Sharkstooth Ridge.\n    \n  \n  \n    Partner: Jason K.\n    Route: Northeast Ridge (5.6, II)\n  \n  \n    Link to Full Trip Report\n  \n  \n    Published 02/08/2024\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    My first real mountaineering trip, in which I climbed the Grand Teton using a classic rock climbing route to the summit.\n    \n  \n  \n    Partner: Donnie K.\n    Route: Exum Ridge (5.5, III)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    An outing with the Explorer's Club of Pittsburgh. We hiked through the night to reach our rock climbing objective at Seneca Rocks, WV. We summitted and bivied atop the rocks.\n    \n  \n  \n    Partners: Evren G., Dan K.\n    Route: Old Man's (5.3)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished"
+  },
+  {
+    "objectID": "adventure.html#photography",
+    "href": "adventure.html#photography",
+    "title": "Adventures",
+    "section": "Photography",
+    "text": "Photography\nI am beginning to share some of my photos from rock climbing adventures.\nFall in West Virginia, 2024"
   },
   {
     "objectID": "index.html",
@@ -54,20 +68,6 @@
     "title": "A Summary of My Research in Stats and Medicine",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nW.E. Johnson, C. Li, A. Rabinovic. Adjusting batch effects in mircoarray expression data using empirical Bayes methods. Biostatistics, 8 (2007), pp. 118-127. https://doi.org/10.1093/biostatistics/kxj037.↩︎\nAzur, M.J., Stuart, E.A., Frangakis, C. and Leaf, P.J. (2011), Multiple imputation by chained equations: what is it and how does it work?. Int. J. Methods Psychiatr. Res., 20: 40-49. https://doi.org/10.1002/mpr.329.↩︎"
-  },
-  {
-    "objectID": "adventure.html",
-    "href": "adventure.html",
-    "title": "Adventures",
-    "section": "",
-    "text": "Outside of my job as a data scientist, I am an avid rock & alpine climber. I’ve climbed in 12 US states as well as in Mexico, tallying over 1,000 pitches since I began outdoor climbing. Below, I’ve compiled a list of my best trip reports below, some of which are unpublished.\n\n  \n  \n    \n    \n  \n  \n  \n  \n    \n    A day-long adventure in Colorado's most famous national park. We encountered a steep snow field on our approach to the Sharkstooth Ridge.\n    \n  \n  \n    Partner: Jason K.\n    Route: Northeast Ridge (5.6, II)\n  \n  \n    Link to Full Trip Report\n  \n  \n    Published 02/08/2024\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    My first real mountaineering trip, in which I climbed the Grand Teton using a classic rock climbing route to the summit.\n    \n  \n  \n    Partner: Donnie K.\n    Route: Exum Ridge (5.5, III)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    An outing with the Explorer's Club of Pittsburgh. We hiked through the night to reach our rock climbing objective at Seneca Rocks, WV. We summitted and bivied atop the rocks.\n    \n  \n  \n    Partners: Evren G., Dan K.\n    Route: Old Man's (5.3)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished"
-  },
-  {
-    "objectID": "adventure.html#trip-reports",
-    "href": "adventure.html#trip-reports",
-    "title": "Adventures",
-    "section": "",
-    "text": "Outside of my job as a data scientist, I am an avid rock & alpine climber. I’ve climbed in 12 US states as well as in Mexico, tallying over 1,000 pitches since I began outdoor climbing. Below, I’ve compiled a list of my best trip reports below, some of which are unpublished.\n\n  \n  \n    \n    \n  \n  \n  \n  \n    \n    A day-long adventure in Colorado's most famous national park. We encountered a steep snow field on our approach to the Sharkstooth Ridge.\n    \n  \n  \n    Partner: Jason K.\n    Route: Northeast Ridge (5.6, II)\n  \n  \n    Link to Full Trip Report\n  \n  \n    Published 02/08/2024\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    My first real mountaineering trip, in which I climbed the Grand Teton using a classic rock climbing route to the summit.\n    \n  \n  \n    Partner: Donnie K.\n    Route: Exum Ridge (5.5, III)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    An outing with the Explorer's Club of Pittsburgh. We hiked through the night to reach our rock climbing objective at Seneca Rocks, WV. We summitted and bivied atop the rocks.\n    \n  \n  \n    Partners: Evren G., Dan K.\n    Route: Old Man's (5.3)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished"
   },
   {
     "objectID": "posts/pitcher-survival/index.html",
@@ -126,10 +126,10 @@
     "text": "Footnotes\n\n\nMicah Melling. “Survival Analysis: How Long Do Careers Last?.” Baseball Data Science. https://www.baseballdatascience.com/survival-analysis-how-long-do-careers-last/↩︎\nPiper Slowinski. “What is WAR?”. FanGraphs. https://library.fangraphs.com/misc/war/↩︎\nWikipedia. Normal Distribution. https://en.wikipedia.org/wiki/Normal_distribution↩︎\nRetrosheet. Play-by-Play Data Files: Post-Season Event Files. https://www.retrosheet.org/game.htm#Post-Season%20Games↩︎\nRetrosheet. The Event File. https://www.retrosheet.org/eventfile.htm↩︎\nJayson Stark. “The book on hooks.” ESPN.com: Baseball. https://www.espn.com/mlb/columns/story?columnist=stark_jayson&id=1798057↩︎\nAlden Woods. “Girardi makes pitching change mid-at-bat.” MLB.com. https://www.mlb.com/news/joe-girardi-makes-pitching-change-mid-at-bat/c-141252666↩︎\nE.L. Kaplan & Paul Meier. “Nonparametric Estimation from Incomplete Observations.” Journal of the American Statistical Association. https://doi.org/10.1080/01621459.1958.10501452↩︎"
   },
   {
-    "objectID": "adventure.html#photography",
-    "href": "adventure.html#photography",
-    "title": "Adventures",
-    "section": "Photography",
-    "text": "Photography\nI am beginning to share some of my photos from rock climbing adventures.\nWest Virginia, Fall 2024"
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Ray Pomponio is a statistician with a specialty in biomedical applications. His expertise is in longitudinal data analysis and advanced statistical computing using R and python. He received his Master’s in Biostatistics from the University of Colorado (Denver, CO) and his Bachelor’s in Economics from the University of Pennsylvania - Wharton (Philadelphia, PA). He currently lives in Shadyside (a neighborhood in Pittsburgh, PA).\nHis work has been published in a variety of clinical and scientific journals including Brain, Alzheimer’s and Dementia, NeuroImage, Pulmonary Circulation, and CHEST Critical Care.\nPlease reach out using any of the links below, or via email: raymond.pomponio (at) outlook.com."
   }
 ]
