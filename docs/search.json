@@ -1,31 +1,10 @@
 [
   {
-    "objectID": "adventure.html",
-    "href": "adventure.html",
-    "title": "Adventures",
-    "section": "",
-    "text": "Outside of my job as a data scientist, I am an avid rock & alpine climber. I’ve climbed in 12 US states as well as in Mexico, tallying over 1,000 pitches since I began outdoor climbing. Below, I’ve compiled a list of my best trip reports below, some of which are unpublished.\n\n  \n  \n    \n    \n  \n  \n  \n  \n    \n    A day-long adventure in Colorado's most famous national park. We encountered a steep snow field on our approach to the Sharkstooth Ridge.\n    \n  \n  \n    Partner: Jason K.\n    Route: Northeast Ridge (5.6, II)\n  \n  \n    Link to Full Trip Report\n  \n  \n    Published 02/08/2024\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    My first real mountaineering trip, in which I climbed the Grand Teton using a classic rock climbing route to the summit.\n    \n  \n  \n    Partner: Donnie K.\n    Route: Exum Ridge (5.5, III)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    An outing with the Explorer's Club of Pittsburgh. We hiked through the night to reach our rock climbing objective at Seneca Rocks, WV. We summitted and bivied atop the rocks.\n    \n  \n  \n    Partners: Evren G., Dan K.\n    Route: Old Man's (5.3)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished"
-  },
-  {
-    "objectID": "adventure.html#trip-reports",
-    "href": "adventure.html#trip-reports",
-    "title": "Adventures",
-    "section": "",
-    "text": "Outside of my job as a data scientist, I am an avid rock & alpine climber. I’ve climbed in 12 US states as well as in Mexico, tallying over 1,000 pitches since I began outdoor climbing. Below, I’ve compiled a list of my best trip reports below, some of which are unpublished.\n\n  \n  \n    \n    \n  \n  \n  \n  \n    \n    A day-long adventure in Colorado's most famous national park. We encountered a steep snow field on our approach to the Sharkstooth Ridge.\n    \n  \n  \n    Partner: Jason K.\n    Route: Northeast Ridge (5.6, II)\n  \n  \n    Link to Full Trip Report\n  \n  \n    Published 02/08/2024\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    My first real mountaineering trip, in which I climbed the Grand Teton using a classic rock climbing route to the summit.\n    \n  \n  \n    Partner: Donnie K.\n    Route: Exum Ridge (5.5, III)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    An outing with the Explorer's Club of Pittsburgh. We hiked through the night to reach our rock climbing objective at Seneca Rocks, WV. We summitted and bivied atop the rocks.\n    \n  \n  \n    Partners: Evren G., Dan K.\n    Route: Old Man's (5.3)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished"
-  },
-  {
-    "objectID": "adventure.html#photography",
-    "href": "adventure.html#photography",
-    "title": "Adventures",
-    "section": "Photography",
-    "text": "Photography\nI am beginning to share some of my photos from rock climbing adventures.\nFall in West Virginia, 2024"
-  },
-  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Ray Pomponio",
     "section": "",
-    "text": "A Summary of My Research in Stats and Medicine\n\n\n\n\n\n\n\npersonal\n\n\nreflections\n\n\n\n\n\n\n\n\n\n\n\nDec 30, 2023\n\n\nRay Pomponio\n\n\n\n\n\n\n  \n\n\n\n\nStarting Pitcher Replacements in the Postseason: Time for survival methods?\n\n\n\n\n\n\n\nanalysis\n\n\nsports\n\n\n\n\n\n\n\n\n\n\n\nDec 18, 2023\n\n\nRay Pomponio\n\n\n\n\n\n\nNo matching items"
+    "text": "A Tool to Visualize Outdoor Climbing Performance\n\n\n\n\n\n\n\nhobbies\n\n\nadventure\n\n\n\n\n\n\n\n\n\n\n\nNov 27, 2024\n\n\nRay Pomponio\n\n\n\n\n\n\n  \n\n\n\n\nA Summary of My Research in Stats and Medicine\n\n\n\n\n\n\n\npersonal\n\n\nreflections\n\n\n\n\n\n\n\n\n\n\n\nDec 30, 2023\n\n\nRay Pomponio\n\n\n\n\n\n\n  \n\n\n\n\nStarting Pitcher Replacements in the Postseason: Time for survival methods?\n\n\n\n\n\n\n\nanalysis\n\n\nsports\n\n\n\n\n\n\n\n\n\n\n\nDec 18, 2023\n\n\nRay Pomponio\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/research-summary/index.html",
@@ -68,6 +47,62 @@
     "title": "A Summary of My Research in Stats and Medicine",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nW.E. Johnson, C. Li, A. Rabinovic. Adjusting batch effects in mircoarray expression data using empirical Bayes methods. Biostatistics, 8 (2007), pp. 118-127. https://doi.org/10.1093/biostatistics/kxj037.↩︎\nAzur, M.J., Stuart, E.A., Frangakis, C. and Leaf, P.J. (2011), Multiple imputation by chained equations: what is it and how does it work?. Int. J. Methods Psychiatr. Res., 20: 40-49. https://doi.org/10.1002/mpr.329.↩︎"
+  },
+  {
+    "objectID": "posts/climbing-pyramids/index.html",
+    "href": "posts/climbing-pyramids/index.html",
+    "title": "A Tool to Visualize Outdoor Climbing Performance",
+    "section": "",
+    "text": "Recently, I’ve been interested in developing ways to assess my own performance as an outdoor rock climber. One classic tool for evaluating a climber’s history on routes is called the ‘pyramid’ (also known as the ‘scorecard’ on other sites). In this post I discuss how I built a simple web app to illustrate my own climbing pyramid as well as that of any other climber who uses MountainProject.com to track their outdoor climbing performance."
+  },
+  {
+    "objectID": "posts/climbing-pyramids/index.html#motivation",
+    "href": "posts/climbing-pyramids/index.html#motivation",
+    "title": "A Tool to Visualize Outdoor Climbing Performance",
+    "section": "Motivation",
+    "text": "Motivation\nI’ve been using Mountain Project meticulously since I began outdoor rock climbing in 2019. On most of my climbing trips, I log ascents in the iPhone app, which syncs with my profile online. This has generally been something I treated as a personal journalling exercise, and I figured I would someday want to look back on my ascents to see how far I’ve come in the sport/adventure of rock climbing.\nRecently, I’ve been focused on physical training to improve my climbing performance outside, and the data that I’ve gathered over the past five years would seem to be an invaluable asset. It turns out that I’m not alone, and many other climbers use the same features on Mountain Project to log their ascents, also known as ‘ticks’ on the site\n\n\n\nThe publicly-available ticks for a route called ‘Scenic Adult’ (5.11c) at the New River Gorge in West Virginia, as of this post (November 2024)\n\n\nThere remains a challenge in leveraging this data, though, which is that metrics of historical climbing performance are not very quantifiable – and those that are quantitative are generally not sophisticated, like Max Redpoint Grade, or Hardest Flash. Those who spend a lot of time in climbing gyms will be familiar with these ideas. In essence, these metrics are akin to asking a runner what their best marathon time is, which can tell you a lot about someone’s running ability. However, it tells you less about how they’ve progressed over time and how they’ve spent their effort to arrive at their current performance level. These questions are more nuanced, and in climbing are arguably more important than just knowing someone’s maximum performance."
+  },
+  {
+    "objectID": "posts/climbing-pyramids/index.html#climbing-pyramids",
+    "href": "posts/climbing-pyramids/index.html#climbing-pyramids",
+    "title": "A Tool to Visualize Outdoor Climbing Performance",
+    "section": "Climbing Pyramids",
+    "text": "Climbing Pyramids\nOne tool that might help climbers address some of the above questions is called the pyramid. The pyrmaid plots the number of successful (and sometimes unsuccessful) ascents of climbs at a particular grade. Without going into too much detail, rock climbs are graded very rigorously1, a little bit like the green/blue/black grading system of ski routes. While being subject to a fair bit of subjectivity, the grade of a rock climb is usually a reliable measure of how difficult that route will be for the average person.\nThe pyramid tool can help visualize how a climber devotes her finite resources (e.g., time) to climbing routes of a particular grade range. It is a snapshot in time of how well-balanced a climber’s performance is, with a ‘top-heavy’ shape suggesting a climber focuses most of his time on difficult routes, and a ‘bottom-heavy’ shape suggesting he should probably try more difficult routes. There’s a lot of insight to be gained by seeing your own pyramid, and to illustrate an example here is my pyramid as of this writing:\n\n\n\nMy climbing pyramid, as of November 2024, with ‘successful’ ascents highlighted in red and failed attempts highlighted in blue.\n\n\nI am no expert but I have an intuition that my climbing pyramid is fairly typical of people at my ability level, with a few unique quirks such as the fact that I’ve spent a lot of time climbing routes at the grade of 5.11a. Additionally, while my max redpoint grade is currently 5.12a, I still have room to reinforce my experience at the grades just below that, namely 5.11c and 5.11d. These are just a few of the takeaways from quickly analyzing my own pyramid."
+  },
+  {
+    "objectID": "posts/climbing-pyramids/index.html#the-web-app",
+    "href": "posts/climbing-pyramids/index.html#the-web-app",
+    "title": "A Tool to Visualize Outdoor Climbing Performance",
+    "section": "The Web App",
+    "text": "The Web App\nUsing the very handy Shiny2 package for R, I developed a web application called the ‘Tick Pyramid Tool’ (subject to name change), which enables Mountain Project users to easily visualize their own climbing pyramids, just as I showed above. I also added the ability to view your progression over time, which simply tracks how your max grade has increased (hopefully by a lot!) since you started climbing.\n\n\n\nScreenshot of the current web app, which is hosted by Shiny Apps at rpomponio.shinyapps.io/climbing_viz_app\n\n\nThis is an active work-in-progress and I plan to add more features to the web app as I solicit feedback from other climbers. However, I figured it is worth highlighting some of the key features in this ‘beta’ version:\n\nUsers can upload their own ticks (from MountainProject.com) or paste their profile URL.\nSee a complete list of all the climbs you’ve logged, and apply filters for route type, dates, and whether you want to include repeated ascents of the same route.\nVisualize your route pyramid (click the second tab across the top, or scroll down on mobile).\nVisualize your climbing progression over time.\n\nIf you are an R programmer and would like to contribute to the development of this tool, then I welcome you to fork the development branch on GitHub3."
+  },
+  {
+    "objectID": "posts/climbing-pyramids/index.html#footnotes",
+    "href": "posts/climbing-pyramids/index.html#footnotes",
+    "title": "A Tool to Visualize Outdoor Climbing Performance",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nhttps://en.wikipedia.org/wiki/Grade_(climbing)↩︎\nShiny: Web Application Framework for R. https://cran.r-project.org/package=shiny↩︎\nhttps://github.com/rpomponio/tick_pyramid_tool/tree/dev↩︎"
+  },
+  {
+    "objectID": "adventure.html",
+    "href": "adventure.html",
+    "title": "Adventures",
+    "section": "",
+    "text": "Outside of my job as a data scientist, I am an avid rock & alpine climber. I’ve climbed in 12 US states as well as in Mexico, tallying over 1,000 pitches since I began outdoor climbing. Below, I’ve compiled a list of my best trip reports below, some of which are unpublished.\n\n  \n  \n    \n    \n  \n  \n  \n  \n    \n    A day-long adventure in Colorado's most famous national park. We encountered a steep snow field on our approach to the Sharkstooth Ridge.\n    \n  \n  \n    Partner: Jason K.\n    Route: Northeast Ridge (5.6, II)\n  \n  \n    Link to Full Trip Report\n  \n  \n    Published 02/08/2024\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    My first real mountaineering trip, in which I climbed the Grand Teton using a classic rock climbing route to the summit.\n    \n  \n  \n    Partner: Donnie K.\n    Route: Exum Ridge (5.5, III)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    An outing with the Explorer's Club of Pittsburgh. We hiked through the night to reach our rock climbing objective at Seneca Rocks, WV. We summitted and bivied atop the rocks.\n    \n  \n  \n    Partners: Evren G., Dan K.\n    Route: Old Man's (5.3)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished"
+  },
+  {
+    "objectID": "adventure.html#trip-reports",
+    "href": "adventure.html#trip-reports",
+    "title": "Adventures",
+    "section": "",
+    "text": "Outside of my job as a data scientist, I am an avid rock & alpine climber. I’ve climbed in 12 US states as well as in Mexico, tallying over 1,000 pitches since I began outdoor climbing. Below, I’ve compiled a list of my best trip reports below, some of which are unpublished.\n\n  \n  \n    \n    \n  \n  \n  \n  \n    \n    A day-long adventure in Colorado's most famous national park. We encountered a steep snow field on our approach to the Sharkstooth Ridge.\n    \n  \n  \n    Partner: Jason K.\n    Route: Northeast Ridge (5.6, II)\n  \n  \n    Link to Full Trip Report\n  \n  \n    Published 02/08/2024\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    My first real mountaineering trip, in which I climbed the Grand Teton using a classic rock climbing route to the summit.\n    \n  \n  \n    Partner: Donnie K.\n    Route: Exum Ridge (5.5, III)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    An outing with the Explorer's Club of Pittsburgh. We hiked through the night to reach our rock climbing objective at Seneca Rocks, WV. We summitted and bivied atop the rocks.\n    \n  \n  \n    Partners: Evren G., Dan K.\n    Route: Old Man's (5.3)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished"
+  },
+  {
+    "objectID": "adventure.html#photography",
+    "href": "adventure.html#photography",
+    "title": "Adventures",
+    "section": "Photography",
+    "text": "Photography\nI am beginning to share some of my photos from rock climbing adventures.\nFall in West Virginia, 2024"
   },
   {
     "objectID": "posts/pitcher-survival/index.html",
