@@ -1,9 +1,9 @@
 ---
-title: "Starting Pitcher Replacements in the Postseason: Time for survival methods?"
+title: "Starting Pitcher Replacements in the Postseason: Time-to-event methods"
 author: "Ray Pomponio"
 date: "2023-12-18"
 categories: [analysis, sports]
-image: "snell.jpg"
+image: false
 ---
 
 ### Introduction
