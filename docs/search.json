@@ -2,9 +2,44 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Ray Pomponio",
+    "title": "A blog and stuff",
     "section": "",
     "text": "A Tool to Visualize Outdoor Climbing Performance\n\n\n\n\n\n\nhobbies\n\n\nadventure\n\n\n\n\n\n\n\n\n\nNov 27, 2024\n\n\nRay Pomponio\n\n\n\n\n\n\n\n\n\n\n\n\nA Summary of My Research in Stats and Medicine\n\n\n\n\n\n\npersonal\n\n\nreflections\n\n\n\n\n\n\n\n\n\nDec 30, 2023\n\n\nRay Pomponio\n\n\n\n\n\n\n\n\n\n\n\n\nStarting Pitcher Replacements in the Postseason: Time-to-event methods\n\n\n\n\n\n\nanalysis\n\n\nsports\n\n\n\n\n\n\n\n\n\nDec 18, 2023\n\n\nRay Pomponio\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "posts/climbing-pyramids/index.html",
+    "href": "posts/climbing-pyramids/index.html",
+    "title": "A Tool to Visualize Outdoor Climbing Performance",
+    "section": "",
+    "text": "Recently, I’ve been interested in developing ways to assess my own performance as an outdoor rock climber. One classic tool for evaluating a climber’s history on routes is called the ‘pyramid’ (also known as the ‘scorecard’ on other sites). In this post I discuss how I built a simple web app to illustrate my own climbing pyramid as well as that of any other climber who uses MountainProject.com to track their outdoor climbing performance."
+  },
+  {
+    "objectID": "posts/climbing-pyramids/index.html#motivation",
+    "href": "posts/climbing-pyramids/index.html#motivation",
+    "title": "A Tool to Visualize Outdoor Climbing Performance",
+    "section": "Motivation",
+    "text": "Motivation\nI’ve been using Mountain Project meticulously since I began outdoor rock climbing in 2019. On most of my climbing trips, I log ascents in the iPhone app, which syncs with my profile online. This has generally been something I treated as a personal journalling exercise, and I figured I would someday want to look back on my ascents to see how far I’ve come in the sport/adventure of rock climbing.\nRecently, I’ve been focused on physical training to improve my climbing performance outside, and the data that I’ve gathered over the past five years would seem to be an invaluable asset. It turns out that I’m not alone, and many other climbers use the same features on Mountain Project to log their ascents, also known as ‘ticks’ on the site\n\n\n\nThe publicly-available ticks for a route called ‘Scenic Adult’ (5.11c) at the New River Gorge in West Virginia, as of this post (November 2024)\n\n\nThere remains a challenge in leveraging this data, though, which is that metrics of historical climbing performance are not very quantifiable – and those that are quantitative are generally not sophisticated, like Max Redpoint Grade, or Hardest Flash. Those who spend a lot of time in climbing gyms will be familiar with these ideas. In essence, these metrics are akin to asking a runner what their best marathon time is, which can tell you a lot about someone’s running ability. However, it tells you less about how they’ve progressed over time and how they’ve spent their effort to arrive at their current performance level. These questions are more nuanced, and in climbing are arguably more important than just knowing someone’s maximum performance."
+  },
+  {
+    "objectID": "posts/climbing-pyramids/index.html#climbing-pyramids",
+    "href": "posts/climbing-pyramids/index.html#climbing-pyramids",
+    "title": "A Tool to Visualize Outdoor Climbing Performance",
+    "section": "Climbing Pyramids",
+    "text": "Climbing Pyramids\nOne tool that might help climbers address some of the above questions is called the pyramid. The pyrmaid plots the number of successful (and sometimes unsuccessful) ascents of climbs at a particular grade. Without going into too much detail, rock climbs are graded very rigorously1, a little bit like the green/blue/black grading system of ski routes. While being subject to a fair bit of subjectivity, the grade of a rock climb is usually a reliable measure of how difficult that route will be for the average person.\nThe pyramid tool can help visualize how a climber devotes her finite resources (e.g., time) to climbing routes of a particular grade range. It is a snapshot in time of how well-balanced a climber’s performance is, with a ‘top-heavy’ shape suggesting a climber focuses most of his time on difficult routes, and a ‘bottom-heavy’ shape suggesting he should probably try more difficult routes. There’s a lot of insight to be gained by seeing your own pyramid, and to illustrate an example here is my pyramid as of this writing:\n\n\n\nMy climbing pyramid, as of November 2024, with ‘successful’ ascents highlighted in red and failed attempts highlighted in blue.\n\n\nI am no expert but I have an intuition that my climbing pyramid is fairly typical of people at my ability level, with a few unique quirks such as the fact that I’ve spent a lot of time climbing routes at the grade of 5.11a. Additionally, while my max redpoint grade is currently 5.12a, I still have room to reinforce my experience at the grades just below that, namely 5.11c and 5.11d. These are just a few of the takeaways from quickly analyzing my own pyramid."
+  },
+  {
+    "objectID": "posts/climbing-pyramids/index.html#the-web-app",
+    "href": "posts/climbing-pyramids/index.html#the-web-app",
+    "title": "A Tool to Visualize Outdoor Climbing Performance",
+    "section": "The Web App",
+    "text": "The Web App\nUsing the very handy Shiny2 package for R, I developed a web application called the ‘Tick Pyramid Tool’ (subject to name change), which enables Mountain Project users to easily visualize their own climbing pyramids, just as I showed above. I also added the ability to view your progression over time, which simply tracks how your max grade has increased (hopefully by a lot!) since you started climbing.\n\n\n\nScreenshot of the current web app, which is hosted by Shiny Apps at rpomponio.shinyapps.io/climbing_viz_app\n\n\nThis is an active work-in-progress and I plan to add more features to the web app as I solicit feedback from other climbers. However, I figured it is worth highlighting some of the key features in this ‘beta’ version:\n\nUsers can upload their own ticks (from MountainProject.com) or paste their profile URL.\nSee a complete list of all the climbs you’ve logged, and apply filters for route type, dates, and whether you want to include repeated ascents of the same route.\nVisualize your route pyramid (click the second tab across the top, or scroll down on mobile).\nVisualize your climbing progression over time.\n\nIf you are an R programmer and would like to contribute to the development of this tool, then I welcome you to fork the development branch on GitHub3."
+  },
+  {
+    "objectID": "posts/climbing-pyramids/index.html#footnotes",
+    "href": "posts/climbing-pyramids/index.html#footnotes",
+    "title": "A Tool to Visualize Outdoor Climbing Performance",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nhttps://en.wikipedia.org/wiki/Grade_(climbing)↩︎\nShiny: Web Application Framework for R. https://cran.r-project.org/package=shiny↩︎\nhttps://github.com/rpomponio/tick_pyramid_tool/tree/dev↩︎"
   },
   {
     "objectID": "posts/research-summary/index.html",
@@ -47,62 +82,6 @@
     "title": "A Summary of My Research in Stats and Medicine",
     "section": "Footnotes",
     "text": "Footnotes\n\n\nW.E. Johnson, C. Li, A. Rabinovic. Adjusting batch effects in mircoarray expression data using empirical Bayes methods. Biostatistics, 8 (2007), pp. 118-127. https://doi.org/10.1093/biostatistics/kxj037.↩︎\nAzur, M.J., Stuart, E.A., Frangakis, C. and Leaf, P.J. (2011), Multiple imputation by chained equations: what is it and how does it work?. Int. J. Methods Psychiatr. Res., 20: 40-49. https://doi.org/10.1002/mpr.329.↩︎"
-  },
-  {
-    "objectID": "posts/climbing-pyramids/index.html",
-    "href": "posts/climbing-pyramids/index.html",
-    "title": "A Tool to Visualize Outdoor Climbing Performance",
-    "section": "",
-    "text": "Recently, I’ve been interested in developing ways to assess my own performance as an outdoor rock climber. One classic tool for evaluating a climber’s history on routes is called the ‘pyramid’ (also known as the ‘scorecard’ on other sites). In this post I discuss how I built a simple web app to illustrate my own climbing pyramid as well as that of any other climber who uses MountainProject.com to track their outdoor climbing performance."
-  },
-  {
-    "objectID": "posts/climbing-pyramids/index.html#motivation",
-    "href": "posts/climbing-pyramids/index.html#motivation",
-    "title": "A Tool to Visualize Outdoor Climbing Performance",
-    "section": "Motivation",
-    "text": "Motivation\nI’ve been using Mountain Project meticulously since I began outdoor rock climbing in 2019. On most of my climbing trips, I log ascents in the iPhone app, which syncs with my profile online. This has generally been something I treated as a personal journalling exercise, and I figured I would someday want to look back on my ascents to see how far I’ve come in the sport/adventure of rock climbing.\nRecently, I’ve been focused on physical training to improve my climbing performance outside, and the data that I’ve gathered over the past five years would seem to be an invaluable asset. It turns out that I’m not alone, and many other climbers use the same features on Mountain Project to log their ascents, also known as ‘ticks’ on the site\n\n\n\nThe publicly-available ticks for a route called ‘Scenic Adult’ (5.11c) at the New River Gorge in West Virginia, as of this post (November 2024)\n\n\nThere remains a challenge in leveraging this data, though, which is that metrics of historical climbing performance are not very quantifiable – and those that are quantitative are generally not sophisticated, like Max Redpoint Grade, or Hardest Flash. Those who spend a lot of time in climbing gyms will be familiar with these ideas. In essence, these metrics are akin to asking a runner what their best marathon time is, which can tell you a lot about someone’s running ability. However, it tells you less about how they’ve progressed over time and how they’ve spent their effort to arrive at their current performance level. These questions are more nuanced, and in climbing are arguably more important than just knowing someone’s maximum performance."
-  },
-  {
-    "objectID": "posts/climbing-pyramids/index.html#climbing-pyramids",
-    "href": "posts/climbing-pyramids/index.html#climbing-pyramids",
-    "title": "A Tool to Visualize Outdoor Climbing Performance",
-    "section": "Climbing Pyramids",
-    "text": "Climbing Pyramids\nOne tool that might help climbers address some of the above questions is called the pyramid. The pyrmaid plots the number of successful (and sometimes unsuccessful) ascents of climbs at a particular grade. Without going into too much detail, rock climbs are graded very rigorously1, a little bit like the green/blue/black grading system of ski routes. While being subject to a fair bit of subjectivity, the grade of a rock climb is usually a reliable measure of how difficult that route will be for the average person.\nThe pyramid tool can help visualize how a climber devotes her finite resources (e.g., time) to climbing routes of a particular grade range. It is a snapshot in time of how well-balanced a climber’s performance is, with a ‘top-heavy’ shape suggesting a climber focuses most of his time on difficult routes, and a ‘bottom-heavy’ shape suggesting he should probably try more difficult routes. There’s a lot of insight to be gained by seeing your own pyramid, and to illustrate an example here is my pyramid as of this writing:\n\n\n\nMy climbing pyramid, as of November 2024, with ‘successful’ ascents highlighted in red and failed attempts highlighted in blue.\n\n\nI am no expert but I have an intuition that my climbing pyramid is fairly typical of people at my ability level, with a few unique quirks such as the fact that I’ve spent a lot of time climbing routes at the grade of 5.11a. Additionally, while my max redpoint grade is currently 5.12a, I still have room to reinforce my experience at the grades just below that, namely 5.11c and 5.11d. These are just a few of the takeaways from quickly analyzing my own pyramid."
-  },
-  {
-    "objectID": "posts/climbing-pyramids/index.html#the-web-app",
-    "href": "posts/climbing-pyramids/index.html#the-web-app",
-    "title": "A Tool to Visualize Outdoor Climbing Performance",
-    "section": "The Web App",
-    "text": "The Web App\nUsing the very handy Shiny2 package for R, I developed a web application called the ‘Tick Pyramid Tool’ (subject to name change), which enables Mountain Project users to easily visualize their own climbing pyramids, just as I showed above. I also added the ability to view your progression over time, which simply tracks how your max grade has increased (hopefully by a lot!) since you started climbing.\n\n\n\nScreenshot of the current web app, which is hosted by Shiny Apps at rpomponio.shinyapps.io/climbing_viz_app\n\n\nThis is an active work-in-progress and I plan to add more features to the web app as I solicit feedback from other climbers. However, I figured it is worth highlighting some of the key features in this ‘beta’ version:\n\nUsers can upload their own ticks (from MountainProject.com) or paste their profile URL.\nSee a complete list of all the climbs you’ve logged, and apply filters for route type, dates, and whether you want to include repeated ascents of the same route.\nVisualize your route pyramid (click the second tab across the top, or scroll down on mobile).\nVisualize your climbing progression over time.\n\nIf you are an R programmer and would like to contribute to the development of this tool, then I welcome you to fork the development branch on GitHub3."
-  },
-  {
-    "objectID": "posts/climbing-pyramids/index.html#footnotes",
-    "href": "posts/climbing-pyramids/index.html#footnotes",
-    "title": "A Tool to Visualize Outdoor Climbing Performance",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nhttps://en.wikipedia.org/wiki/Grade_(climbing)↩︎\nShiny: Web Application Framework for R. https://cran.r-project.org/package=shiny↩︎\nhttps://github.com/rpomponio/tick_pyramid_tool/tree/dev↩︎"
-  },
-  {
-    "objectID": "adventure.html",
-    "href": "adventure.html",
-    "title": "Adventures",
-    "section": "",
-    "text": "Outside of my job as a data scientist, I am an avid rock & alpine climber. I’ve climbed in 12 US states as well as in Mexico, tallying over 1,000 pitches since I began outdoor climbing. Below, I’ve compiled a list of my best trip reports below, some of which are unpublished.\n\n  \n  \n    \n    \n  \n  \n  \n  \n    \n    A day-long adventure in Colorado's most famous national park. We encountered a steep snow field on our approach to the Sharkstooth Ridge.\n    \n  \n  \n    Partner: Jason K.\n    Route: Northeast Ridge (5.6, II)\n  \n  \n    Link to Full Trip Report\n  \n  \n    Published 02/08/2024\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    My first real mountaineering trip, in which I climbed the Grand Teton using a classic rock climbing route to the summit.\n    \n  \n  \n    Partner: Donnie K.\n    Route: Exum Ridge (5.5, III)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    An outing with the Explorer's Club of Pittsburgh. We hiked through the night to reach our rock climbing objective at Seneca Rocks, WV. We summitted and bivied atop the rocks.\n    \n  \n  \n    Partners: Evren G., Dan K.\n    Route: Old Man's (5.3)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished"
-  },
-  {
-    "objectID": "adventure.html#trip-reports",
-    "href": "adventure.html#trip-reports",
-    "title": "Adventures",
-    "section": "",
-    "text": "Outside of my job as a data scientist, I am an avid rock & alpine climber. I’ve climbed in 12 US states as well as in Mexico, tallying over 1,000 pitches since I began outdoor climbing. Below, I’ve compiled a list of my best trip reports below, some of which are unpublished.\n\n  \n  \n    \n    \n  \n  \n  \n  \n    \n    A day-long adventure in Colorado's most famous national park. We encountered a steep snow field on our approach to the Sharkstooth Ridge.\n    \n  \n  \n    Partner: Jason K.\n    Route: Northeast Ridge (5.6, II)\n  \n  \n    Link to Full Trip Report\n  \n  \n    Published 02/08/2024\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    My first real mountaineering trip, in which I climbed the Grand Teton using a classic rock climbing route to the summit.\n    \n  \n  \n    Partner: Donnie K.\n    Route: Exum Ridge (5.5, III)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    An outing with the Explorer's Club of Pittsburgh. We hiked through the night to reach our rock climbing objective at Seneca Rocks, WV. We summitted and bivied atop the rocks.\n    \n  \n  \n    Partners: Evren G., Dan K.\n    Route: Old Man's (5.3)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished"
-  },
-  {
-    "objectID": "adventure.html#photography",
-    "href": "adventure.html#photography",
-    "title": "Adventures",
-    "section": "Photography",
-    "text": "Photography\nI am beginning to share some of my photos from rock climbing adventures.\nFall in West Virginia, 2024"
   },
   {
     "objectID": "posts/pitcher-survival/index.html",
@@ -161,45 +140,31 @@
     "text": "Footnotes\n\n\nMicah Melling. “Survival Analysis: How Long Do Careers Last?.” Baseball Data Science. https://www.baseballdatascience.com/survival-analysis-how-long-do-careers-last/↩︎\nPiper Slowinski. “What is WAR?”. FanGraphs. https://library.fangraphs.com/misc/war/↩︎\nWikipedia. Normal Distribution. https://en.wikipedia.org/wiki/Normal_distribution↩︎\nRetrosheet. Play-by-Play Data Files: Post-Season Event Files. https://www.retrosheet.org/game.htm#Post-Season%20Games↩︎\nRetrosheet. The Event File. https://www.retrosheet.org/eventfile.htm↩︎\nJayson Stark. “The book on hooks.” ESPN.com: Baseball. https://www.espn.com/mlb/columns/story?columnist=stark_jayson&id=1798057↩︎\nAlden Woods. “Girardi makes pitching change mid-at-bat.” MLB.com. https://www.mlb.com/news/joe-girardi-makes-pitching-change-mid-at-bat/c-141252666↩︎\nE.L. Kaplan & Paul Meier. “Nonparametric Estimation from Incomplete Observations.” Journal of the American Statistical Association. https://doi.org/10.1080/01621459.1958.10501452↩︎"
   },
   {
+    "objectID": "adventure.html",
+    "href": "adventure.html",
+    "title": "Adventures",
+    "section": "",
+    "text": "Outside of my job as a data scientist, I am an avid rock & alpine climber. I’ve climbed in 12 US states as well as in Mexico, tallying over 1,000 pitches since I began outdoor climbing. Below, I’ve compiled a list of my best trip reports below, some of which are unpublished.\n\n  \n  \n    \n    \n  \n  \n  \n  \n    \n    A day-long adventure in Colorado's most famous national park. We encountered a steep snow field on our approach to the Sharkstooth Ridge.\n    \n  \n  \n    Partner: Jason K.\n    Route: Northeast Ridge (5.6, II)\n  \n  \n    Link to Full Trip Report\n  \n  \n    Published 02/08/2024\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    My first real mountaineering trip, in which I climbed the Grand Teton using a classic rock climbing route to the summit.\n    \n  \n  \n    Partner: Donnie K.\n    Route: Exum Ridge (5.5, III)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    An outing with the Explorer's Club of Pittsburgh. We hiked through the night to reach our rock climbing objective at Seneca Rocks, WV. We summitted and bivied atop the rocks.\n    \n  \n  \n    Partners: Evren G., Dan K.\n    Route: Old Man's (5.3)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished"
+  },
+  {
+    "objectID": "adventure.html#trip-reports",
+    "href": "adventure.html#trip-reports",
+    "title": "Adventures",
+    "section": "",
+    "text": "Outside of my job as a data scientist, I am an avid rock & alpine climber. I’ve climbed in 12 US states as well as in Mexico, tallying over 1,000 pitches since I began outdoor climbing. Below, I’ve compiled a list of my best trip reports below, some of which are unpublished.\n\n  \n  \n    \n    \n  \n  \n  \n  \n    \n    A day-long adventure in Colorado's most famous national park. We encountered a steep snow field on our approach to the Sharkstooth Ridge.\n    \n  \n  \n    Partner: Jason K.\n    Route: Northeast Ridge (5.6, II)\n  \n  \n    Link to Full Trip Report\n  \n  \n    Published 02/08/2024\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    My first real mountaineering trip, in which I climbed the Grand Teton using a classic rock climbing route to the summit.\n    \n  \n  \n    Partner: Donnie K.\n    Route: Exum Ridge (5.5, III)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished\n  \n\n\n  \n  \n    \n    \n  \n  \n    \n    An outing with the Explorer's Club of Pittsburgh. We hiked through the night to reach our rock climbing objective at Seneca Rocks, WV. We summitted and bivied atop the rocks.\n    \n  \n  \n    Partners: Evren G., Dan K.\n    Route: Old Man's (5.3)\n  \n  \n    Link to Draft Trip Report\n  \n  \n    Unpublished"
+  },
+  {
+    "objectID": "adventure.html#photography",
+    "href": "adventure.html#photography",
+    "title": "Adventures",
+    "section": "Photography",
+    "text": "Photography\nI am beginning to share some of my photos from rock climbing adventures.\nFall in West Virginia, 2024"
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
     "section": "",
     "text": "Ray Pomponio is a data scientist with seven years of experience in biomedical applications. He received his Master’s degree in Biostatistics from the University of Colorado, where he developed and applied advanced analytical techniques to biomedical data.\nRay has contributed to several team science collaborations and provided biostatistical expertise/support for grant writing, study design, and longitudinal analysis. He has co-authored 20+ manuscripts in peer-reviewed journals, recently focused on relationships among pulmonary and critical care medical outcomes. He is proficient at programming in R, SAS, and Python, and has experience handling complex datasets, including missing information, time-to-event outcomes, and clustered/correlated data.\nPlease reach out using any of the links below, or via email: raymond.pomponio (at) outlook.com."
-  },
-  {
-    "objectID": "posts/test-negative-designs/index.html",
-    "href": "posts/test-negative-designs/index.html",
-    "title": "Studying Vaccine Effectiveness through Test-Negative Designs",
-    "section": "",
-    "text": "Recently, epidemiological studies have focused on monitoring vaccine effectiveness (VE) through a variety of study designs. One such study design common for monitoring VE in influenza is the test-negative design (TND). In this post I summarize key characteristics of the TND and comment on its known limitations in estimating VE."
-  },
-  {
-    "objectID": "posts/test-negative-designs/index.html#history-of-test-negative-designs",
-    "href": "posts/test-negative-designs/index.html#history-of-test-negative-designs",
-    "title": "Studying Vaccine Effectiveness through Test-Negative Designs",
-    "section": "History of Test-Negative Designs",
-    "text": "History of Test-Negative Designs\nTest-negative designs appear to be a recent development within epidemiology and public health. In the context of influenza vaccine surveillance, the earliest scientific publications with TNDs are from studies conducted in the mid-2000s.1\nDespite the relative youth of this study design, TNDs are now common and impactful ways of monitoring vaccines. The United States’ Centers for Disease Control (CDC) recently evaluated the effectiveness of the 2023-24 influenza vaccine using a TND.2 Similarly, the CDC estimated the VE of Nirsevimab against RSV infection in infants,3 finding that the monoclonal antibody was 90% effective against RSV-related hospitalizaions based on the results of a TND study.\nThe current examples of TNDs illustrate the study design’s potential. It is likely that TNDs have become so common because they are cost-effective (versus cohort studies and randomized control trials), they are thought to reduce certain types of biases, and they are relatively easy to implement in monitoring public health outcomes, such as hospitalizations."
-  },
-  {
-    "objectID": "posts/test-negative-designs/index.html#key-characteristics-of-test-negative-designs",
-    "href": "posts/test-negative-designs/index.html#key-characteristics-of-test-negative-designs",
-    "title": "Studying Vaccine Effectiveness through Test-Negative Designs",
-    "section": "Key Characteristics of Test-Negative Designs",
-    "text": "Key Characteristics of Test-Negative Designs\nThere are several common characteristics of the test-negative design. To explain these characteristics, I will use an example with influenza as the context. Influenza (“flu”) is a seasonal virus that can cause acute respiratory infections (ARIs). To reduce the public health burden of influenza, a seasonal flu vaccine is commonly circulated in the United States and other countries around the world. Suppose it’s a new flu season and our aim is to study the effectiveness of the latest vaccine against hospitalizations. This is the classic case to highlight the utility of the test-negative design.\nWe conduct a TND by recruiting in our study patients who develop ARI symptoms and are hospitalized at a specific clinic due to their symptoms; this is our recruitment population. Next, all those who enroll in the study are tested for flu, typically with rapid diagnostic testing. Finally, the enrollees who test positive for influenza are considered “cases”, while the remaining enrollees are considered “controls”. For every enrollee, we would identify their flu vaccination status based on a government registry or the electronic health record. Our primary endpoint is the vaccine effectiveness (VE) against hospitalizations, which can be estimated as:\n\\[\n\\hat{VE}_{hospoitalizaion}=1-\\hat{OR}_{Vax,Case:Ctrl}\n\\]\nwhere \\(\\hat{OR}_{Vax,Case:Ctrl}\\) is the ratio of the odds of vaccination in cases versus the odds of vaccination in controls. It is worth noting that this is an unadjusted odds ratio, but an adjusted ratio might easily be computed using logistic regression; this would permit adjusting for potential confounding variables, such as age and sex.\nIt is important to distinguish between the characteristics of the TND and those of the randomized controlled trial (RCT), which is generally considered the “gold standard” of epidemiological evidence. In an RCT, participants are recruited before they get vaccinated and before they’ve been exposed to the season’s flu virus. The key characteristic of an RCT is that participants will be randomized to receiving either the vaccine or a placebo. Throughout an RCT study, researchers will follow-up with participants to monitor any outcomes of interest, such as infections and hospitalizations. In contrast, participants in a TND are recruited after symptoms develop and they show up at a hospital clinic. Thus the recruitment populations are fundamentally different between RCTs and TNDs."
-  },
-  {
-    "objectID": "posts/test-negative-designs/index.html#limitations-of-test-negative-designs",
-    "href": "posts/test-negative-designs/index.html#limitations-of-test-negative-designs",
-    "title": "Studying Vaccine Effectiveness through Test-Negative Designs",
-    "section": "Limitations of Test-Negative Designs",
-    "text": "Limitations of Test-Negative Designs\nTest-negative designs are praised for their improved accuracy in estimating vaccine effectiveness (VE). One of the foundational papers for the basis of TNDs argued that the design is less susceptible to bias resulting from differences in health care-seeking behavior between vaccinated and unvaccinated populations.4 The reason is that the TND only analyzes individuals who have already sought care, by definition. Thus any differential likelihood in health care-seeking behavior is unlikely to impact the estimates of VE from a TND study.\nHowever, more recent work has elucidated a number of potential limitations of TNDs and their susceptibility to biases. For example, vaccination receipt might be associated with healthy behaviors such as hand washing. If those individuals who receive the vaccine also engage in healthier behaviors than their unvaccinated counterparts, then the results of a TND that does not adjust for hand washing will be confounded."
-  },
-  {
-    "objectID": "posts/test-negative-designs/index.html#footnotes",
-    "href": "posts/test-negative-designs/index.html#footnotes",
-    "title": "Studying Vaccine Effectiveness through Test-Negative Designs",
-    "section": "Footnotes",
-    "text": "Footnotes\n\n\nFukushima, W., & Hirota, Y. (2017). Basic principles of test-negative design in evaluating influenza vaccine effectiveness. Vaccine, 35(36), 4796–4800. https://doi.org/10.1016/j.vaccine.2017.07.003↩︎\nFrutos, A. M., Price, A. M., Harker, E., Reeves, E. L., Ahmad, H. M., Murugan, V., Martin, E. T., House, S., Saade, E. A., Zimmerman, R. K., Gaglani, M., Wernli, K. J., Walter, E. B., Michaels, M. G., Staat, M. A., Weinberg, G. A., Selvarangan, R., Boom, J. A., Klein, E. J., Halasa, N. B., … CDC Influenza Vaccine Effectiveness Collaborators (2024). Interim Estimates of 2023-24 Seasonal Influenza Vaccine Effectiveness - United States. MMWR. Morbidity and mortality weekly report, 73(8), 168–174. https://doi.org/10.15585/mmwr.mm7308a3↩︎\nMoline, H. L., Tannis, A., Toepfer, A. P., Williams, J. V., Boom, J. A., Englund, J. A., Halasa, N. B., Staat, M. A., Weinberg, G. A., Selvarangan, R., Michaels, M. G., Sahni, L. C., Klein, E. J., Stewart, L. S., Schlaudecker, E. P., Szilagyi, P. G., Schuster, J. E., Goldstein, L., Musa, S., Piedra, P. A., … Dawood, F. S. (2024). Early Estimate of Nirsevimab Effectiveness for Prevention of Respiratory Syncytial Virus-Associated Hospitalization Among Infants Entering Their First Respiratory Syncytial Virus Season - New Vaccine Surveillance Network, October 2023-February 2024. MMWR. Morbidity and mortality weekly report, 73(9), 209–214. https://doi.org/10.15585/mmwr.mm7309a4↩︎\nJackson, M. L., & Nelson, J. C. (2013). The test-negative design for estimating influenza vaccine effectiveness. Vaccine, 31(17), 2165–2168. https://doi.org/10.1016/j.vaccine.2013.02.053↩︎"
   }
 ]

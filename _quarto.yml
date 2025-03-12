@@ -7,7 +7,7 @@ project:
     - "RAY-POMPONIO_cv.pdf"
 
 website:
-  title: "rpomponio.github.io"
+  title: "pompon.io"
   navbar:
     right:
       - text: resume

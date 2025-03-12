@@ -1,5 +1,6 @@
 ---
-title: "Ray Pomponio"
+title: "A blog and stuff"
+subtitle: "rpomponio.github.io (Pompon.io)"
 listing:
   contents: posts
   sort: "date desc"
