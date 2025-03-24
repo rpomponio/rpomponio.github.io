@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "A blog and stuff",
     "section": "",
-    "text": "A Tool to Visualize Outdoor Climbing Performance\n\n\n\n\n\n\nhobbies\n\n\nadventure\n\n\n\n\n\n\n\n\n\nNov 27, 2024\n\n\nRay Pomponio\n\n\n\n\n\n\n\n\n\n\n\n\nA Summary of My Research in Stats and Medicine\n\n\n\n\n\n\npersonal\n\n\nreflections\n\n\n\n\n\n\n\n\n\nDec 30, 2023\n\n\nRay Pomponio\n\n\n\n\n\n\n\n\n\n\n\n\nStarting Pitcher Replacements in the Postseason: Time-to-event methods\n\n\n\n\n\n\nanalysis\n\n\nsports\n\n\n\n\n\n\n\n\n\nDec 18, 2023\n\n\nRay Pomponio\n\n\n\n\n\n\nNo matching items"
+    "text": "Himalayan Climbing Expeditions\n\n\n\n\n\n\nanalysis\n\n\nsports\n\n\n\n\n\n\n\n\n\nMar 24, 2025\n\n\nRay Pomponio\n\n\n\n\n\n\n\n\n\n\n\n\nA Tool to Visualize Outdoor Climbing Performance\n\n\n\n\n\n\nhobbies\n\n\nadventure\n\n\n\n\n\n\n\n\n\nNov 27, 2024\n\n\nRay Pomponio\n\n\n\n\n\n\n\n\n\n\n\n\nLessons Learned From a Year of Statistical Consulting\n\n\n\n\n\n\nreflections\n\n\nbusiness\n\n\n\n\n\n\n\n\n\nApr 18, 2024\n\n\nRay Pomponio\n\n\n\n\n\n\n\n\n\n\n\n\nStudying Vaccine Effectiveness through Test-Negative Designs\n\n\n\n\n\n\nanalysis\n\n\nbiomedical\n\n\n\n\n\n\n\n\n\nMar 19, 2024\n\n\nRay Pomponio\n\n\n\n\n\n\n\n\n\n\n\n\nECommerce Transactions to Lifetime Value Modeling\n\n\n\n\n\n\nanalysis\n\n\nbusiness\n\n\n\n\n\n\n\n\n\nJan 5, 2024\n\n\nRay Pomponio\n\n\n\n\n\n\n\n\n\n\n\n\nStarting Pitcher Replacements in the Postseason: Regression Approach\n\n\n\n\n\n\nanalysis\n\n\nsports\n\n\n\n\n\n\n\n\n\nJan 5, 2024\n\n\nRay Pomponio\n\n\n\n\n\n\n\n\n\n\n\n\nA Summary of My Research in Stats and Medicine\n\n\n\n\n\n\npersonal\n\n\nreflections\n\n\n\n\n\n\n\n\n\nDec 30, 2023\n\n\nRay Pomponio\n\n\n\n\n\n\n\n\n\n\n\n\nStarting Pitcher Replacements in the Postseason: Time-to-event methods\n\n\n\n\n\n\nanalysis\n\n\nsports\n\n\n\n\n\n\n\n\n\nDec 18, 2023\n\n\nRay Pomponio\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/climbing-pyramids/index.html",
@@ -166,5 +166,12 @@
     "title": "About",
     "section": "",
     "text": "Ray Pomponio is a data scientist with seven years of experience in biomedical applications. He received his Master’s degree in Biostatistics from the University of Colorado, where he developed and applied advanced analytical techniques to biomedical data.\nRay has contributed to several team science collaborations and provided biostatistical expertise/support for grant writing, study design, and longitudinal analysis. He has co-authored 20+ manuscripts in peer-reviewed journals, recently focused on relationships among pulmonary and critical care medical outcomes. He is proficient at programming in R, SAS, and Python, and has experience handling complex datasets, including missing information, time-to-event outcomes, and clustered/correlated data.\nPlease reach out using any of the links below, or via email: raymond.pomponio (at) outlook.com."
+  },
+  {
+    "objectID": "posts/himalayan-climbs/index.html",
+    "href": "posts/himalayan-climbs/index.html",
+    "title": "Himalayan Climbing Expeditions",
+    "section": "",
+    "text": "Abstract\nThis analysis investigates the impact of supplemental oxygen use on the success rates of over 10,000 Himalayan expeditions, accounting for the variability in peak difficulty and the nationality of expedition teams. Utilizing a fully Bayesian statistical modeling approach, we employ a hierarchical structure to incorporate peak-specific and country-specific effects, ensuring a robust understanding of the contributing factors. Our findings suggest that while supplemental oxygen is commonly used in high-altitude climbing, its efficacy in improving the likelihood of reaching the summit is minimal when controlling for peak difficulty and team nationality. These results provide important insights into the role of oxygen supplementation in extreme altitude expeditions and highlight the significance of other factors in determining expedition outcomes."
   }
 ]

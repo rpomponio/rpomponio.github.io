@@ -1,0 +1,11 @@
+---
+title: "Himalayan Climbing Expeditions"
+author: "Ray Pomponio"
+date: today
+categories: [analysis, sports]
+draft: true
+---
+
+# Abstract
+
+This analysis investigates the impact of supplemental oxygen use on the success rates of over 10,000 Himalayan expeditions, accounting for the variability in peak difficulty and the nationality of expedition teams. Utilizing a fully Bayesian statistical modeling approach, we employ a hierarchical structure to incorporate peak-specific and country-specific effects, ensuring a robust understanding of the contributing factors. Our findings suggest that while supplemental oxygen is commonly used in high-altitude climbing, its efficacy in improving the likelihood of reaching the summit is minimal when controlling for peak difficulty and team nationality. These results provide important insights into the role of oxygen supplementation in extreme altitude expeditions and highlight the significance of other factors in determining expedition outcomes.
