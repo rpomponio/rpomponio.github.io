@@ -1,16 +1,29 @@
 ---
 title: "About"
+subtitle: "Ray Pomponio, MS"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: cloud-arrow-down-fill
+      text: Current CV
+      href: RAY-POMPONIO_cv.pdf
+    - icon: google
+      text: Publications
+      href: https://scholar.google.com/citations?user=TxEcZMMAAAAJ&hl=en
+    - icon: github
+      text: Github
+      href: https://github.com/rpomponio
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/ray-pomponio
+    - icon: briefcase-fill
+      text: Upwork
+      href: https://www.upwork.com/freelancers/~01bb85ee6f09078536
 ---
 
-## Ray Pomponio
+Ray Pomponio is a data scientist with seven years of experience in biomedical applications. He received his Master's degree in Biostatistics from the **University of Colorado**, where he developed and applied advanced analytical techniques to biomedical data.
 
-* Graduated May 2023, Master of Science in Biostatistics: **University of Colorado** (Denver, CO).
-* Bachelor of Science in Economics: **University of Pennsylvania - Wharton** (W' 2018, Magna Cum Laude).
-* Expertise in longitudinal data analysis and advanced statistical computing using `R`, SAS, and `python`.
-* Past experience includes work in sports analytics, marketing, neuroimaging, and critical care medicine.
-* Originally from Philadelphia, PA.
-* Currently lives in Shadyside (**Pittsburgh, PA**).
-* To contact me, please reach me at: raymond.pomponio (at) outlook.com.
-* For freelance data science work, you can hire me on [Upwork](https://www.upwork.com/freelancers/~01bb85ee6f09078536).
+Ray has contributed to several team science collaborations and provided biostatistical expertise/support for grant writing, study design, and longitudinal analysis. He has co-authored 20+ manuscripts in peer-reviewed journals, recently focused on relationships among pulmonary and critical care medical outcomes. He is proficient at programming in `R`, `SAS`, and `Python`, and has experience handling complex datasets, including missing information, time-to-event outcomes, and clustered/correlated data.
 
----
+Please reach out using any of the links below, or via email: raymond.pomponio (at) outlook.com.

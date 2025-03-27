@@ -1,0 +1,19 @@
+---
+title: "Lessons Learned From a Year of Statistical Consulting"
+author: "Ray Pomponio"
+date: "2024-04-18"
+categories: [reflections, business]
+draft: true
+---
+
+# Intro
+
+*I began freelance consulting as a data scientist in August 2023. In this post, I compile and reflect on some of the lessons I've learned from these wide-randing experiences.*
+
+# Lessons Learned from Independent Consulting
+
+## The Best Business Comes Organically
+
+## Cash Flow Can be Unpredictable
+
+## Salesmanship Can Close Gaps

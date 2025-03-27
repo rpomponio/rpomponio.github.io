@@ -1,0 +1,26 @@
+---
+title: "ECommerce Transactions to Lifetime Value Modeling"
+author: "Ray Pomponio"
+date: "2024-01-05"
+categories: [analysis, business]
+draft: true
+---
+
+# Outline
+
+*Focus on managerial decision making.*
+
+* [ ] Explain the transaction log, synthetic data generation
+* [ ] How to go from transaction log to customer lifetime value?
+* [ ] What to do with CLV? Examine trends by product line
+* [ ] How to enable better decisions with CLV metrics?
+
+# How to enable better decisionmaking with CLV
+
+Customer lifetime value (CLV) is at the core of marketing theory, but its use in practice is limited. One reason is because CLV is a construct that is difficult to measure. There are statistical methods for estimating CLV, and I will walkthrough one of those methods in detail below. But even if CLV can be forecasted to a high degree of accuracy, CLV is still difficult to operationalize and empower decisionmaking. Say you know the expected[^1] CLV of each customer. Should you then focus on marketing to customers with high CLV? Or should you try to acquire new customers that resemble your high-CLV customers? Another option is trying to convert low-CLV customers to high-CLV customers. One example of such a strategy would be cross-selling, i.e., marketing different products across your portfolio to try and influence more purchases.
+
+These are all valid strategies, and they are not mutually exclusive. It is not a surprise that CLV has suffered a slow adoption in industry, despite its a growing body of academic research demonstrating its viability. In this post, I will show how CLV can be used in conjunction with other metrics to enable better decisionmaking. I will use a transaction log from an ecommerce company to illustrate how CLV can be used to enable better decisionmaking. I will also discuss how CLV can be used to measure the effectiveness of different strategies.
+
+[^1]: By "expected CLV" I mean the expected value of the customer's future purchases. This is different from the customer's historical CLV, which is the sum of the customer's past purchases.
+
+
