@@ -1,6 +1,6 @@
 ---
 title: "A blog and stuff"
-subtitle: "rpomponio.github.io (Pompon.io)"
+subtitle: "rpomponio.github.io"
 listing:
   contents: posts
   sort: "date desc"
