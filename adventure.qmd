@@ -14,7 +14,7 @@ Outside of my job as a data scientist, I am an avid rock & alpine climber. I've 
     <h5 class="card-title">July 17, 2022</h5>
     <h6 class="card-subtitle text-muted">Status: Published</h6>
   </div>
-  <img src="sharkstooth.jpg" width="100%" height="100%" focusable="false" role="img"
+  <img src="photos/sharkstooth.jpg" width="100%" height="100%" focusable="false" role="img"
   viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
   </img>
   <div class="card-body">
