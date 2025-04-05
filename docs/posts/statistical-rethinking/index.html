@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Ray Pomponio">
+<meta name="dcterms.date" content="2025-04-04">
 
-<title>A blog and stuff – pompon.io</title>
+<title>Rethinking Some Statistical Principles – pompon.io</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,24 +25,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,35 +68,6 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -128,17 +99,17 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">pompon.io</span>
     </a>
   </div>
@@ -149,15 +120,15 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./RAY-POMPONIO_cv.pdf"> 
+    <a class="nav-link" href="../../RAY-POMPONIO_cv.pdf"> 
 <span class="menu-text">resume</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./adventure.html"> 
+    <a class="nav-link" href="../../adventure.html"> 
 <span class="menu-text">Adventures</span></a>
   </li>  
   <li class="nav-item compact">
@@ -180,189 +151,119 @@ window.Quarto = {
 <!-- content -->
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">A blog and stuff</h1>
-            <p class="subtitle lead">rpomponio.github.io</p>
-                      </div>
+    <div class="quarto-title column-body">
+      <h1 class="title">Rethinking Some Statistical Principles</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">reading</div>
+                <div class="quarto-category">reflections</div>
+              </div>
+                  </div>
   </div>
     
   
-  <div class="quarto-title-meta column-page-left">
+  <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Ray Pomponio </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 4, 2025</p>
+      </div>
+    </div>
     
       
     </div>
     
   
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(4)</span></div><div class="category" data-category="adventure">adventure <span class="quarto-category-count">(1)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(1)</span></div><div class="category" data-category="hobbies">hobbies <span class="quarto-category-count">(1)</span></div><div class="category" data-category="personal">personal <span class="quarto-category-count">(1)</span></div><div class="category" data-category="reading">reading <span class="quarto-category-count">(1)</span></div><div class="category" data-category="reflections">reflections <span class="quarto-category-count">(2)</span></div><div class="category" data-category="sports">sports <span class="quarto-category-count">(1)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<p>I’ve begun reading <em>Statistical Rethinking</em> by Richard McElreath: <a href="https://xcelab.net/rm/">Website</a>, and I want to log some of my thoughts that came to mind while working through his ideas on modern statistical science.</p>
+<section id="chapter-2" class="level1">
+<h1>Chapter 2</h1>
+<p>In this chapter, a hypothetical experiment was introduced in which an observer collects data about the proportion of water on a globe (to understand the true proportion of water on earth).</p>
+<p>Let <span class="math inline">\(p\)</span> denote the proportion of water on the globe, <span class="math inline">\(W\)</span> the number of observations that yielded “water”, and <span class="math inline">\(L\)</span> the number of observations that yielded “land”. By the Binomial distribution:</p>
+<p><span class="math display">\[
+Pr(W=w,L=l\quad|\quad p)={w+l\choose w}p^w(1-p)^l
+\]</span></p>
+<p>Now presume the observer recorded <span class="math inline">\(W=6\)</span> and <span class="math inline">\(L=3\)</span> in nine trials. The “likelihood” of these data can be plotted as a function of probability:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>And this is <strong>by no means a probabiltity distribution</strong>. It doesn’t sum to one; it integrates to 0.1. However the recognition of this function is a crucial step towards two possible modes of inference:</p>
+<ul>
+<li>In a <strong>classical</strong> sense, this function represents an objective to maximize, then compare against a null hypothesis (often <span class="math inline">\(H_0: p=0.5\)</span>).</li>
+<li>In a <strong>Bayesian</strong> sense, this function represents one piece of the joint distribution of <span class="math inline">\(W, L, p\)</span> (the other piece being the prior on <span class="math inline">\(p\)</span>). And this is the mode of inference advocated by the book.</li>
+</ul>
+<p>When we start with a uniform prior <span class="math inline">\(p\sim\text{Beta}(1, 1)\)</span>, we end up with a posterior that looks uncannily like our likelihood function:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Posterior</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Likelihood (again)</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>They’re actually the same function, just with different <em>y-axis</em> scales. I previously didn’t realize that…</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Likelihoods as Objectives
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>As part of the classical mode of inference, one might reasonably seek to maximize the above likelihood function <span class="math inline">\(\mathcal{L}\)</span>, setting <span class="math inline">\(p=\hat{p}\)</span> at maximal likelihood, then comparing the ratio of likelihoods between <span class="math inline">\(\mathcal{L}(\hat{p})\)</span> and <span class="math inline">\(\mathcal{L}(p_0)\)</span>. It turns out, when this ratio is greater than some constant <span class="math inline">\(c\)</span>, one would rationally conclude that <span class="math inline">\(p\neq p_0\)</span> (in other words, one rejects the null hypothesis).</p>
+</div>
+</div>
+<p>So contrasting the two modes of inference: in the classical sense, one compares two points along the likelihood curve to posit evidence against some hypothesis <span class="math inline">\(H_0\)</span>. In a Bayesian sense, one obtains a posterior distribution over plausible values of <span class="math inline">\(p\)</span>, which can be further analyzed for compatability with any set of hypotheses. And the realization for me (at least in this trivial example) is that the likelihood and posterior functions are the <strong>exact same shape</strong>.</p>
+<p>Reflecting on this a little more, I can understand how the relative simplicity of the classical approach might be appealing at the start of a scientific inquiry, say, when we don’t know much about the phenomenon but expect to learn a lot quickly. However, when an inquiry matures to the point of having data readily available, it seems silly to forgo the benefit of having the entire distribution of a parameter available to interrogate. It’s clear that the latter offers a richer description of the unknown phenomenon. Perhaps an analogy would be like entering a dark cavernous tunnel, where the classical approach affords you looks at two possible paths forward (one of which is a dead-end and the other quite a promising lead). The Bayesian approach, on the other hand, affords you something like a map of multiple paths forward.</p>
 
 
+</section>
 
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="reading,reflections" data-listing-date-sort="1743739200000" data-listing-file-modified-sort="1743813918100" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="552">
-<div class="thumbnail">
-<p><a href="./posts/statistical-rethinking/index.html" class="no-external"></a></p><a href="./posts/statistical-rethinking/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/statistical-rethinking/index_files/figure-html/unnamed-chunk-1-1.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/statistical-rethinking/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/statistical-rethinking/index.html" class="no-external">Rethinking Some Statistical Principles</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/statistical-rethinking/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('reading'); return false;">
-reading
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('reflections'); return false;">
-reflections
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/statistical-rethinking/index.html" class="no-external">I’ve begun reading <em>Statistical Rethinking</em> by Richard McElreath: Website, and I want to log some of my thoughts that came to mind while working through his ideas on modern…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/statistical-rethinking/index.html" class="no-external">
-<div class="listing-date">
-Apr 4, 2025
-</div>
-<div class="listing-author">
-Ray Pomponio
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="hobbies,adventure" data-listing-date-sort="1732683600000" data-listing-file-modified-sort="1743074762943" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="847">
-<div class="thumbnail">
-<p><a href="./posts/climbing-pyramids/index.html" class="no-external"></a></p><a href="./posts/climbing-pyramids/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/climbing-pyramids/my-pyramid.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/climbing-pyramids/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/climbing-pyramids/index.html" class="no-external">A Tool to Visualize Outdoor Climbing Performance</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/climbing-pyramids/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('hobbies'); return false;">
-hobbies
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('adventure'); return false;">
-adventure
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/climbing-pyramids/index.html" class="no-external">Recently, I’ve been interested in developing ways to assess my own performance as an outdoor rock climber. One classic tool for evaluating a climber’s history on routes is…</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/climbing-pyramids/index.html" class="no-external">
-<div class="listing-date">
-Nov 27, 2024
-</div>
-<div class="listing-author">
-Ray Pomponio
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="personal,reflections" data-listing-date-sort="1703912400000" data-listing-file-modified-sort="1743074762969" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14" data-listing-word-count-sort="2747">
-<div class="thumbnail">
-<p><a href="./posts/research-summary/index.html" class="no-external"></a></p><a href="./posts/research-summary/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/research-summary/trends.jpeg"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/research-summary/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/research-summary/index.html" class="no-external">A Summary of My Research in Stats and Medicine</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/research-summary/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('personal'); return false;">
-personal
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('reflections'); return false;">
-reflections
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/research-summary/index.html" class="no-external">In this post, I review progress in my research so far, and distill my work into three themes spanning topics in biomedical sciences and applied statistics.</a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/research-summary/index.html" class="no-external">
-<div class="listing-date">
-Dec 30, 2023
-</div>
-<div class="listing-author">
-Ray Pomponio
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="3" data-categories="analysis,sports" data-listing-date-sort="1702875600000" data-listing-file-modified-sort="1743074762959" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13" data-listing-word-count-sort="2492">
-<div class="thumbnail">
-<p><a href="./posts/pitcher-survival/index.html" class="no-external"></a></p><a href="./posts/pitcher-survival/index.html" class="no-external">
-<p class="card-img-top"><img src="posts/pitcher-survival/ncss.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/pitcher-survival/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/pitcher-survival/index.html" class="no-external">Starting Pitcher Replacements in the Postseason: Time-to-event methods</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/pitcher-survival/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('analysis'); return false;">
-analysis
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('sports'); return false;">
-sports
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/pitcher-survival/index.html" class="no-external">Recently, starting pitchers in baseball have been pulled at earlier points in the game, especially in high leverage moments. This trend is particularly noticeable in the…<em></em><em></em></a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/pitcher-survival/index.html" class="no-external">
-<div class="listing-date">
-Dec 18, 2023
-</div>
-<div class="listing-author">
-Ray Pomponio
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
