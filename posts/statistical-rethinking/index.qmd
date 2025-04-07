@@ -5,9 +5,11 @@ date: today
 categories: [reading, reflections]
 ---
 
-I've begun reading *Statistical Rethinking* by Richard McElreath: [Website](https://xcelab.net/rm/), and I want to log some of my thoughts that came to mind while working through his ideas on modern statistical science.
+I've begun reading *Statistical Rethinking* by Richard McElreath,[^1] and I want to log some of my thoughts that came to mind while working through his ideas on modern statistical science.
 
 # Chapter 2
+
+## Likelihoods
 
 In this chapter, a hypothetical experiment was introduced in which an observer collects data about the proportion of water on a globe (to understand the true proportion of water on earth).
 
@@ -61,3 +63,85 @@ As part of the classical mode of inference, one might reasonably seek to maximiz
 So contrasting the two modes of inference: in the classical sense, one compares two points along the likelihood curve to posit evidence against some hypothesis $H_0$. In a Bayesian sense, one obtains a posterior distribution over plausible values of $p$, which can be further analyzed for compatability with any set of hypotheses. And the realization for me (at least in this trivial example) is that the likelihood and posterior functions are the **exact same shape**.
 
 Reflecting on this a little more, I can understand how the relative simplicity of the classical approach might be appealing at the start of a scientific inquiry, say, when we don't know much about the phenomenon but expect to learn a lot quickly. However, when an inquiry matures to the point of having data readily available, it seems silly to forgo the benefit of having the entire distribution of a parameter available to interrogate. It's clear that the latter offers a richer description of the unknown phenomenon. Perhaps an analogy would be like entering a dark cavernous tunnel, where the classical approach affords you looks at two possible paths forward (one of which is a dead-end and the other quite a promising lead). The Bayesian approach, on the other hand, affords you something like a map of multiple paths forward.
+
+## Algorithms for Posterior Approximation
+
+I was previously aware of posterior approximation using Markov chain Monte Carlo (MCMC), but I was surprised to learn about two viable alternatives to numerically sampling from a posterior distribution.
+
+I'll continue with the hypothetical experiment from the previous section in which we are aiming to estimate $p$, the proportion of water on the globe.
+
+:::{.panel-tabset}
+
+### Grid Approximation
+
+By selecting a finite grid across the support of our parameter $p$, we can approximate the posterior:
+
+```{r}
+#| code-fold: true
+grid.seq <- seq(0, 1, length.out=20)
+prior <- dunif(grid.seq)
+likelihood <- dbinom(6, size=9, prob=grid.seq)
+posterior <- prior * likelihood / sum(prior * likelihood)
+```
+```{r}
+#| echo: false
+plot(grid.seq, posterior, type="b", xlab="p", ylab="Posterior Probability")
+mtext("Posterior Approximation with 20 Grid Points")
+```
+
+### Quadratic Approximation
+
+This technique involves leveraging a Gaussian approximation of the posterior near its mode. I believe the theory behind it is related to the efficiency property[^2] of MLEs, which states that the MLE converges in distribution to a normal distribution at larger sample sizes. It is relatively easy to code up using the `quap` function from the textbook's `rethinking` package:[^3]
+
+```{r}
+#| code-fold: true
+posterior <- rethinking::quap(
+  alist(
+    W ~ dbinom(W+L ,p) ,
+    p ~ dunif(0, 1)),
+  data=list(W=6,L=3) )
+quad.post <- rethinking::precis(posterior)
+```
+
+```{r}
+#| echo: false
+curve(dnorm(x, quad.post$mean, quad.post$sd), from=0, to=1, ylab="Quadratic Density", xlab="p")
+mtext("Quadratic Approximation to Posterior")
+```
+
+### MCMC
+
+Finally MCMC, which is the most-widely adopted approach to posterior approximation, has many algorithmic variants. The following is an example of the Metropolis Algorithm:[^4]
+
+```{r}
+#| code-fold: true
+set.seed(1818)
+n.samples <- 2000
+p <- rep(NA, n.samples)
+p[1] <- 0.5
+obs.data <- list(W=6, L=3)
+for (i in 2:n.samples){
+  p.new <- rnorm(1 , p[i - 1] , 0.1)
+  if (p.new < 0) p.new <- abs(p.new)
+  if (p.new > 1) p.new <- 2 - p.new
+  q0 <- dbinom(obs.data$W, obs.data$W + obs.data$L, p[i-1])
+  q1 <- dbinom(obs.data$W, obs.data$W + obs.data$L, p.new)
+  p[i] <- ifelse(runif(1) < q1/q0, p.new, p[i-1])
+}
+```
+```{r}
+#| echo: false
+hist(p, xlim=c(0, 1), xlab="p", ylab="Posterior Probability", freq=F, main=NA)
+mtext("MCMC Approximation to Posterior")
+```
+
+:::
+
+The one intruiging feature of the Metropolis algorithm is the acceptance rule, which computes a ratio of **likelihoods**, given $p$ and $p'$, and accepts the new value $p'$ if this ratio is above some randomly-generated value.
+
+In other words, the internal mechanics of the algorithm work a bit like the classical approach to inference (see above), in which the likelihoods of two points are compared. In the classical approach, $\hat{p}$ is never technically "accepted", but $p_0$ can be rejected if the ratio of likelihoods ($\mathcal{L}(\hat{p})$ vs. $\mathcal{L}(p_0)$) is above some constant $c$. In contrast to MCMC, however, $c$ is not randomly-generate but instead dictated by the choice of $\alpha$, which is commonly 0.05.
+
+[^1]: Statistical Rethinking by Richard McElreath. Second Edition. <https://xcelab.net/rm/>.
+[^2]: Efficiency Property of Maximum Likelihood Estimators. <https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Efficiency>.
+[^3]: Rethinking package for R. <https://github.com/rmcelreath/rethinking>.
+[^4]: Metropolis-Hastings Algorithm. <https://en.wikipedia.org/wiki/Metropolis%E2%80%93Hastings_algorithm>.
