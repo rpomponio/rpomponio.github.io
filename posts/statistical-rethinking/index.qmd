@@ -137,9 +137,21 @@ mtext("MCMC Approximation to Posterior")
 
 :::
 
-The one intruiging feature of the Metropolis algorithm is the acceptance rule, which computes a ratio of **likelihoods**, given $p$ and $p'$, and accepts the new value $p'$ if this ratio is above some randomly-generated value.
+The one intruiging feature of the Metropolis Algorithm is the acceptance rule, which computes a ratio of **likelihoods**, given $p$ and $p'$, and accepts the new value $p'$ if this ratio is above some randomly-generated value.
 
 In other words, the internal mechanics of the algorithm work a bit like the classical approach to inference (see above), in which the likelihoods of two points are compared. In the classical approach, $\hat{p}$ is never technically "accepted", but $p_0$ can be rejected if the ratio of likelihoods ($\mathcal{L}(\hat{p})$ vs. $\mathcal{L}(p_0)$) is above some constant $c$. In contrast to MCMC, however, $c$ is not randomly-generate but instead dictated by the choice of $\alpha$, which is commonly 0.05.
+
+Another noteworthy feature, not highlighted here, is that the Metropolis Algorithm does not require computation of exact densities, relative density functions work just fine. That's a major advantage when it comes time to scale the algorithm with increasing model complexity.
+
+```{r}
+#| echo: false
+#| output: false
+# use posterior probabilities from grid approximation
+posterior <- prior * likelihood / sum(prior * likelihood)
+samples <- sample(grid.seq, prob=posterior, size=9999, replace=TRUE)
+hist(samples)
+```
+
 
 [^1]: Statistical Rethinking by Richard McElreath. Second Edition. <https://xcelab.net/rm/>.
 [^2]: Efficiency Property of Maximum Likelihood Estimators. <https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Efficiency>.

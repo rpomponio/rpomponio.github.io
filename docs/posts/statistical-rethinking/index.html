@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ray Pomponio">
-<meta name="dcterms.date" content="2025-04-07">
+<meta name="dcterms.date" content="2025-04-08">
 
 <title>Rethinking Some Statistical Principles – pompon.io</title>
 <style>
@@ -207,7 +207,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 7, 2025</p>
+        <p class="date">April 8, 2025</p>
       </div>
     </div>
     
@@ -379,8 +379,9 @@ Likelihoods as Objectives
 </div>
 </div>
 </div>
-<p>The one intruiging feature of the Metropolis algorithm is the acceptance rule, which computes a ratio of <strong>likelihoods</strong>, given <span class="math inline">\(p\)</span> and <span class="math inline">\(p'\)</span>, and accepts the new value <span class="math inline">\(p'\)</span> if this ratio is above some randomly-generated value.</p>
+<p>The one intruiging feature of the Metropolis Algorithm is the acceptance rule, which computes a ratio of <strong>likelihoods</strong>, given <span class="math inline">\(p\)</span> and <span class="math inline">\(p'\)</span>, and accepts the new value <span class="math inline">\(p'\)</span> if this ratio is above some randomly-generated value.</p>
 <p>In other words, the internal mechanics of the algorithm work a bit like the classical approach to inference (see above), in which the likelihoods of two points are compared. In the classical approach, <span class="math inline">\(\hat{p}\)</span> is never technically “accepted”, but <span class="math inline">\(p_0\)</span> can be rejected if the ratio of likelihoods (<span class="math inline">\(\mathcal{L}(\hat{p})\)</span> vs.&nbsp;<span class="math inline">\(\mathcal{L}(p_0)\)</span>) is above some constant <span class="math inline">\(c\)</span>. In contrast to MCMC, however, <span class="math inline">\(c\)</span> is not randomly-generate but instead dictated by the choice of <span class="math inline">\(\alpha\)</span>, which is commonly 0.05.</p>
+<p>Another noteworthy feature, not highlighted here, is that the Metropolis Algorithm does not require computation of exact densities, relative density functions work just fine. That’s a major advantage when it comes time to scale the algorithm with increasing model complexity.</p>
 
 
 </section>
