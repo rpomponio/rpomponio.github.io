@@ -1,0 +1,137 @@
+---
+title: "What the heck are GEEs Doing?"
+author: "Ray Pomponio"
+date: today
+categories: [statistics, analysis]
+draft: true
+---
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+library(data.table)
+library(corrplot)
+library(geepack)
+library(broom)
+```
+
+
+Following along with an online stats course example,[^1] I began to unpack GEEs and understand what they're doing. The data in this example come from a survey in which respondents were asked to rank their confidence in educational, medical, and scientific institutions. Each respondent had three observations in the dataset:
+
+```{r}
+gss <- fread("gss.confidence.csv")
+dim(gss)
+```
+
+Altogether there were `r length(unique(gss$id))` respondents.
+
+Let's treat each observation as independent, which is a bad assumption. However I will show why that's a bad idea shortly. For now, we can easily fit a model with a binary outcome and an arbitrary set of predictors using the `glm()` function:
+
+```{r}
+gss[, agedec:=age / 10]
+fit.glm <- glm(greatly ~ question + agedec, data=gss, family=binomial)
+tidy(fit.glm, exponentiate=TRUE, conf.int=TRUE) |>
+  knitr::kable(digits=2)
+```
+The model suggests with a high degree of precision that both medical institutions and scientific institutions are *more* likely to be rated favorably by respondents, and that older respondents are *less* likely to rate any institutions favorably.
+
+However, this might be a bad model because, as we know, each respondent answered three questions and the answers within a single respondent are likely to be correlated. The directional effect of this correlation on resulting estimates is difficult to determine, but statistical theory suggests that our current estimates may be biased.
+
+Below I attempt to visualize the observed correlation structure, to show that answers from the same respondent are indeed correlated:
+
+```{r}
+#| echo: false
+wide <- dcast(gss, id ~ question, value.var="greatly")
+corrplot(cor(wide[, 2:4]), method="number", type="upper")
+```
+
+[Notice that I've left out elements from the lower triangle but they are identical to the upper triangle in any correlatin matrix, by design.]{.aside}
+
+The respondents' answers are positively correlated, with stronger correlation between questions on medicine and education and between questions on medicine and science (makes sense). They are also correlated between the questions on education and science, just not as strongly.
+
+Now let's move away from assuming independence and instead use GEEs with an **exchangeable** correlation structure. This structure states that the off-diagonal elements of the correlation matrix are constant in magnitude:
+
+$$
+\begin{bmatrix}
+1 & \rho & \rho \\
+- & 1 & \rho \\
+- & - & 1
+\end{bmatrix}
+$$
+So we fit this structure with GEEs and examine the new estimates, compared to our old ones:
+
+::: {.panel-tabset}
+
+## GEE
+
+```{r}
+#| code-fold: true
+# gee with exchangeable corr structure; avoid overdispersion with scale.fix=T
+fit.exch <- geeglm(greatly ~ question + agedec, data=gss, family=binomial,
+                   id=id, corstr="exchangeable", scale.fix=TRUE)
+tidy(fit.exch, exponentiate=TRUE, conf.int=TRUE) |>
+  knitr::kable(digits=2)
+```
+## GLM
+
+```{r}
+#| code-fold: true
+tidy(fit.glm, exponentiate=TRUE, conf.int=TRUE) |>
+  knitr::kable(digits=2)
+```
+
+:::
+
+Notice there's no difference in the estimated coefficients, but the standard errors changed, causing the resulting inference to change (p-values and confidence intervals).
+
+What's confusing is that the direction of change is not the same across the coefficients, as you can see by flipping back and forth between the "GEE" tab and the "GLM" tab. By accounting for correlation among respondents' answers, we lost some precision in the intercept estimate, yet gained precision in the estimates of the fixed effects for question category.
+
+You might be wondering what the model estimated for the correlation parameter, $\rho$. That also comes with a standard error:
+
+```{r}
+summary(fit.exch)$corr |>
+  knitr::kable(digits=3)
+```
+
+This estimate makes sense, because it's sort-of-an-average over the three correlation values we obtained earlier (0.26, 0.29, and 0.15).
+
+Lastly I wanted to assess the potential impact of specifying a different correlation structure, such as **unstructured** correlation, which is arguably appropriate for these data since pairs of questions were not uniformly correlated.
+
+::: {.panel-tabset}
+
+## Unstructured
+
+```{r}
+#| code-fold: true
+# gee with unstructured corr structure; avoid overdispersion with scale.fix=T
+fit.unst <- geeglm(greatly ~ question + agedec, data=gss, family=binomial,
+                   id=id, corstr="unstructured", scale.fix=TRUE)
+tidy(fit.unst, exponentiate=TRUE, conf.int=TRUE) |>
+  knitr::kable(digits=2)
+```
+
+## Exchangeable
+
+```{r}
+#| code-fold: true
+tidy(fit.exch, exponentiate=TRUE, conf.int=TRUE) |>
+  knitr::kable(digits=2)
+```
+
+:::
+
+Doesn't seem to make much of a difference.
+
+# Appendix
+
+Here's the estimated correlation structure with the last GEE:
+
+```{r}
+V.unst <- diag(3)
+V.unst[upper.tri(V.unst)] <- summary(fit.unst)$corr$Estimate
+V.unst[lower.tri(V.unst)] <- summary(fit.unst)$corr$Estimate
+round(V.unst, 3)
+```
+
+[^1]: Penn State Eberly College of Science. STAT 504: Analysis of Discrete Data. 12.1 - Introduction to Generalized Estimating Equations. <https://online.stat.psu.edu/stat504/lesson/12/12.1>.

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ray Pomponio">
-<meta name="dcterms.date" content="2025-04-08">
+<meta name="dcterms.date" content="2025-04-11">
 
 <title>Rethinking Some Statistical Principles – pompon.io</title>
 <style>
@@ -207,7 +207,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 8, 2025</p>
+        <p class="date">April 11, 2025</p>
       </div>
     </div>
     
@@ -227,8 +227,8 @@ window.Quarto = {
 
 
 <p>I’ve begun reading <em>Statistical Rethinking</em> by Richard McElreath,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and I want to log some of my thoughts that came to mind while working through his ideas on modern statistical science.</p>
-<section id="chapter-2" class="level1">
-<h1>Chapter 2</h1>
+<section id="chapter-2-modes-of-inference" class="level1">
+<h1>Chapter 2 (Modes of Inference)</h1>
 <section id="likelihoods" class="level2">
 <h2 class="anchored" data-anchor-id="likelihoods">Likelihoods</h2>
 <p>In this chapter, a hypothetical experiment was introduced in which an observer collects data about the proportion of water on a globe (to understand the true proportion of water on earth).</p>
@@ -241,12 +241,12 @@ Pr(W=w,L=l\quad|\quad p)={w+l\choose w}p^w(1-p)^l
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>And this is <strong>by no means a probabiltity distribution</strong>. It doesn’t sum to one; it integrates to 0.1. However the recognition of this function is a crucial step towards two possible modes of inference:</p>
+<p>And this is <strong>by no means a probability distribution</strong>. It doesn’t sum to one; it integrates to 0.1. However the recognition of this function is a crucial step towards two possible modes of inference:</p>
 <ul>
 <li>In a <strong>classical</strong> sense, this function represents an objective to maximize, then compare against a null hypothesis (often <span class="math inline">\(H_0: p=0.5\)</span>).</li>
 <li>In a <strong>Bayesian</strong> sense, this function represents one piece of the joint distribution of <span class="math inline">\(W, L, p\)</span> (the other piece being the prior on <span class="math inline">\(p\)</span>). And this is the mode of inference advocated by the book.</li>
@@ -260,7 +260,7 @@ Pr(W=w,L=l\quad|\quad p)={w+l\choose w}p^w(1-p)^l
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -271,7 +271,7 @@ Pr(W=w,L=l\quad|\quad p)={w+l\choose w}p^w(1-p)^l
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -293,7 +293,7 @@ Likelihoods as Objectives
 <p>As part of the classical mode of inference, one might reasonably seek to maximize the above likelihood function <span class="math inline">\(\mathcal{L}\)</span>, setting <span class="math inline">\(p=\hat{p}\)</span> at maximal likelihood, then comparing the ratio of likelihoods between <span class="math inline">\(\mathcal{L}(\hat{p})\)</span> and <span class="math inline">\(\mathcal{L}(p_0)\)</span>. It turns out, when this ratio is greater than some constant <span class="math inline">\(c\)</span>, one would rationally conclude that <span class="math inline">\(p\neq p_0\)</span> (in other words, one rejects the null hypothesis).</p>
 </div>
 </div>
-<p>So contrasting the two modes of inference: in the classical sense, one compares two points along the likelihood curve to posit evidence against some hypothesis <span class="math inline">\(H_0\)</span>. In a Bayesian sense, one obtains a posterior distribution over plausible values of <span class="math inline">\(p\)</span>, which can be further analyzed for compatability with any set of hypotheses. And the realization for me (at least in this trivial example) is that the likelihood and posterior functions are the <strong>exact same shape</strong>.</p>
+<p>So contrasting the two modes of inference: in the classical sense, one compares two points along the likelihood curve to posit evidence against some hypothesis <span class="math inline">\(H_0\)</span>. In a Bayesian sense, one obtains a posterior distribution over plausible values of <span class="math inline">\(p\)</span>, which can be further analyzed for compatibility with any set of hypotheses. And the realization for me (at least in this trivial example) is that the likelihood and posterior functions are the <strong>exact same shape</strong>.</p>
 <p>Reflecting on this a little more, I can understand how the relative simplicity of the classical approach might be appealing at the start of a scientific inquiry, say, when we don’t know much about the phenomenon but expect to learn a lot quickly. However, when an inquiry matures to the point of having data readily available, it seems silly to forgo the benefit of having the entire distribution of a parameter available to interrogate. It’s clear that the latter offers a richer description of the unknown phenomenon. Perhaps an analogy would be like entering a dark cavernous tunnel, where the classical approach affords you looks at two possible paths forward (one of which is a dead-end and the other quite a promising lead). The Bayesian approach, on the other hand, affords you something like a map of multiple paths forward.</p>
 </section>
 <section id="algorithms-for-posterior-approximation" class="level2">
@@ -318,7 +318,7 @@ Likelihoods as Objectives
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -329,19 +329,19 @@ Likelihoods as Objectives
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>posterior <span class="ot">&lt;-</span> rethinking<span class="sc">::</span><span class="fu">quap</span>(</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>posterior <span class="ot">&lt;-</span> <span class="fu">quap</span>(</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">alist</span>(</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    W <span class="sc">~</span> <span class="fu">dbinom</span>(W<span class="sc">+</span>L ,p) ,</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    p <span class="sc">~</span> <span class="fu">dunif</span>(<span class="dv">0</span>, <span class="dv">1</span>)),</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">data=</span><span class="fu">list</span>(<span class="at">W=</span><span class="dv">6</span>,<span class="at">L=</span><span class="dv">3</span>) )</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>quad.post <span class="ot">&lt;-</span> rethinking<span class="sc">::</span><span class="fu">precis</span>(posterior)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>quad.post <span class="ot">&lt;-</span> <span class="fu">precis</span>(posterior)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -371,7 +371,7 @@ Likelihoods as Objectives
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -379,9 +379,154 @@ Likelihoods as Objectives
 </div>
 </div>
 </div>
-<p>The one intruiging feature of the Metropolis Algorithm is the acceptance rule, which computes a ratio of <strong>likelihoods</strong>, given <span class="math inline">\(p\)</span> and <span class="math inline">\(p'\)</span>, and accepts the new value <span class="math inline">\(p'\)</span> if this ratio is above some randomly-generated value.</p>
+<p>The one intriguing feature of the Metropolis Algorithm is the acceptance rule, which computes a ratio of <strong>likelihoods</strong>, given <span class="math inline">\(p\)</span> and <span class="math inline">\(p'\)</span>, and accepts the new value <span class="math inline">\(p'\)</span> if this ratio is above some randomly-generated value.</p>
 <p>In other words, the internal mechanics of the algorithm work a bit like the classical approach to inference (see above), in which the likelihoods of two points are compared. In the classical approach, <span class="math inline">\(\hat{p}\)</span> is never technically “accepted”, but <span class="math inline">\(p_0\)</span> can be rejected if the ratio of likelihoods (<span class="math inline">\(\mathcal{L}(\hat{p})\)</span> vs.&nbsp;<span class="math inline">\(\mathcal{L}(p_0)\)</span>) is above some constant <span class="math inline">\(c\)</span>. In contrast to MCMC, however, <span class="math inline">\(c\)</span> is not randomly-generate but instead dictated by the choice of <span class="math inline">\(\alpha\)</span>, which is commonly 0.05.</p>
-<p>Another noteworthy feature, not highlighted here, is that the Metropolis Algorithm does not require computation of exact densities, relative density functions work just fine. That’s a major advantage when it comes time to scale the algorithm with increasing model complexity.</p>
+<p>Another noteworthy feature, not highlighted here, is that the Metropolis Algorithm does not require computation of exact densities; relative density functions work just fine. That’s a major advantage when it comes time to scale the algorithm with increasing model complexity.</p>
+</section>
+</section>
+<section id="chapter-4-linear-regression" class="level1">
+<h1>Chapter 4 (Linear Regression)</h1>
+<section id="normal-gaussian-distributions" class="level2">
+<h2 class="anchored" data-anchor-id="normal-gaussian-distributions">Normal (Gaussian) Distributions</h2>
+<p>This chapter points out the commonality of the Normal Distribution, which serves as a wonderful approximation of natural phenomena such as variation in <em>height</em>, variation in <em>growth rates</em>, or games of chance. The chapter begins by introducing a hypothetical experiment, which I paraphrase below:</p>
+<blockquote class="blockquote">
+<p>Suppose 1,000 people line up on the 50-yard line of a American football field. Each person flips a coin 16 times; for each time they see “heads” they step one yard in the direction of the home team’s endzone. Likewise, for each time they see “tails” the step one yard towards the away team’s endzone.</p>
+</blockquote>
+<p>It’s apparent from the simulation below that this somewhat-contrived process will yield a distribution of yardage positions that looks like the following:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">16</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1818</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>simulation <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1000</span>,{</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  heads <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="dv">1</span>, <span class="at">size=</span>N, <span class="at">prob=</span><span class="fl">0.5</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  tails <span class="ot">&lt;-</span> N <span class="sc">-</span> heads</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  steps <span class="ot">&lt;-</span> heads <span class="sc">-</span> tails</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  steps</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">prop.table</span>(<span class="fu">table</span>(simulation)), <span class="at">xlab=</span><span class="st">"Position (0=50-yard line)"</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="fu">paste</span>(<span class="st">"Observed SD:"</span>, <span class="fu">round</span>(<span class="fu">sd</span>(simulation), <span class="dv">3</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>By the central limit theorem, it’s possible to predict the ultimate distribution of positions. Let <span class="math inline">\(X_i\)</span> be an individual coin flip, and <span class="math inline">\(\bar{X}\)</span> be the mean number of heads for an individual person; there are 1,000 people and <span class="math inline">\(n=16\)</span> tosses per person. The central limit theorem predicts the distribution of <span class="math inline">\(Y=n(2\bar{X}-1)\)</span> will converge towards:</p>
+<p><span class="math display">\[
+Y \rightarrow N(0, 4n\sigma^2) \quad \text{where} \quad \sigma^2=p(1-p)
+\]</span> Note that <span class="math inline">\(p\)</span> is assumed to be 0.5 because the coin is fair. But what’s neat is that the assumption of a fair coin is not a requirement for normality to arise. For example, what if the probability of heads is <span class="math inline">\(p=0.25\)</span>?</p>
+<p>The distribution for <span class="math inline">\(n=16\)</span> is not quite “normal”, in that it is asymetrically skewed towards the right tail (towars the home team’s endzone). However, the normal distribution is not a bad approximation and the central limit theorem states this will still converge given large enough <span class="math inline">\(n\)</span>. See for example, <span class="math inline">\(n=64\)</span>.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">N=16</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">N=64</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The CLT Revisited
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In it’s classical form (the form I learned in grad school), the central limit theorem states that for independent samples of <span class="math inline">\(X_i\)</span> with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>, the distribution of the sample mean <span class="math inline">\(\bar{X}\)</span> converges with large <span class="math inline">\(n\)</span> to a Normal distribution centered at <span class="math inline">\(\mu\)</span> with predictable variance:</p>
+<p><span class="math display">\[
+\bar{X} \rightarrow N(\mu, \frac{\sigma^2}{n})
+\]</span></p>
+</div>
+</div>
+</section>
+<section id="selecting-priors" class="level2">
+<h2 class="anchored" data-anchor-id="selecting-priors">Selecting Priors</h2>
+<p>While classical inference is often concerned with selecting the best estimators, Bayesian inference depends heavily on the choice of priors. The latter is not something that’s emphasized in most courses (indeed, not in my graduate school classes), and it’s usually assumed that priors emerge out of a textbook when needed to solve a Bayesian problem, or that they are extremely vague and uninformative.</p>
+<p>What I like about this chapter is its insistence on selecting appropriate priors, and then checking the assumptions reinforced by priors before analyzing any data. This is a sensible thing to do; indeed the choice of different priors may distinguish two anlysts from one another, but to even begin analyzing data one ought to reassure themselves that the prior chosen is at least appropriate.</p>
+<p>Consider the example from this chapter, which analyzes heights as Gaussian-distributed. In a way that’s surprisingly common in other textbooks, one might suppose that the prior on the mean height <span class="math inline">\(\mu\)</span> is uninformative, for example:</p>
+<p><span class="math display">\[
+\begin{align}
+h_i \sim \text{Normal}(\mu, \sigma^2) \\
+\mu \sim \text{Normal}(0, 100^2) \\
+\sigma \sim \text{Unif}(0, 50) \\
+\end{align}
+\]</span> The choice of prior for <span class="math inline">\(\mu\)</span> is uninformative, yes, but it’s actually a preposterous assumption. Human heights are not distributed with such high variance, nor are they centered at zero. But this is exactly the kind of choice that a naive observer would want to make if they knew <em>nothing</em> about human heights. Instead the author posits a model that is reasonable given his height of 178cm:</p>
+<p><span class="math display">\[
+\begin{align}
+h_i \sim \text{Normal}(\mu, \sigma^2) \\
+\mu \sim \text{Normal}(178, 20^2) \\
+\sigma \sim \text{Unif}(0, 50) \\
+\end{align}
+\]</span></p>
+<p>Below I compare the two choices of priors through a prior predictive check:</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true">Uninformative</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false">Informative</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>sample.mu <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10000</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">100</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sample.sigma <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10000</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">50</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>prior.h <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10000</span>, <span class="at">mean=</span>sample.mu, <span class="at">sd=</span>sample.sigma)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(prior.h, <span class="at">main=</span><span class="cn">NA</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">400</span>, <span class="dv">400</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">"Prior on Height (cm)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>sample.mu <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10000</span>, <span class="at">mean=</span><span class="dv">178</span>, <span class="at">sd=</span><span class="dv">20</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sample.sigma <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">10000</span>, <span class="at">min=</span><span class="dv">0</span>, <span class="at">max=</span><span class="dv">50</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>prior.h <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">10000</span>, <span class="at">mean=</span>sample.mu, <span class="at">sd=</span>sample.sigma)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(prior.h, <span class="at">main=</span><span class="cn">NA</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">400</span>, <span class="dv">400</span>))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">"Prior on Height (cm)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>The informative prior might seem like “cheating” in some respect because it is more precise to begin with, but such precision is the exact reason we’d like to work with priors in the first place. Priors help to constrain our estimates to ranges we believe plausible. The alternatives–keeping priors vague or reverting to classical methods–might be lauded as “objective” but fail to provide meaningful insight when our sample size is limited (as it almost always is). Even worse, when folks see an objective result that doesn’t agree with their intuition, they come up with subjective reasons to discount it, and those reasons are almost never formalized with the same transparency as a prior selection.</p>
 
 
 </section>

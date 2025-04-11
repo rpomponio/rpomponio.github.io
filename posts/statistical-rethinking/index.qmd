@@ -5,9 +5,16 @@ date: today
 categories: [reading, reflections]
 ---
 
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(rethinking)
+```
+
 I've begun reading *Statistical Rethinking* by Richard McElreath,[^1] and I want to log some of my thoughts that came to mind while working through his ideas on modern statistical science.
 
-# Chapter 2
+# Chapter 2 (Modes of Inference)
 
 ## Likelihoods
 
@@ -26,7 +33,7 @@ Now presume the observer recorded $W=6$ and $L=3$ in nine trials. The "likelihoo
 curve(dbinom(6, size=9, prob=x), from=0, to=1, ylab="Likelihood", xlab="p")
 ```
 
-And this is **by no means a probabiltity distribution**. It doesn't sum to one; it integrates to `r integrate(function(p) dbinom(6, size=9, prob=p), lower=0, upper=1)$value`. However the recognition of this function is a crucial step towards two possible modes of inference:
+And this is **by no means a probability distribution**. It doesn't sum to one; it integrates to `r integrate(function(p) dbinom(6, size=9, prob=p), lower=0, upper=1)$value`. However the recognition of this function is a crucial step towards two possible modes of inference:
 
 * In a **classical** sense, this function represents an objective to maximize, then compare against a null hypothesis (often $H_0: p=0.5$).
 * In a **Bayesian** sense, this function represents one piece of the joint distribution of $W, L, p$ (the other piece being the prior on $p$). And this is the mode of inference advocated by the book.
@@ -34,7 +41,6 @@ And this is **by no means a probabiltity distribution**. It doesn't sum to one; 
 When we start with a uniform prior $p\sim\text{Beta}(1, 1)$, we end up with a posterior that looks uncannily like our likelihood function:
 
 :::{.panel-tabset}
-
 
 ### Posterior
 
@@ -60,7 +66,7 @@ They're actually the same function, just with different *y-axis* scales. I previ
 As part of the classical mode of inference, one might reasonably seek to maximize the above likelihood function $\mathcal{L}$, setting $p=\hat{p}$ at maximal likelihood, then comparing the ratio of likelihoods between $\mathcal{L}(\hat{p})$ and $\mathcal{L}(p_0)$. It turns out, when this ratio is greater than some constant $c$, one would rationally conclude that $p\neq p_0$ (in other words, one rejects the null hypothesis).
 :::
 
-So contrasting the two modes of inference: in the classical sense, one compares two points along the likelihood curve to posit evidence against some hypothesis $H_0$. In a Bayesian sense, one obtains a posterior distribution over plausible values of $p$, which can be further analyzed for compatability with any set of hypotheses. And the realization for me (at least in this trivial example) is that the likelihood and posterior functions are the **exact same shape**.
+So contrasting the two modes of inference: in the classical sense, one compares two points along the likelihood curve to posit evidence against some hypothesis $H_0$. In a Bayesian sense, one obtains a posterior distribution over plausible values of $p$, which can be further analyzed for compatibility with any set of hypotheses. And the realization for me (at least in this trivial example) is that the likelihood and posterior functions are the **exact same shape**.
 
 Reflecting on this a little more, I can understand how the relative simplicity of the classical approach might be appealing at the start of a scientific inquiry, say, when we don't know much about the phenomenon but expect to learn a lot quickly. However, when an inquiry matures to the point of having data readily available, it seems silly to forgo the benefit of having the entire distribution of a parameter available to interrogate. It's clear that the latter offers a richer description of the unknown phenomenon. Perhaps an analogy would be like entering a dark cavernous tunnel, where the classical approach affords you looks at two possible paths forward (one of which is a dead-end and the other quite a promising lead). The Bayesian approach, on the other hand, affords you something like a map of multiple paths forward.
 
@@ -95,12 +101,12 @@ This technique involves leveraging a Gaussian approximation of the posterior nea
 
 ```{r}
 #| code-fold: true
-posterior <- rethinking::quap(
+posterior <- quap(
   alist(
     W ~ dbinom(W+L ,p) ,
     p ~ dunif(0, 1)),
   data=list(W=6,L=3) )
-quad.post <- rethinking::precis(posterior)
+quad.post <- precis(posterior)
 ```
 
 ```{r}
@@ -137,11 +143,11 @@ mtext("MCMC Approximation to Posterior")
 
 :::
 
-The one intruiging feature of the Metropolis Algorithm is the acceptance rule, which computes a ratio of **likelihoods**, given $p$ and $p'$, and accepts the new value $p'$ if this ratio is above some randomly-generated value.
+The one intriguing feature of the Metropolis Algorithm is the acceptance rule, which computes a ratio of **likelihoods**, given $p$ and $p'$, and accepts the new value $p'$ if this ratio is above some randomly-generated value.
 
 In other words, the internal mechanics of the algorithm work a bit like the classical approach to inference (see above), in which the likelihoods of two points are compared. In the classical approach, $\hat{p}$ is never technically "accepted", but $p_0$ can be rejected if the ratio of likelihoods ($\mathcal{L}(\hat{p})$ vs. $\mathcal{L}(p_0)$) is above some constant $c$. In contrast to MCMC, however, $c$ is not randomly-generate but instead dictated by the choice of $\alpha$, which is commonly 0.05.
 
-Another noteworthy feature, not highlighted here, is that the Metropolis Algorithm does not require computation of exact densities, relative density functions work just fine. That's a major advantage when it comes time to scale the algorithm with increasing model complexity.
+Another noteworthy feature, not highlighted here, is that the Metropolis Algorithm does not require computation of exact densities; relative density functions work just fine. That's a major advantage when it comes time to scale the algorithm with increasing model complexity.
 
 ```{r}
 #| echo: false
@@ -150,6 +156,155 @@ Another noteworthy feature, not highlighted here, is that the Metropolis Algorit
 posterior <- prior * likelihood / sum(prior * likelihood)
 samples <- sample(grid.seq, prob=posterior, size=9999, replace=TRUE)
 hist(samples)
+```
+
+# Chapter 4 (Linear Regression)
+
+## Normal (Gaussian) Distributions
+
+This chapter points out the commonality of the Normal Distribution, which serves as a wonderful approximation of natural phenomena such as variation in *height*, variation in *growth rates*, or games of chance. The chapter begins by introducing a hypothetical experiment, which I paraphrase below:
+
+> Suppose 1,000 people line up on the 50-yard line of a American football field. Each person flips a coin 16 times; for each time they see "heads" they step one yard in the direction of the home team's endzone. Likewise, for each time they see "tails" the step one yard towards the away team's endzone.
+
+It's apparent from the simulation below that this somewhat-contrived process will yield a distribution of yardage positions that looks like the following:
+
+```{r}
+N <- 16
+set.seed(1818)
+simulation <- replicate(
+  1000,{
+  heads <- rbinom(1, size=N, prob=0.5)
+  tails <- N - heads
+  steps <- heads - tails
+  steps
+  }
+)
+barplot(prop.table(table(simulation)), xlab="Position (0=50-yard line)")
+mtext(paste("Observed SD:", round(sd(simulation), 3)))
+```
+
+By the central limit theorem, it's possible to predict the ultimate distribution of positions. Let $X_i$ be an individual coin flip, and $\bar{X}$ be the mean number of heads for an individual person; there are 1,000 people and $n=16$ tosses per person. The central limit theorem predicts the distribution of $Y=n(2\bar{X}-1)$ will converge towards:
+
+$$
+Y \rightarrow N(0, 4n\sigma^2) \quad \text{where} \quad \sigma^2=p(1-p)
+$$
+Note that $p$ is assumed to be 0.5 because the coin is fair. But what's neat is that the assumption of a fair coin is not a requirement for normality to arise. For example, what if the probability of heads is $p=0.25$?
+
+The distribution for $n=16$ is not quite "normal", in that it is asymetrically skewed towards the right tail (towars the home team's endzone). However, the normal distribution is not a bad approximation and the central limit theorem states this will still converge given large enough $n$. See for example, $n=64$.
+
+:::{.panel-tabset}
+
+### N=16
+
+```{r}
+#| echo: false
+simulation <- replicate(
+  1000,{
+  heads <- rbinom(1, size=N, prob=0.25)
+  tails <- N - heads
+  steps <- heads - tails
+  steps
+  }
+)
+barplot(prop.table(table(simulation)), xlab="Position (0=50-yard line)")
+mtext(paste("Observed SD:", round(sd(simulation), 3)))
+```
+### N=64
+
+```{r}
+#| echo: false
+N <- 64
+simulation <- replicate(
+  1000,{
+  heads <- rbinom(1, size=N, prob=0.25)
+  tails <- N - heads
+  steps <- heads - tails
+  steps
+  }
+)
+barplot(prop.table(table(simulation)), xlab="Position (0=50-yard line)")
+mtext(paste("Observed SD:", round(sd(simulation), 3)))
+```
+
+:::
+
+::: {.callout-tip}
+## The CLT Revisited
+
+In it's classical form (the form I learned in grad school), the central limit theorem states that for independent samples of $X_i$ with mean $\mu$ and variance $\sigma^2$, the distribution of the sample mean $\bar{X}$ converges with large $n$ to a Normal distribution centered at $\mu$ with predictable variance:
+
+$$
+\bar{X} \rightarrow N(\mu, \frac{\sigma^2}{n})
+$$
+:::
+
+## Selecting Priors
+
+While classical inference is often concerned with selecting the best estimators, Bayesian inference depends heavily on the choice of priors. The latter is not something that's emphasized in most courses (indeed, not in my graduate school classes), and it's usually assumed that priors emerge out of a textbook when needed to solve a Bayesian problem, or that they are extremely vague and uninformative.
+
+What I like about this chapter is its insistence on selecting appropriate priors, and then checking the assumptions reinforced by priors before analyzing any data. This is a sensible thing to do; indeed the choice of different priors may distinguish two anlysts from one another, but to even begin analyzing data one ought to reassure themselves that the prior chosen is at least appropriate.
+
+Consider the example from this chapter, which analyzes heights as Gaussian-distributed. In a way that's surprisingly common in other textbooks, one might suppose that the prior on the mean height $\mu$ is uninformative, for example:
+
+$$
+\begin{align}
+h_i \sim \text{Normal}(\mu, \sigma^2) \\
+\mu \sim \text{Normal}(0, 100^2) \\
+\sigma \sim \text{Unif}(0, 50) \\
+\end{align}
+$$
+The choice of prior for $\mu$ is uninformative, yes, but it's actually a preposterous assumption. Human heights are not distributed with such high variance, nor are they centered at zero. But this is exactly the kind of choice that a naive observer would want to make if they knew *nothing* about human heights. Instead the author posits a model that is reasonable given his height of 178cm:
+
+$$
+\begin{align}
+h_i \sim \text{Normal}(\mu, \sigma^2) \\
+\mu \sim \text{Normal}(178, 20^2) \\
+\sigma \sim \text{Unif}(0, 50) \\
+\end{align}
+$$
+
+Below I compare the two choices of priors through a prior predictive check:
+
+:::{.panel-tabset}
+
+### Uninformative
+
+```{r}
+#| code-fold: true
+sample.mu <- rnorm(10000, mean=0, sd=100)
+sample.sigma <- runif(10000, min=0, max=50)
+prior.h <- rnorm(10000, mean=sample.mu, sd=sample.sigma)
+hist(prior.h, main=NA, xlim=c(-400, 400))
+mtext("Prior on Height (cm)")
+```
+### Informative
+
+```{r}
+#| code-fold: true
+sample.mu <- rnorm(10000, mean=178, sd=20)
+sample.sigma <- runif(10000, min=0, max=50)
+prior.h <- rnorm(10000, mean=sample.mu, sd=sample.sigma)
+hist(prior.h, main=NA, xlim=c(-400, 400))
+mtext("Prior on Height (cm)")
+```
+:::
+
+The informative prior might seem like "cheating" in some respect because it is more precise to begin with, but such precision is the exact reason we'd like to work with priors in the first place. Priors help to constrain our estimates to ranges we believe plausible. The alternatives--keeping priors vague or reverting to classical methods--might be lauded as "objective" but fail to provide meaningful insight when our sample size is limited (as it almost always is). Even worse, when folks see an objective result that doesn't agree with their intuition, they come up with subjective reasons to discount it, and those reasons are almost never formalized with the same transparency as a prior selection.
+
+
+```{r}
+#| eval: false
+#| echo: false
+data(Howell1)
+adults <- Howell1[Howell1$age>=18, ]
+fit.height1 <- quap(alist(
+  height ~ dnorm(mu, sigma),
+  mu ~ dnorm(178, 20),
+  sigma ~ dunif(0, 50)),
+  data=adults)
+
+posterior <- extract.samples(fit.height1, n=10000)
+precis(posterior)
 ```
 
 
