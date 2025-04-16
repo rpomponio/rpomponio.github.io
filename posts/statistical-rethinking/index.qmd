@@ -10,6 +10,8 @@ categories: [reading, reflections]
 #| message: false
 #| warning: false
 library(rethinking)
+library(dagitty)
+library(splines)
 ```
 
 I've begun reading *Statistical Rethinking* by Richard McElreath,[^1] and I want to log some of my thoughts that came to mind while working through his ideas on modern statistical science.
@@ -297,16 +299,195 @@ The informative prior might seem like "cheating" in some respect because it is m
 #| echo: false
 data(Howell1)
 adults <- Howell1[Howell1$age>=18, ]
-fit.height1 <- quap(alist(
+mean.weight <- mean(adults$weight)
+fit.heights <- quap(alist(
   height ~ dnorm(mu, sigma),
-  mu ~ dnorm(178, 20),
+  mu <- alpha + beta * (weight - mean.weight),
+  alpha ~ dnorm(178, 20),
+  beta ~ dlnorm(0, 1),
   sigma ~ dunif(0, 50)),
   data=adults)
-
-posterior <- extract.samples(fit.height1, n=10000)
+posterior <- extract.samples(fit.heights, n=10000)
 precis(posterior)
+# plot posterior inference
+weight.seq <- seq(25, 70)
+plot(height ~ weight, data=adults, col=rangi2)
+mu <- link(fit.heights, data=data.frame(weight=weight.seq))
+mu.int89 <- apply(mu, 2, PI, prob=0.89)
+lines(weight.seq, apply(mu, 2, mean))
+shade(mu.int89, weight.seq)
+# plot prediction intervals
+sim.heights <- sim(fit.heights, data=list(weight=weight.seq))
+heights.int89 <- apply(sim.heights, 2, PI, prob=0.89)
+plot(height ~ weight, data=adults, col=rangi2)
+lines(weight.seq, apply(mu, 2, mean))
+shade(heights.int89, weight.seq)
+```
+```{r}
+#| eval: false
+#| echo: false
+data(cherry_blossoms)
+temps <- cherry_blossoms[complete.cases(cherry_blossoms$temp), ]
+num.knots <- 15
+knot.locs <- quantile(temps$year, seq(0, 1, length.out=num.knots))
+basis <- bs(temps$year, knots=knot.locs[-c(1, num.knots)], degree=3, intercept=T)
+fit.temps <- quap(
+  alist(
+    T ~ dnorm(mu, sigma),
+    mu <- alpha + B %*% w,
+    alpha ~ dnorm(6, 10),
+    w ~ dnorm(0, 1),
+    sigma ~ dexp(1)),
+  data=list(T=temps$temp, B=basis),
+  start=list(w=rep(0, ncol(basis))))
+posterior <- extract.samples(fit.temps)
+mu <- link(fit.temps)
+mu.int97 <- apply(mu, 2, PI, prob=0.97)
+plot(temp ~ year, data=cherry_blossoms, col=col.alpha(rangi2, 0.3), pch=16)
+shade(mu.int97, temps$year, col=col.alpha("black", 0.5))
+```
+# Chapter 5 (Multiple Linear Regression)
+
+## Testable Implications
+
+This chapter, which emphasizes multiple regression techniques, begins with a surprising discourse on causal inference. I'm thankful for the opportunity to review some causal concepts, since just like Bayesian methods, causal inference is not often taught in traditional statistics curricula.
+
+Here are some directed acyclic graphs (DAGs) that were proposed, in an attempt to explain the phenomenon of variability in state-level divorce rates:
+
+```{r}
+#| label: fig-dags
+#| fig-cap: "DAGs from Chapter 5"
+#| fig-subcap: 
+#|   - "Effect of age (at marriage) on divorce rate mediated by marriage rate."
+#|   - "Effect of marriage rate is conditionally independent of divorce rate."
+#| layout-ncol: 2
+#| code-fold: true
+dag.mediator <- dagitty( "dag {
+    Age -> Divorce
+    Age -> Marriage
+    Marriage -> Divorce}")
+coordinates(dag.mediator) <- list(
+  x=c(Age=0, Divorce=1, Marriage=2),
+  y=c(Age=0, Divorce=1, Marriage=0))
+plot(dag.mediator)
+
+dag.independ <- dagitty( "dag {
+    Age -> Divorce
+    Age -> Marriage}")
+coordinates(dag.independ) <- list(
+  x=c(Age=0, Divorce=1, Marriage=2),
+  y=c(Age=0, Divorce=1, Marriage=0))
+plot(dag.independ)
 ```
 
+Now the testable implication of @fig-dags is whether the marriage rate is *conditionally independent* of divorce. In formal terms:
+
+$$
+\begin{align}
+M \perp D |A \\
+\quad \text{where} \quad M:\text{Marriage rate,} \quad D:\text{Divorce rate,} \\
+\quad \text{and} \quad A:\text{Age at marriage (median)}
+\end{align}
+$$
+This example introduced new intuition that I had not previously encountered in my graduate statistics training. One, the idea of conditional independence is not new, but knowing that it could be gleaned from a DAG is a valuable lesson. It highlights the value in drawing these diagrams before modeling. Two, the concept of mediators is not new either, but knowing that a mediator model implies all three variables are associated with one another is a good reminder of the differences between data structures and causal implications. We might observe many correlations within an observed set of data, some of them spurious. However, having a DAG to return to makes it easier to theorize how such correlations came to be.
+
+Here's a simulated example of conditional independence, in which marriage rate is conditionally independent of divorce rate, yet a linear regression still picks up on the strong (unadjusted) relationship between the two:
+
+```{r}
+#| code-fold: true
+set.seed(1818)
+N <- 50
+age <- rnorm(N)
+mar.rate <- rnorm(N, -age)
+div.rate <- rnorm(N, age)
+precis(lm(div.rate ~ mar.rate), prob=0.95)
+```
+
+Without adjusting for age, we would mistakenly conclude that marriage rate is the solely important predictor of divorce rate (with a confidence interval that includes negative boundaries). In reality, this association disappears when we "control" for age:
+
+[**Terminology:** The book makes a compelling argument against use of the word "control", which is common in statistical parlance, because it suggests more power than is truly available. In lieu of an experimental *control*, the best we can do is *adjust* for predictors that might share a causal relationship with the outcome. That is what's accomplished in multiple regression.]{.aside}
+
+```{r}
+#| code-fold: true
+precis(lm(div.rate ~ mar.rate + age), prob=0.95)
+```
+
+## Counterfactual Plots
+
+Of the various diagnostics for multiple regression, I found the proposition of a counterfactual plot most compelling. They are constructed as follows:
+
+1. Choose the predictor (intervention) to manipulate.
+2. Define the range of values for the chosen predictor.
+3. Leverage the posterior to simulate values of other variables, including both the outcome *and* dependent predictors.
+
+It's the third step that's new for me. I am not used to considering the intermediate effects of a change in the intervention, but that seems to be exactly what Bayesian models are equipped to handle. Here's the textbook example:
+
+```{r}
+#| code-fold: true
+
+data("WaffleDivorce")
+states <- list(
+  A = standardize(WaffleDivorce$MedianAgeMarriage),
+  M = standardize(WaffleDivorce$Marriage),
+  D = standardize(WaffleDivorce$Divorce))
+fit.counterfac <- quap(
+  alist(
+    D ~ dnorm(mu, sigma),
+    mu <- alpha + beta_mar * M + beta_age * A,
+    alpha ~ dnorm(0, 0.2),
+    beta_mar ~ dnorm(0, 0.5),
+    beta_age ~ dnorm(0, 0.5),
+    sigma ~ dexp(1),
+    M ~ dnorm(theta, gamma), ### I'm using theta, gamma for the mediator model
+    theta <- eta + delta_age * A,
+    eta ~ dnorm(0, 0.2),
+    delta_age ~ dnorm(0, 0.5),
+    gamma ~ dexp(1)),
+  data=states)
+precis(fit.counterfac)
+```
+
+From this model, it's clear that age and marriage rate are associated through the posterior summary of $\delta_{\text{Age}}$, which is consistently negative. Therefore the effect of an increase in the median age of marriage is associated with a decrease in the marriage rate, which makes perfect sense.
+
+Next I carry out the three steps necessary to create a counterfactual portrait of a change in the median age at marriage, all in the following code block:
+
+```{r}
+age.seq <- seq(-2, 2, length.out=10)
+post <- extract.samples(fit.counterfac)
+sim.counterfac <- list()
+# simulate a 1000 x 10 matrix of marriage rates...
+sim.counterfac$M <- sapply(
+  age.seq,
+  function(age) rnorm(1000, post$eta + post$delta_age * age, post$gamma))
+# next, simulate a 1000 x 10 matrix of divorce rates, conditional on prev. sim
+sim.counterfac$D <- sapply(
+  1:length(age.seq),
+  function(i) rnorm(
+    1000,
+    post$alpha + post$beta_age * age.seq[i] + post$beta_mar * sim.counterfac$M[, i],
+    post$gamma))
+```
+
+I think the trick here is to use the simulated values of the marriage rate (conditional on chosen ages) to simulate--in-turn--values of the divorce rate. I can say confidently that I would not have though to do this, especially within the scope of one model. But the posterior makes this trivial to examine:
+
+```{r}
+#| label: fig-counterfactual
+#| fig-cap: "Counterfactual Plots from Chapter 5"
+#| fig-subcap: 
+#|   - "Effect of age (at marriage) on divorce rate, the outcome."
+#|   - "Effect of age (at marriage) on marriage rate, the mediator."
+#| layout-ncol: 2
+#| code-fold: true
+plot(age.seq, colMeans(sim.counterfac$D), ylim=c(-2, 2), type="l",
+     xlab="Manipulated Age", ylab="Counterfactual Divorce")
+shade(apply(sim.counterfac$D, 2, PI), age.seq)
+
+plot(age.seq, colMeans(sim.counterfac$M), ylim=c(-2, 2), type="l",
+     xlab="Manipulated Age", ylab="Counterfactual Marriage")
+shade(apply(sim.counterfac$M, 2, PI), age.seq)
+```
+
+The plot in @fig-counterfactual illustrates the entire strength of associations illustrated earlier in @fig-dags; namely, that age is associated with both marriage rate and divorce rate. Thus, intervening to alter the age of marriage will cascade downstream to effect both the mediator and the outcome, where the outcome is *doubly* affected by both the intervention and the mediator.
 
 [^1]: Statistical Rethinking by Richard McElreath. Second Edition. <https://xcelab.net/rm/>.
 [^2]: Efficiency Property of Maximum Likelihood Estimators. <https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Efficiency>.

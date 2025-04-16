@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ray Pomponio">
-<meta name="dcterms.date" content="2025-04-11">
+<meta name="dcterms.date" content="2025-04-16">
 
 <title>Rethinking Some Statistical Principles – pompon.io</title>
 <style>
@@ -136,7 +136,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -207,7 +207,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">April 11, 2025</p>
+        <p class="date">April 16, 2025</p>
       </div>
     </div>
     
@@ -218,9 +218,11 @@ window.Quarto = {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
 
 
 
@@ -527,6 +529,217 @@ h_i \sim \text{Normal}(\mu, \sigma^2) \\
 </div>
 </div>
 <p>The informative prior might seem like “cheating” in some respect because it is more precise to begin with, but such precision is the exact reason we’d like to work with priors in the first place. Priors help to constrain our estimates to ranges we believe plausible. The alternatives–keeping priors vague or reverting to classical methods–might be lauded as “objective” but fail to provide meaningful insight when our sample size is limited (as it almost always is). Even worse, when folks see an objective result that doesn’t agree with their intuition, they come up with subjective reasons to discount it, and those reasons are almost never formalized with the same transparency as a prior selection.</p>
+</section>
+</section>
+<section id="chapter-5-multiple-linear-regression" class="level1 page-columns page-full">
+<h1>Chapter 5 (Multiple Linear Regression)</h1>
+<section id="testable-implications" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="testable-implications">Testable Implications</h2>
+<p>This chapter, which emphasizes multiple regression techniques, begins with a surprising discourse on causal inference. I’m thankful for the opportunity to review some causal concepts, since just like Bayesian methods, causal inference is not often taught in traditional statistics curricula.</p>
+<p>Here are some directed acyclic graphs (DAGs) that were proposed, in an attempt to explain the phenomenon of variability in state-level divorce rates:</p>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dag.mediator <span class="ot">&lt;-</span> <span class="fu">dagitty</span>( <span class="st">"dag {</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="st">    Age -&gt; Divorce</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="st">    Age -&gt; Marriage</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="st">    Marriage -&gt; Divorce}"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coordinates</span>(dag.mediator) <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">x=</span><span class="fu">c</span>(<span class="at">Age=</span><span class="dv">0</span>, <span class="at">Divorce=</span><span class="dv">1</span>, <span class="at">Marriage=</span><span class="dv">2</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">y=</span><span class="fu">c</span>(<span class="at">Age=</span><span class="dv">0</span>, <span class="at">Divorce=</span><span class="dv">1</span>, <span class="at">Marriage=</span><span class="dv">0</span>))</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dag.mediator)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>dag.independ <span class="ot">&lt;-</span> <span class="fu">dagitty</span>( <span class="st">"dag {</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="st">    Age -&gt; Divorce</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="st">    Age -&gt; Marriage}"</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">coordinates</span>(dag.independ) <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">x=</span><span class="fu">c</span>(<span class="at">Age=</span><span class="dv">0</span>, <span class="at">Divorce=</span><span class="dv">1</span>, <span class="at">Marriage=</span><span class="dv">2</span>),</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">y=</span><span class="fu">c</span>(<span class="at">Age=</span><span class="dv">0</span>, <span class="at">Divorce=</span><span class="dv">1</span>, <span class="at">Marriage=</span><span class="dv">0</span>))</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dag.independ)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="fig-dags" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dags-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-dags" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-dags-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-dags-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-dags-1.png" class="img-fluid figure-img" data-ref-parent="fig-dags" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-dags-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Effect of age (at marriage) on divorce rate mediated by marriage rate.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-dags" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-dags-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-dags-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-dags-2.png" class="img-fluid figure-img" data-ref-parent="fig-dags" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-dags-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Effect of marriage rate is conditionally independent of divorce rate.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dags-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: DAGs from Chapter 5
+</figcaption>
+</figure>
+</div>
+<p>Now the testable implication of <a href="#fig-dags" class="quarto-xref">Figure&nbsp;1</a> is whether the marriage rate is <em>conditionally independent</em> of divorce. In formal terms:</p>
+<p><span class="math display">\[
+\begin{align}
+M \perp D |A \\
+\quad \text{where} \quad M:\text{Marriage rate,} \quad D:\text{Divorce rate,} \\
+\quad \text{and} \quad A:\text{Age at marriage (median)}
+\end{align}
+\]</span> This example introduced new intuition that I had not previously encountered in my graduate statistics training. One, the idea of conditional independence is not new, but knowing that it could be gleaned from a DAG is a valuable lesson. It highlights the value in drawing these diagrams before modeling. Two, the concept of mediators is not new either, but knowing that a mediator model implies all three variables are associated with one another is a good reminder of the differences between data structures and causal implications. We might observe many correlations within an observed set of data, some of them spurious. However, having a DAG to return to makes it easier to theorize how such correlations came to be.</p>
+<p>Here’s a simulated example of conditional independence, in which marriage rate is conditionally independent of divorce rate, yet a linear regression still picks up on the strong (unadjusted) relationship between the two:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1818</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>age <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>mar.rate <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N, <span class="sc">-</span>age)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>div.rate <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(N, age)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(<span class="fu">lm</span>(div.rate <span class="sc">~</span> mar.rate), <span class="at">prob=</span><span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   mean        sd       2.5%      97.5%
+(Intercept) -0.07556679 0.1834771 -0.4351754  0.2840418
+mar.rate    -0.54643398 0.1118293 -0.7656153 -0.3272527</code></pre>
+</div>
+</div>
+<p>Without adjusting for age, we would mistakenly conclude that marriage rate is the solely important predictor of divorce rate (with a confidence interval that includes negative boundaries). In reality, this association disappears when we “control” for age:</p>
+<div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside"><strong>Terminology:</strong> The book makes a compelling argument against use of the word “control”, which is common in statistical parlance, because it suggests more power than is truly available. In lieu of an experimental <em>control</em>, the best we can do is <em>adjust</em> for predictors that might share a causal relationship with the outcome. That is what’s accomplished in multiple regression.</span></div></div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(<span class="fu">lm</span>(div.rate <span class="sc">~</span> mar.rate <span class="sc">+</span> age), <span class="at">prob=</span><span class="fl">0.95</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  mean        sd        2.5%      97.5%
+(Intercept) -0.1754270 0.1130081 -0.39691877 0.04606467
+mar.rate     0.1950782 0.1072680 -0.01516319 0.40531955
+age          1.4164137 0.1576099  1.10750397 1.72532335</code></pre>
+</div>
+</div>
+</section>
+<section id="counterfactual-plots" class="level2">
+<h2 class="anchored" data-anchor-id="counterfactual-plots">Counterfactual Plots</h2>
+<p>Of the various diagnostics for multiple regression, I found the proposition of a counterfactual plot most compelling. They are constructed as follows:</p>
+<ol type="1">
+<li>Choose the predictor (intervention) to manipulate.</li>
+<li>Define the range of values for the chosen predictor.</li>
+<li>Leverage the posterior to simulate values of other variables, including both the outcome <em>and</em> dependent predictors.</li>
+</ol>
+<p>It’s the third step that’s new for me. I am not used to considering the intermediate effects of a change in the intervention, but that seems to be exactly what Bayesian models are equipped to handle. Here’s the textbook example:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"WaffleDivorce"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">A =</span> <span class="fu">standardize</span>(WaffleDivorce<span class="sc">$</span>MedianAgeMarriage),</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">M =</span> <span class="fu">standardize</span>(WaffleDivorce<span class="sc">$</span>Marriage),</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">D =</span> <span class="fu">standardize</span>(WaffleDivorce<span class="sc">$</span>Divorce))</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>fit.counterfac <span class="ot">&lt;-</span> <span class="fu">quap</span>(</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">alist</span>(</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    D <span class="sc">~</span> <span class="fu">dnorm</span>(mu, sigma),</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    mu <span class="ot">&lt;-</span> alpha <span class="sc">+</span> beta_mar <span class="sc">*</span> M <span class="sc">+</span> beta_age <span class="sc">*</span> A,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    alpha <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="fl">0.2</span>),</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    beta_mar <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="fl">0.5</span>),</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    beta_age <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="fl">0.5</span>),</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    sigma <span class="sc">~</span> <span class="fu">dexp</span>(<span class="dv">1</span>),</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    M <span class="sc">~</span> <span class="fu">dnorm</span>(theta, gamma), <span class="do">### I'm using theta, gamma for the mediator model</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    theta <span class="ot">&lt;-</span> eta <span class="sc">+</span> delta_age <span class="sc">*</span> A,</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    eta <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="fl">0.2</span>),</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    delta_age <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="fl">0.5</span>),</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    gamma <span class="sc">~</span> <span class="fu">dexp</span>(<span class="dv">1</span>)),</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">data=</span>states)</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(fit.counterfac)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   mean         sd       5.5%      94.5%
+alpha     -1.866974e-05 0.09707569 -0.1551644  0.1551270
+beta_mar  -6.541709e-02 0.15077205 -0.3063799  0.1755458
+beta_age  -6.134788e-01 0.15098351 -0.8547796 -0.3721780
+sigma      7.851144e-01 0.07784255  0.6607069  0.9095218
+eta        2.173672e-05 0.08684748 -0.1387773  0.1388208
+delta_age -6.947480e-01 0.09572636 -0.8477372 -0.5417588
+gamma      6.817335e-01 0.06757919  0.5737289  0.7897381</code></pre>
+</div>
+</div>
+<p>From this model, it’s clear that age and marriage rate are associated through the posterior summary of <span class="math inline">\(\delta_{\text{Age}}\)</span>, which is consistently negative. Therefore the effect of an increase in the median age of marriage is associated with a decrease in the marriage rate, which makes perfect sense.</p>
+<p>Next I carry out the three steps necessary to create a counterfactual portrait of a change in the median age at marriage, all in the following code block:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>age.seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length.out=</span><span class="dv">10</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">extract.samples</span>(fit.counterfac)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>sim.counterfac <span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># simulate a 1000 x 10 matrix of marriage rates...</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>sim.counterfac<span class="sc">$</span>M <span class="ot">&lt;-</span> <span class="fu">sapply</span>(</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  age.seq,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(age) <span class="fu">rnorm</span>(<span class="dv">1000</span>, post<span class="sc">$</span>eta <span class="sc">+</span> post<span class="sc">$</span>delta_age <span class="sc">*</span> age, post<span class="sc">$</span>gamma))</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># next, simulate a 1000 x 10 matrix of divorce rates, conditional on prev. sim</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>sim.counterfac<span class="sc">$</span>D <span class="ot">&lt;-</span> <span class="fu">sapply</span>(</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(age.seq),</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(i) <span class="fu">rnorm</span>(</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="dv">1000</span>,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    post<span class="sc">$</span>alpha <span class="sc">+</span> post<span class="sc">$</span>beta_age <span class="sc">*</span> age.seq[i] <span class="sc">+</span> post<span class="sc">$</span>beta_mar <span class="sc">*</span> sim.counterfac<span class="sc">$</span>M[, i],</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    post<span class="sc">$</span>gamma))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I think the trick here is to use the simulated values of the marriage rate (conditional on chosen ages) to simulate–in-turn–values of the divorce rate. I can say confidently that I would not have though to do this, especially within the scope of one model. But the posterior makes this trivial to examine:</p>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(age.seq, <span class="fu">colMeans</span>(sim.counterfac<span class="sc">$</span>D), <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>), <span class="at">type=</span><span class="st">"l"</span>,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Manipulated Age"</span>, <span class="at">ylab=</span><span class="st">"Counterfactual Divorce"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">shade</span>(<span class="fu">apply</span>(sim.counterfac<span class="sc">$</span>D, <span class="dv">2</span>, PI), age.seq)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(age.seq, <span class="fu">colMeans</span>(sim.counterfac<span class="sc">$</span>M), <span class="at">ylim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>), <span class="at">type=</span><span class="st">"l"</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Manipulated Age"</span>, <span class="at">ylab=</span><span class="st">"Counterfactual Marriage"</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">shade</span>(<span class="fu">apply</span>(sim.counterfac<span class="sc">$</span>M, <span class="dv">2</span>, PI), age.seq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="fig-counterfactual" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-counterfactual-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-counterfactual" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-counterfactual-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-counterfactual-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-counterfactual-1.png" class="img-fluid figure-img" data-ref-parent="fig-counterfactual" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-counterfactual-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Effect of age (at marriage) on divorce rate, the outcome.
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-counterfactual" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-counterfactual-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-counterfactual-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-counterfactual-2.png" class="img-fluid figure-img" data-ref-parent="fig-counterfactual" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-counterfactual-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Effect of age (at marriage) on marriage rate, the mediator.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-counterfactual-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Counterfactual Plots from Chapter 5
+</figcaption>
+</figure>
+</div>
+<p>The plot in <a href="#fig-counterfactual" class="quarto-xref">Figure&nbsp;2</a> illustrates the entire strength of associations illustrated earlier in <a href="#fig-dags" class="quarto-xref">Figure&nbsp;1</a>; namely, that age is associated with both marriage rate and divorce rate. Thus, intervening to alter the age of marriage will cascade downstream to effect both the mediator and the outcome, where the outcome is <em>doubly</em> affected by both the intervention and the mediator.</p>
 
 
 </section>
