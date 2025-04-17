@@ -15,10 +15,14 @@ format:
 library(rethinking)
 library(dagitty)
 library(splines)
-options(digits=3, scipen=999)
+options(digits=3, scipen=1e5)
+data(Howell1)
+data(WaffleDivorce)
+data(cherry_blossoms)
+data(milk)
 ```
 
-I've begun reading *Statistical Rethinking* by Richard McElreath,[^1] and I want to log some of my thoughts that came to mind while working through his ideas on modern statistical science.
+I've begun reading *Statistical Rethinking* by Richard McElreath,[^1] and I wanted to log some of my thoughts that come to mind while working through his ideas on modern statistical science.
 
 # Chapter 2 (Modes of Inference)
 
@@ -196,7 +200,7 @@ Y \rightarrow N(0, 4n\sigma^2) \quad \text{where} \quad \sigma^2=p(1-p)
 $$
 Note that $p$ is assumed to be 0.5 because the coin is fair. But what's neat is that the assumption of a fair coin is not a requirement for normality to arise. For example, what if the probability of heads is $p=0.25$?
 
-The distribution for $n=16$ is not quite "normal", in that it is asymetrically skewed towards the right tail (towars the home team's endzone). However, the normal distribution is not a bad approximation and the central limit theorem states this will still converge given large enough $n$. See for example, $n=64$.
+The distribution for $n=16$ is not quite "normal", in that it is asymmetrically skewed towards the right tail (towards the home team's end zone). However, the normal distribution is not a bad approximation and the central limit theorem states this will still converge given large enough $n$. See for example, $n=64$.
 
 :::{.panel-tabset}
 
@@ -248,7 +252,7 @@ $$
 
 While classical inference is often concerned with selecting the best estimators, Bayesian inference depends heavily on the choice of priors. The latter is not something that's emphasized in most courses (indeed, not in my graduate school classes), and it's usually assumed that priors emerge out of a textbook when needed to solve a Bayesian problem, or that they are extremely vague and uninformative.
 
-What I like about this chapter is its insistence on selecting appropriate priors, and then checking the assumptions reinforced by priors before analyzing any data. This is a sensible thing to do; indeed the choice of different priors may distinguish two anlysts from one another, but to even begin analyzing data one ought to reassure themselves that the prior chosen is at least appropriate.
+What I like about this chapter is its insistence on selecting appropriate priors, and then checking the assumptions reinforced by priors before analyzing any data. This is a sensible thing to do; indeed the choice of different priors may distinguish two analysts from one another, but to even begin analyzing data one ought to reassure themselves that the prior chosen is at least appropriate.
 
 Consider the example from this chapter, which analyzes heights as Gaussian-distributed. In a way that's surprisingly common in other textbooks, one might suppose that the prior on the mean height $\mu$ is uninformative, for example:
 
@@ -301,7 +305,7 @@ The informative prior might seem like "cheating" in some respect because it is m
 ```{r}
 #| eval: false
 #| echo: false
-data(Howell1)
+
 adults <- Howell1[Howell1$age>=18, ]
 mean.weight <- mean(adults$weight)
 fit.heights <- quap(alist(
@@ -330,7 +334,7 @@ shade(heights.int89, weight.seq)
 ```{r}
 #| eval: false
 #| echo: false
-data(cherry_blossoms)
+
 temps <- cherry_blossoms[complete.cases(cherry_blossoms$temp), ]
 num.knots <- 15
 knot.locs <- quantile(temps$year, seq(0, 1, length.out=num.knots))
@@ -395,7 +399,7 @@ M \perp D |A \\
 $$
 This example introduced new intuition that I had not previously encountered in my graduate statistics training. One, the idea of conditional independence is not new, but knowing that it could be gleaned from a DAG is a valuable lesson. It highlights the value in drawing these diagrams before modeling. Two, the concept of mediators is not new either, but knowing that a mediator model implies all three variables are associated with one another is a good reminder of the differences between data structures and causal implications. We might observe many correlations within an observed set of data, some of them spurious. However, having a DAG to return to makes it easier to theorize how such correlations came to be.
 
-Here's a simulated example of conditional independence, in which marriage rate is conditionally independent of divorce rate, yet a linear regression still picks up on the strong (unadjusted) relationship between the two:
+Here's a simulated example of conditional independence, in which marriage rate is conditionally independent of divorce rate, yet a linear regression still picks up on the strong (adjusted) relationship between the two:
 
 ```{r}
 #| code-fold: true
@@ -418,7 +422,7 @@ precis(lm(div.rate ~ mar.rate + age), prob=0.95)
 
 ## Counterfactual Plots
 
-Of the various diagnostics for multiple regression, I found the proposition of a counterfactual plot most compelling. They are constructed as follows:
+Of the various diagnostics for multiple regression, I found the proposition of a counter-factual plot most compelling. They are constructed as follows:
 
 1. Choose the predictor (intervention) to manipulate.
 2. Define the range of values for the chosen predictor.
@@ -429,7 +433,6 @@ It's the third step that's new for me. I am not used to considering the intermed
 ```{r}
 #| code-fold: true
 
-data("WaffleDivorce")
 states <- list(
   A = standardize(WaffleDivorce$MedianAgeMarriage),
   M = standardize(WaffleDivorce$Marriage),
@@ -453,7 +456,7 @@ precis(fit.counterfac, digits=2)
 
 From this model, it's clear that age and marriage rate are associated through the posterior summary of $\delta_{\text{Age}}$, which is consistently negative. Therefore the effect of an increase in the median age of marriage is associated with a decrease in the marriage rate, which makes perfect sense.
 
-Next I carry out the three steps necessary to create a counterfactual portrait of a change in the median age at marriage, all in the following code block:
+Next I carry out the three steps necessary to create a counter-factual portrait of a change in the median age at marriage, all in the following code block:
 
 ```{r}
 age.seq <- seq(-2, 2, length.out=10)
@@ -475,7 +478,7 @@ sim.counterfac$D <- sapply(
 I think the trick here is to use the simulated values of the marriage rate (conditional on chosen ages) to simulate--in-turn--values of the divorce rate. I can say confidently that I would not have though to do this, especially within the scope of one model. But the posterior makes this trivial to examine:
 
 ```{r}
-#| label: fig-counterfactual
+#| label: fig-counter-factual
 #| fig-cap: "Counterfactual Plots from Chapter 5"
 #| fig-subcap: 
 #|   - "Effect of age (at marriage) on divorce rate, the outcome."
@@ -496,7 +499,7 @@ The plot in @fig-counterfactual illustrates the entire strength of associations 
 ```{r}
 #| eval: false
 #| echo: false
-data(milk)
+
 primates <- list(
   K = scale(milk$kcal.per.g),
   N = scale(milk$neocortex.perc),
@@ -519,25 +522,53 @@ fit.draft <- quap(
 ::: {.callout-tip}
 ## Markov Equivalence
 
-What if we are unsure about the direction of the mediation effect? In the example above, this would look like two DAGs with a classic mediator structure, only we'd be unsure whether *age* or *marriage rate* was the mediator. In such cases, the DAGs would imply the same conditional indepencies, and there would be no *testable implications*. Such DAGs are said to be part of a **Markov Equivalence** set. Indeed many hypothetical DAGs may part of a Markov equivalent set for a given problem, but scientific knowledge will eliminate many of the implausible ones. 
+What if we are unsure about the direction of the mediation effect? In the example above, this would look like two DAGs with a classic mediator structure, only we'd be unsure whether *age* or *marriage rate* was the mediator. In such cases, the DAGs would imply the same conditional independencies, and there would be no *testable implications*. Such DAGs are said to be part of a **Markov Equivalence** set. Indeed many hypothetical DAGs may part of a Markov equivalent set for a given problem, but scientific knowledge will eliminate many of the implausible ones. 
 :::
 
 ## Encoding Categorical Predictors
 
+It is common practice to encode categorical predictors as indicators or "dummy" variables. In other words, we construct new variables with 1's and 0's to encode category membership. I would say this approach resembles the vast majority of models in applied statistical literature I've read. When interpreting such models, one has to remember the reference category, because every parameter of an indicator variable represents a *difference* between two groups. Admittedly, this causes confusion.
+
+But there are of course other ways to encode categorical variables. The approach advocated by the book is to use indexed parameters for each level in the category. So if we have $K$ levels, we have $K$ indices of the parameter describing that category. And we don't include an intercept. Apparently, this is acceptable for models even with multiple categorical predictors, as I demonstrate below:
+
+[**Less than full rank?** In my graduate statistics training, I was taught that models with multiple categorical predictors, all with index encoding (as described here) would cause issues by nature of having 'less than full rank'. In mathematical terms, the design matrix contains one or more columns that can be expressed as linear combinations of the other columns. When this occurs, no unique solution to ordinary least squares exists. But we're not dealing in 'ordinary' models anymore... I wonder if the priors help the Bayesian approach converge.]{.aside}
+
 ```{r}
-primates$C <- as.integer(milk$clade)
+primates <- list(
+  K = scale(milk$kcal.per.g),
+  H = sample(rep(1:4, each=8), size=nrow(milk)),
+  C = as.integer(milk$clade))
 fit.mcateg <- quap(alist(
   K ~ dnorm(mu, sigma),
-  mu <- alpha[C],
+  mu <- alpha[C] + gamma[H],
   alpha[C] ~ dnorm(0, 0.5),
+  gamma[H] ~ dnorm(0, 0.5),
   sigma ~ dunif(0, 50)),
   data=primates)
-post <- extract.samples(fit.mcateg)
 plot(
-  precis(fit.mcateg, depth=2, pars="alpha"),
-  labels=paste("a[", 1:4, "]:", levels(milk$clade), sep=""),
+  precis(fit.mcateg, depth=2, pars=c("alpha", "gamma")),
+  labels=c(paste("alpha[", 1:4, "]:", levels(milk$clade)),
+           paste("gamma[", 1:4, "]:", c("Red", "Blue", "Green", "Yellow"))),
   xlab="Model-based Energy (kCal / g)")
 ```
+
+Finally, the idea of working with contrasts in Bayesian models is far more appealing than that of maximum likelihood models. In the latter, we are forced to come up with contrast statements to combine parameters and then assess the significance of the combination. However, with Bayesian models its as simple as computing the difference in posterior samples, then examining the distribution:
+
+```{r}
+#| warning: false
+#| message: false
+post <- extract.samples(fit.mcateg)
+post$diff1 <- post$alpha[, 1] - post$alpha[, 2]
+precis(post, pars="diff")
+```
+
+::: {.callout-tip}
+## Chapter 3, Revisited
+
+A subtlety of Chapter 3, 'Sampling the Imaginary', was the notion that posterior samples are *easier* to work with than theoretically-defined models. I was initially surprised at this claim, but I later agreed with the reasoning that most scientists are uncomfortable with integral calculus (including me). In practice, anyways, everything is approximated through discrete computations on a computer, so there's no point in holding fast with theory just for theory's sake. In the end, everything gets converted to an arbitrary level of numerical approximation.
+
+For this reason, it's so much easier to define and measure contrasts in a Bayesian framework. If I want to know how parameters compare to one another, I just compare the *samples*. If instead I wanted to test for linearity in a categorical predictor using likelihood theory, I would have a much harder time constructing the appropriate contrast statement.
+:::
 
 [^1]: Statistical Rethinking by Richard McElreath. Second Edition. <https://xcelab.net/rm/>.
 [^2]: Efficiency Property of Maximum Likelihood Estimators. <https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Efficiency>.

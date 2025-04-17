@@ -230,7 +230,7 @@ window.Quarto = {
 
 
 
-<p>I’ve begun reading <em>Statistical Rethinking</em> by Richard McElreath,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and I want to log some of my thoughts that came to mind while working through his ideas on modern statistical science.</p>
+<p>I’ve begun reading <em>Statistical Rethinking</em> by Richard McElreath,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and I wanted to log some of my thoughts that come to mind while working through his ideas on modern statistical science.</p>
 <section id="chapter-2-modes-of-inference" class="level1">
 <h1>Chapter 2 (Modes of Inference)</h1>
 <section id="likelihoods" class="level2">
@@ -422,7 +422,7 @@ Likelihoods as Objectives
 <p><span class="math display">\[
 Y \rightarrow N(0, 4n\sigma^2) \quad \text{where} \quad \sigma^2=p(1-p)
 \]</span> Note that <span class="math inline">\(p\)</span> is assumed to be 0.5 because the coin is fair. But what’s neat is that the assumption of a fair coin is not a requirement for normality to arise. For example, what if the probability of heads is <span class="math inline">\(p=0.25\)</span>?</p>
-<p>The distribution for <span class="math inline">\(n=16\)</span> is not quite “normal”, in that it is asymetrically skewed towards the right tail (towars the home team’s endzone). However, the normal distribution is not a bad approximation and the central limit theorem states this will still converge given large enough <span class="math inline">\(n\)</span>. See for example, <span class="math inline">\(n=64\)</span>.</p>
+<p>The distribution for <span class="math inline">\(n=16\)</span> is not quite “normal”, in that it is asymmetrically skewed towards the right tail (towards the home team’s end zone). However, the normal distribution is not a bad approximation and the central limit theorem states this will still converge given large enough <span class="math inline">\(n\)</span>. See for example, <span class="math inline">\(n=64\)</span>.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">N=16</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">N=64</a></li></ul>
 <div class="tab-content">
@@ -470,7 +470,7 @@ The CLT Revisited
 <section id="selecting-priors" class="level2">
 <h2 class="anchored" data-anchor-id="selecting-priors">Selecting Priors</h2>
 <p>While classical inference is often concerned with selecting the best estimators, Bayesian inference depends heavily on the choice of priors. The latter is not something that’s emphasized in most courses (indeed, not in my graduate school classes), and it’s usually assumed that priors emerge out of a textbook when needed to solve a Bayesian problem, or that they are extremely vague and uninformative.</p>
-<p>What I like about this chapter is its insistence on selecting appropriate priors, and then checking the assumptions reinforced by priors before analyzing any data. This is a sensible thing to do; indeed the choice of different priors may distinguish two anlysts from one another, but to even begin analyzing data one ought to reassure themselves that the prior chosen is at least appropriate.</p>
+<p>What I like about this chapter is its insistence on selecting appropriate priors, and then checking the assumptions reinforced by priors before analyzing any data. This is a sensible thing to do; indeed the choice of different priors may distinguish two analysts from one another, but to even begin analyzing data one ought to reassure themselves that the prior chosen is at least appropriate.</p>
 <p>Consider the example from this chapter, which analyzes heights as Gaussian-distributed. In a way that’s surprisingly common in other textbooks, one might suppose that the prior on the mean height <span class="math inline">\(\mu\)</span> is uninformative, for example:</p>
 <p><span class="math display">\[
 \begin{align}
@@ -601,7 +601,7 @@ M \perp D |A \\
 \quad \text{and} \quad A:\text{Age at marriage (median)}
 \end{align}
 \]</span> This example introduced new intuition that I had not previously encountered in my graduate statistics training. One, the idea of conditional independence is not new, but knowing that it could be gleaned from a DAG is a valuable lesson. It highlights the value in drawing these diagrams before modeling. Two, the concept of mediators is not new either, but knowing that a mediator model implies all three variables are associated with one another is a good reminder of the differences between data structures and causal implications. We might observe many correlations within an observed set of data, some of them spurious. However, having a DAG to return to makes it easier to theorize how such correlations came to be.</p>
-<p>Here’s a simulated example of conditional independence, in which marriage rate is conditionally independent of divorce rate, yet a linear regression still picks up on the strong (unadjusted) relationship between the two:</p>
+<p>Here’s a simulated example of conditional independence, in which marriage rate is conditionally independent of divorce rate, yet a linear regression still picks up on the strong (adjusted) relationship between the two:</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -638,7 +638,7 @@ M \perp D |A \\
 </section>
 <section id="counterfactual-plots" class="level2">
 <h2 class="anchored" data-anchor-id="counterfactual-plots">Counterfactual Plots</h2>
-<p>Of the various diagnostics for multiple regression, I found the proposition of a counterfactual plot most compelling. They are constructed as follows:</p>
+<p>Of the various diagnostics for multiple regression, I found the proposition of a counter-factual plot most compelling. They are constructed as follows:</p>
 <ol type="1">
 <li>Choose the predictor (intervention) to manipulate.</li>
 <li>Define the range of values for the chosen predictor.</li>
@@ -648,26 +648,25 @@ M \perp D |A \\
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"WaffleDivorce"</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">A =</span> <span class="fu">standardize</span>(WaffleDivorce<span class="sc">$</span>MedianAgeMarriage),</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">M =</span> <span class="fu">standardize</span>(WaffleDivorce<span class="sc">$</span>Marriage),</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">D =</span> <span class="fu">standardize</span>(WaffleDivorce<span class="sc">$</span>Divorce))</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>fit.counterfac <span class="ot">&lt;-</span> <span class="fu">quap</span>(</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">alist</span>(</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    D <span class="sc">~</span> <span class="fu">dnorm</span>(mu, sigma),</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    mu <span class="ot">&lt;-</span> alpha <span class="sc">+</span> beta_mar <span class="sc">*</span> M <span class="sc">+</span> beta_age <span class="sc">*</span> A,</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    alpha <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="fl">0.2</span>),</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    beta_mar <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="fl">0.5</span>),</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    beta_age <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="fl">0.5</span>),</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    sigma <span class="sc">~</span> <span class="fu">dexp</span>(<span class="dv">1</span>),</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    M <span class="sc">~</span> <span class="fu">dnorm</span>(theta, gamma), <span class="do">### I'm using theta, gamma for the mediator model</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    theta <span class="ot">&lt;-</span> eta <span class="sc">+</span> delta_age <span class="sc">*</span> A,</span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    eta <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="fl">0.2</span>),</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    delta_age <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="fl">0.5</span>),</span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    gamma <span class="sc">~</span> <span class="fu">dexp</span>(<span class="dv">1</span>)),</span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">data=</span>states)</span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(fit.counterfac, <span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>states <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">A =</span> <span class="fu">standardize</span>(WaffleDivorce<span class="sc">$</span>MedianAgeMarriage),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">M =</span> <span class="fu">standardize</span>(WaffleDivorce<span class="sc">$</span>Marriage),</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">D =</span> <span class="fu">standardize</span>(WaffleDivorce<span class="sc">$</span>Divorce))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>fit.counterfac <span class="ot">&lt;-</span> <span class="fu">quap</span>(</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">alist</span>(</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    D <span class="sc">~</span> <span class="fu">dnorm</span>(mu, sigma),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    mu <span class="ot">&lt;-</span> alpha <span class="sc">+</span> beta_mar <span class="sc">*</span> M <span class="sc">+</span> beta_age <span class="sc">*</span> A,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    alpha <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="fl">0.2</span>),</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    beta_mar <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="fl">0.5</span>),</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    beta_age <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="fl">0.5</span>),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    sigma <span class="sc">~</span> <span class="fu">dexp</span>(<span class="dv">1</span>),</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    M <span class="sc">~</span> <span class="fu">dnorm</span>(theta, gamma), <span class="do">### I'm using theta, gamma for the mediator model</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    theta <span class="ot">&lt;-</span> eta <span class="sc">+</span> delta_age <span class="sc">*</span> A,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    eta <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="fl">0.2</span>),</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    delta_age <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="fl">0.5</span>),</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    gamma <span class="sc">~</span> <span class="fu">dexp</span>(<span class="dv">1</span>)),</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">data=</span>states)</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(fit.counterfac, <span class="at">digits=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div data-pagedtable="false">
@@ -678,7 +677,7 @@ M \perp D |A \\
 </div>
 </div>
 <p>From this model, it’s clear that age and marriage rate are associated through the posterior summary of <span class="math inline">\(\delta_{\text{Age}}\)</span>, which is consistently negative. Therefore the effect of an increase in the median age of marriage is associated with a decrease in the marriage rate, which makes perfect sense.</p>
-<p>Next I carry out the three steps necessary to create a counterfactual portrait of a change in the median age at marriage, all in the following code block:</p>
+<p>Next I carry out the three steps necessary to create a counter-factual portrait of a change in the median age at marriage, all in the following code block:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>age.seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="at">length.out=</span><span class="dv">10</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">extract.samples</span>(fit.counterfac)</span>
@@ -706,29 +705,29 @@ M \perp D |A \\
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Manipulated Age"</span>, <span class="at">ylab=</span><span class="st">"Counterfactual Marriage"</span>)</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">shade</span>(<span class="fu">apply</span>(sim.counterfac<span class="sc">$</span>M, <span class="dv">2</span>, PI), age.seq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div id="fig-counterfactual" class="quarto-layout-panel">
+<div id="fig-counter-factual" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-counterfactual-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div aria-describedby="fig-counter-factual-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-counterfactual" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-counterfactual-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-counter-factual" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-counter-factual-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-counterfactual-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-counterfactual-1.png" class="img-fluid figure-img" data-ref-parent="fig-counterfactual" width="672">
+<div aria-describedby="fig-counter-factual-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-counter-factual-1.png" class="img-fluid figure-img" data-ref-parent="fig-counter-factual" width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-counterfactual-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-counter-factual-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Effect of age (at marriage) on divorce rate, the outcome.
 </figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-counterfactual" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-counterfactual-2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-counter-factual" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-counter-factual-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-counterfactual-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="index_files/figure-html/fig-counterfactual-2.png" class="img-fluid figure-img" data-ref-parent="fig-counterfactual" width="672">
+<div aria-describedby="fig-counter-factual-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-counter-factual-2.png" class="img-fluid figure-img" data-ref-parent="fig-counter-factual" width="672">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-counterfactual-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-counter-factual-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Effect of age (at marriage) on marriage rate, the mediator.
 </figcaption>
 </figure>
@@ -736,12 +735,83 @@ M \perp D |A \\
 </div>
 </div>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-counterfactual-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-counter-factual-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;2: Counterfactual Plots from Chapter 5
 </figcaption>
 </figure>
 </div>
-<p>The plot in <a href="#fig-counterfactual" class="quarto-xref">Figure&nbsp;2</a> illustrates the entire strength of associations illustrated earlier in <a href="#fig-dags" class="quarto-xref">Figure&nbsp;1</a>; namely, that age is associated with both marriage rate and divorce rate. Thus, intervening to alter the age of marriage will cascade downstream to effect both the mediator and the outcome, where the outcome is <em>doubly</em> affected by both the intervention and the mediator.</p>
+<p>The plot in <strong>?@fig-counterfactual</strong> illustrates the entire strength of associations illustrated earlier in <a href="#fig-dags" class="quarto-xref">Figure&nbsp;1</a>; namely, that age is associated with both marriage rate and divorce rate. Thus, intervening to alter the age of marriage will cascade downstream to effect both the mediator and the outcome, where the outcome is <em>doubly</em> affected by both the intervention and the mediator.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Markov Equivalence
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What if we are unsure about the direction of the mediation effect? In the example above, this would look like two DAGs with a classic mediator structure, only we’d be unsure whether <em>age</em> or <em>marriage rate</em> was the mediator. In such cases, the DAGs would imply the same conditional independencies, and there would be no <em>testable implications</em>. Such DAGs are said to be part of a <strong>Markov Equivalence</strong> set. Indeed many hypothetical DAGs may part of a Markov equivalent set for a given problem, but scientific knowledge will eliminate many of the implausible ones.</p>
+</div>
+</div>
+</section>
+<section id="encoding-categorical-predictors" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="encoding-categorical-predictors">Encoding Categorical Predictors</h2>
+<p>It is common practice to encode categorical predictors as indicators or “dummy” variables. In other words, we construct new variables with 1’s and 0’s to encode category membership. I would say this approach resembles the vast majority of models in applied statistical literature I’ve read. When interpreting such models, one has to remember the reference category, because every parameter of an indicator variable represents a <em>difference</em> between two groups. Admittedly, this causes confusion.</p>
+<p>But there are of course other ways to encode categorical variables. The approach advocated by the book is to use indexed parameters for each level in the category. So if we have <span class="math inline">\(K\)</span> levels, we have <span class="math inline">\(K\)</span> indices of the parameter describing that category. And we don’t include an intercept. Apparently, this is acceptable for models even with multiple categorical predictors, as I demonstrate below:</p>
+<div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside"><strong>Less than full rank?</strong> In my graduate statistics training, I was taught that models with multiple categorical predictors, all with index encoding (as described here) would cause issues by nature of having ‘less than full rank’. In mathematical terms, the design matrix contains one or more columns that can be expressed as linear combinations of the other columns. When this occurs, no unique solution to ordinary least squares exists. But we’re not dealing in ‘ordinary’ models anymore… I wonder if the priors help the Bayesian approach converge.</span></div></div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>primates <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">K =</span> <span class="fu">scale</span>(milk<span class="sc">$</span>kcal.per.g),</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">H =</span> <span class="fu">sample</span>(<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">each=</span><span class="dv">8</span>), <span class="at">size=</span><span class="fu">nrow</span>(milk)),</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">C =</span> <span class="fu">as.integer</span>(milk<span class="sc">$</span>clade))</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>fit.mcateg <span class="ot">&lt;-</span> <span class="fu">quap</span>(<span class="fu">alist</span>(</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  K <span class="sc">~</span> <span class="fu">dnorm</span>(mu, sigma),</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  mu <span class="ot">&lt;-</span> alpha[C] <span class="sc">+</span> gamma[H],</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  alpha[C] <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="fl">0.5</span>),</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  gamma[H] <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="fl">0.5</span>),</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  sigma <span class="sc">~</span> <span class="fu">dunif</span>(<span class="dv">0</span>, <span class="dv">50</span>)),</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">data=</span>primates)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">precis</span>(fit.mcateg, <span class="at">depth=</span><span class="dv">2</span>, <span class="at">pars=</span><span class="fu">c</span>(<span class="st">"alpha"</span>, <span class="st">"gamma"</span>)),</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels=</span><span class="fu">c</span>(<span class="fu">paste</span>(<span class="st">"alpha["</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="st">"]:"</span>, <span class="fu">levels</span>(milk<span class="sc">$</span>clade)),</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>           <span class="fu">paste</span>(<span class="st">"gamma["</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="st">"]:"</span>, <span class="fu">c</span>(<span class="st">"Red"</span>, <span class="st">"Blue"</span>, <span class="st">"Green"</span>, <span class="st">"Yellow"</span>))),</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">xlab=</span><span class="st">"Model-based Energy (kCal / g)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Finally, the idea of working with contrasts in Bayesian models is far more appealing than that of maximum likelihood models. In the latter, we are forced to come up with contrast statements to combine parameters and then assess the significance of the combination. However, with Bayesian models its as simple as computing the difference in posterior samples, then examining the distribution:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>post <span class="ot">&lt;-</span> <span class="fu">extract.samples</span>(fit.mcateg)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>post<span class="sc">$</span>diff1 <span class="ot">&lt;-</span> post<span class="sc">$</span>alpha[, <span class="dv">1</span>] <span class="sc">-</span> post<span class="sc">$</span>alpha[, <span class="dv">2</span>]</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">precis</span>(post, <span class="at">pars=</span><span class="st">"diff"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["mean"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["sd"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["5.5%"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["94.5%"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["histogram"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"0.717","2":"0.0978","3":"0.561","4":"0.874","5":"▁▁▁▂▇▇▃▁▁▁","_rn_":"sigma"},{"1":"-0.783","2":"0.3262","3":"-1.310","4":"-0.266","5":"▁▁▁▁▂▅▇▇▅▂▁▁▁▁","_rn_":"diff1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Chapter 3, Revisited
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A subtlety of Chapter 3, ‘Sampling the Imaginary’, was the notion that posterior samples are <em>easier</em> to work with than theoretically-defined models. I was initially surprised at this claim, but I later agreed with the reasoning that most scientists are uncomfortable with integral calculus (including me). In practice, anyways, everything is approximated through discrete computations on a computer, so there’s no point in holding fast with theory just for theory’s sake. In the end, everything gets converted to an arbitrary level of numerical approximation.</p>
+<p>For this reason, it’s so much easier to define and measure contrasts in a Bayesian framework. If I want to know how parameters compare to one another, I just compare the <em>samples</em>. If instead I wanted to test for linearity in a categorical predictor using likelihood theory, I would have a much harder time constructing the appropriate contrast statement.</p>
+</div>
+</div>
 
 
 </section>
