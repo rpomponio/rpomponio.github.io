@@ -3,6 +3,9 @@ title: "Rethinking Some Statistical Principles"
 author: "Ray Pomponio"
 date: today
 categories: [reading, reflections]
+format: 
+   html:
+     df-print: paged
 ---
 
 ```{r}
@@ -12,6 +15,7 @@ categories: [reading, reflections]
 library(rethinking)
 library(dagitty)
 library(splines)
+options(digits=3, scipen=999)
 ```
 
 I've begun reading *Statistical Rethinking* by Richard McElreath,[^1] and I want to log some of my thoughts that came to mind while working through his ideas on modern statistical science.
@@ -444,7 +448,7 @@ fit.counterfac <- quap(
     delta_age ~ dnorm(0, 0.5),
     gamma ~ dexp(1)),
   data=states)
-precis(fit.counterfac)
+precis(fit.counterfac, digits=2)
 ```
 
 From this model, it's clear that age and marriage rate are associated through the posterior summary of $\delta_{\text{Age}}$, which is consistently negative. Therefore the effect of an increase in the median age of marriage is associated with a decrease in the marriage rate, which makes perfect sense.
@@ -488,6 +492,52 @@ shade(apply(sim.counterfac$M, 2, PI), age.seq)
 ```
 
 The plot in @fig-counterfactual illustrates the entire strength of associations illustrated earlier in @fig-dags; namely, that age is associated with both marriage rate and divorce rate. Thus, intervening to alter the age of marriage will cascade downstream to effect both the mediator and the outcome, where the outcome is *doubly* affected by both the intervention and the mediator.
+
+```{r}
+#| eval: false
+#| echo: false
+data(milk)
+primates <- list(
+  K = scale(milk$kcal.per.g),
+  N = scale(milk$neocortex.perc),
+  M = scale(log(milk$mass)))
+primates.cc <- lapply(primates, function(x) x[complete.cases(milk[, c(3, 7, 8)])])
+fit.draft <- quap(
+  alist(
+    K ~ dnorm(mu, sigma),
+    mu <- alpha + betaM * M + betaN * N,
+    alpha ~ dnorm(0, 0.2),
+    betaM ~ dnorm(0, 0.5),
+    betaN ~ dnorm(0, 0.5),
+    sigma ~ dexp(1)
+  ),
+  data=primates.cc)
+
+```
+
+
+::: {.callout-tip}
+## Markov Equivalence
+
+What if we are unsure about the direction of the mediation effect? In the example above, this would look like two DAGs with a classic mediator structure, only we'd be unsure whether *age* or *marriage rate* was the mediator. In such cases, the DAGs would imply the same conditional indepencies, and there would be no *testable implications*. Such DAGs are said to be part of a **Markov Equivalence** set. Indeed many hypothetical DAGs may part of a Markov equivalent set for a given problem, but scientific knowledge will eliminate many of the implausible ones. 
+:::
+
+## Encoding Categorical Predictors
+
+```{r}
+primates$C <- as.integer(milk$clade)
+fit.mcateg <- quap(alist(
+  K ~ dnorm(mu, sigma),
+  mu <- alpha[C],
+  alpha[C] ~ dnorm(0, 0.5),
+  sigma ~ dunif(0, 50)),
+  data=primates)
+post <- extract.samples(fit.mcateg)
+plot(
+  precis(fit.mcateg, depth=2, pars="alpha"),
+  labels=paste("a[", 1:4, "]:", levels(milk$clade), sep=""),
+  xlab="Model-based Energy (kCal / g)")
+```
 
 [^1]: Statistical Rethinking by Richard McElreath. Second Edition. <https://xcelab.net/rm/>.
 [^2]: Efficiency Property of Maximum Likelihood Estimators. <https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Efficiency>.
