@@ -478,7 +478,7 @@ sim.counterfac$D <- sapply(
 I think the trick here is to use the simulated values of the marriage rate (conditional on chosen ages) to simulate--in-turn--values of the divorce rate. I can say confidently that I would not have though to do this, especially within the scope of one model. But the posterior makes this trivial to examine:
 
 ```{r}
-#| label: fig-counter-factual
+#| label: fig-counterfactual
 #| fig-cap: "Counterfactual Plots from Chapter 5"
 #| fig-subcap: 
 #|   - "Effect of age (at marriage) on divorce rate, the outcome."
@@ -569,6 +569,78 @@ A subtlety of Chapter 3, 'Sampling the Imaginary', was the notion that posterior
 
 For this reason, it's so much easier to define and measure contrasts in a Bayesian framework. If I want to know how parameters compare to one another, I just compare the *samples*. If instead I wanted to test for linearity in a categorical predictor using likelihood theory, I would have a much harder time constructing the appropriate contrast statement.
 :::
+
+# Chapter 6
+
+## Managing Multicollinearity
+
+Multicollinearity is bad thing for regressions. I never intuitively understood why, but I had enough training to sense that it emerges when two predictors are correlated. The consequence (so I thought) was that condifence intervals tended to be very wide when both predictors were included in a model.
+
+But the textbook offers a much simpler, straightforward explanation of multicollinarity: *Does knowing the second predictor offer any value, once you know the first predictor?*. In the example at the beginning of chapter 6, the answer is 'no'. If you're predicting human heights, then knowing the length of the second length offers no value beyond knowing the length of the first leg.
+
+Yet there's still a simpler intuition! Imagine we include the same predictor, $x$, as two separate 'predictors' in a regression. We'd be duplicating the information available to the model, which would look like this:
+
+$$
+\begin{align}
+y_i \sim \text{Normal}(\mu_i, 1) \\
+\mu=\alpha+\beta_1x +\beta_2x
+\end{align}
+$$
+The problem, here, is that the model doesn't know how to identify which copy of $x$ is 'imortant', and there are infinitely many solutions that combine $\beta_1$ and $\beta_2$ to add up to the correct value, which I represent as $\beta^*$ below:
+
+$$
+\begin{align}
+y_i \sim \text{Normal}(\mu_i, 1) \\
+\mu=\alpha+\beta^*x \\
+\text{where} \quad \beta^*=\beta_1 +\beta_2
+\end{align}
+$$
+
+Further, the fact that the model is confused by copies of the same predictor means that $\beta_1$ and $\beta_2$ will be negatively correlated with high magnitude. The posterior will occupy a narrow 'ridge' of paired values for the two parameters, and the sum of the parameters will be appropriately distributed around the value $\beta^*$:
+
+```{r}
+#| echo: false
+#| label: fig-multicollinearity
+#| fig-cap: "Posterior example of Multicollinearity"
+#| fig-subcap: 
+#|   - "Joint posterior distribution of parameters."
+#|   - "Posterior sum of parameters."
+#| layout-ncol: 2
+
+xy <- rmvnorm(100, c(1, 1), sigma=cbind(c(1, -0.95), c(-0.95, 1)))
+plot(xy, xlab="beta1", ylab="beta2", col=col.alpha(rangi2, 0.5), pch=16)
+dens(rowSums(xy), adj=2)
+```
+::: {.callout-tip}
+## A Pair of Paradoxes
+
+I'd heard of **Simpson's Paradox** many times throughout statistics courses which occurs if data are *under*-adjusted. The classic example is gender bias in university admission (not sure how well this has aged). Essentially, the failure to consider both the gender and the target program of the applicant will yield inferences that are misleading; one should consider both effects simultaneously to understand how admission rates vary.
+
+However, a phenomenon was introduced to me in this chapter, which goes by the name **Berkson's Paradox**. One example is that good restaurants tend to either have great burgers or great fries, but not both. This observation may deceptively suggest a *negative* correlation between quality of burgers and fries; however, we've only considered the best restaurants and failed to include all the mediocre and below-average restaurants.
+
+The interesting thing for me is to reflect on how the two paradoxes reflect mistakes that can occur when the opposite actions are taken. In Simpson's, it's the mistake of *under*-adjusting; in Berkson's, it's *over*-adjusting. The only real way for a scientist to know for sure that their model is correct is use DAGs and develop a working knowledge of the causal chain of events.
+:::
+
+## Post-Treatment Bias
+
+Spending a lot of time doing observational research has clearly weakend my skill in analyzing treatment effects and recognizing their pitfalls. Post-treatment bias occurs when including a predictor that is solely a consequence of the treatment effect, and also affects the outcome. It sounds like a mediator but it is subtely different:
+
+```{r}
+#| echo: false
+#| label: fig-post-treatment-bias
+#| fig-cap: "An example of post-treatment bias in viral epidemiology. Antibodies are the post-treatment effect that can induce bias."
+post.treat.bias <- dagitty("dag {
+  Underlying -> Outcome
+  Antibodies -> Outcome
+  Vaccine -> Antibodies}")
+coordinates(post.treat.bias) <- list(
+  x=c(Underlying=0, Vaccine=2, Antibodies=1.5, Outcome=1),
+  y=c(Underlying=0, Vaccine=0, Antibodies=0, Outcome=0))
+plot(post.treat.bias)
+```
+[**Definition:** The textbook uses the term *d-separation* to describe the phenomenon of blocking effects between a treatment and outcome by conditioning on a post-treatment consequence.]{.aside}
+
+The simplified example in @fig-post-treatment-bias is related to my current work in pediatric medical research. We're interesting in how underlying medical conditions affect some clinical outcome, say influenza-related hospitalizations. At the same time, there's a vaccine available for influenza. If children received the flu vaccine, they're less likely to have severe infections and more likely to develop antibodies. In this sense, antibodies are a post-treatment consequence of flu vaccine uptake. For those that didn't receive the flu vaccine, infections are more likely to be severe and no antibodies develop. If we included antibodies along with vaccination uptake in a multiple regression, we'd end up *blocking* the path between vaccine uptake and the clinical outcome.
 
 [^1]: Statistical Rethinking by Richard McElreath. Second Edition. <https://xcelab.net/rm/>.
 [^2]: Efficiency Property of Maximum Likelihood Estimators. <https://en.wikipedia.org/wiki/Maximum_likelihood_estimation#Efficiency>.
