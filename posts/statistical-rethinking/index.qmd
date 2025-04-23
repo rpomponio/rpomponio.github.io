@@ -155,7 +155,7 @@ mtext("MCMC Approximation to Posterior")
 
 The one intriguing feature of the Metropolis Algorithm is the acceptance rule, which computes a ratio of **likelihoods**, given $p$ and $p'$, and accepts the new value $p'$ if this ratio is above some randomly-generated value.
 
-In other words, the internal mechanics of the algorithm work a bit like the classical approach to inference (see above), in which the likelihoods of two points are compared. In the classical approach, $\hat{p}$ is never technically "accepted", but $p_0$ can be rejected if the ratio of likelihoods ($\mathcal{L}(\hat{p})$ vs. $\mathcal{L}(p_0)$) is above some constant $c$. In contrast to MCMC, however, $c$ is not randomly-generate but instead dictated by the choice of $\alpha$, which is commonly 0.05.
+In other words, the internal mechanics of the algorithm work a bit like the classical approach to inference (see above), in which the likelihoods of two points are compared. In the classical approach, $\hat{p}$ is never technically "accepted", but $p_0$ can be rejected if the ratio of likelihoods ($\mathcal{L}(\hat{p})$ vs. $\mathcal{L}(p_0)$) is above some constant $c$. In contrast to MCMC, however, $c$ is not randomly-generated but instead dictated by the choice of $\alpha$, which is commonly 0.05.
 
 Another noteworthy feature, not highlighted here, is that the Metropolis Algorithm does not require computation of exact densities; relative density functions work just fine. That's a major advantage when it comes time to scale the algorithm with increasing model complexity.
 
@@ -301,59 +301,6 @@ mtext("Prior on Height (cm)")
 
 The informative prior might seem like "cheating" in some respect because it is more precise to begin with, but such precision is the exact reason we'd like to work with priors in the first place. Priors help to constrain our estimates to ranges we believe plausible. The alternatives--keeping priors vague or reverting to classical methods--might be lauded as "objective" but fail to provide meaningful insight when our sample size is limited (as it almost always is). Even worse, when folks see an objective result that doesn't agree with their intuition, they come up with subjective reasons to discount it, and those reasons are almost never formalized with the same transparency as a prior selection.
 
-
-```{r}
-#| eval: false
-#| echo: false
-
-adults <- Howell1[Howell1$age>=18, ]
-mean.weight <- mean(adults$weight)
-fit.heights <- quap(alist(
-  height ~ dnorm(mu, sigma),
-  mu <- alpha + beta * (weight - mean.weight),
-  alpha ~ dnorm(178, 20),
-  beta ~ dlnorm(0, 1),
-  sigma ~ dunif(0, 50)),
-  data=adults)
-posterior <- extract.samples(fit.heights, n=10000)
-precis(posterior)
-# plot posterior inference
-weight.seq <- seq(25, 70)
-plot(height ~ weight, data=adults, col=rangi2)
-mu <- link(fit.heights, data=data.frame(weight=weight.seq))
-mu.int89 <- apply(mu, 2, PI, prob=0.89)
-lines(weight.seq, apply(mu, 2, mean))
-shade(mu.int89, weight.seq)
-# plot prediction intervals
-sim.heights <- sim(fit.heights, data=list(weight=weight.seq))
-heights.int89 <- apply(sim.heights, 2, PI, prob=0.89)
-plot(height ~ weight, data=adults, col=rangi2)
-lines(weight.seq, apply(mu, 2, mean))
-shade(heights.int89, weight.seq)
-```
-```{r}
-#| eval: false
-#| echo: false
-
-temps <- cherry_blossoms[complete.cases(cherry_blossoms$temp), ]
-num.knots <- 15
-knot.locs <- quantile(temps$year, seq(0, 1, length.out=num.knots))
-basis <- bs(temps$year, knots=knot.locs[-c(1, num.knots)], degree=3, intercept=T)
-fit.temps <- quap(
-  alist(
-    T ~ dnorm(mu, sigma),
-    mu <- alpha + B %*% w,
-    alpha ~ dnorm(6, 10),
-    w ~ dnorm(0, 1),
-    sigma ~ dexp(1)),
-  data=list(T=temps$temp, B=basis),
-  start=list(w=rep(0, ncol(basis))))
-posterior <- extract.samples(fit.temps)
-mu <- link(fit.temps)
-mu.int97 <- apply(mu, 2, PI, prob=0.97)
-plot(temp ~ year, data=cherry_blossoms, col=col.alpha(rangi2, 0.3), pch=16)
-shade(mu.int97, temps$year, col=col.alpha("black", 0.5))
-```
 # Chapter 5 (Multiple Linear Regression)
 
 ## Testable Implications
@@ -495,28 +442,6 @@ shade(apply(sim.counterfac$M, 2, PI), age.seq)
 ```
 
 The plot in @fig-counterfactual illustrates the entire strength of associations illustrated earlier in @fig-dags; namely, that age is associated with both marriage rate and divorce rate. Thus, intervening to alter the age of marriage will cascade downstream to effect both the mediator and the outcome, where the outcome is *doubly* affected by both the intervention and the mediator.
-
-```{r}
-#| eval: false
-#| echo: false
-
-primates <- list(
-  K = scale(milk$kcal.per.g),
-  N = scale(milk$neocortex.perc),
-  M = scale(log(milk$mass)))
-primates.cc <- lapply(primates, function(x) x[complete.cases(milk[, c(3, 7, 8)])])
-fit.draft <- quap(
-  alist(
-    K ~ dnorm(mu, sigma),
-    mu <- alpha + betaM * M + betaN * N,
-    alpha ~ dnorm(0, 0.2),
-    betaM ~ dnorm(0, 0.5),
-    betaN ~ dnorm(0, 0.5),
-    sigma ~ dexp(1)
-  ),
-  data=primates.cc)
-
-```
 
 
 ::: {.callout-tip}
