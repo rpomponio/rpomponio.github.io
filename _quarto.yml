@@ -18,8 +18,8 @@ website:
         href: RAY-POMPONIO_power_analysis.pdf
       - text: work sample 2
         href: RAY-POMPONIO_report-sample.pdf
-      - about.qmd
       - adventure.qmd
+      - about.qmd
       - icon: github
         href: https://github.com/rpomponio
       - icon: linkedin
