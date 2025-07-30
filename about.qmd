@@ -22,8 +22,4 @@ about:
       href: https://www.upwork.com/freelancers/~01bb85ee6f09078536
 ---
 
-Ray Pomponio is a data scientist. He received his Master's degree in Biostatistics from the **University of Colorado** in 2023.
-
-Ray has contributed to team science collaborations and provided biostatistical expertise/support for grant writing, study design, and longitudinal analysis. He has co-authored 20+ manuscripts in peer-reviewed journals.
-
-Please reach out using any of the links below, or via email: raymond.pomponio (at) outlook.com.
+Ray Pomponio is a biomedical data scientist. He received his Master's degree in biostatistics from the University of Colorado. Ray has collaborated in team science settings and consulted professionally across public health, epidemiology, adult critical care, pediatric infectious disease, neuroscience, medical imaging, medical device manufacturing, and e-commerce domains. Please reach out using any of the links below, or via email: raymond.pomponio (at) outlook.com.
