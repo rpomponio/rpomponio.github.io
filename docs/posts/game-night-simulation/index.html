@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ray Pomponio">
-<meta name="dcterms.date" content="2024-11-27">
+<meta name="dcterms.date" content="2025-08-12">
 
-<title>A Tool to Visualize Outdoor Climbing Performance – pompon.io</title>
+<title>Simple Board Game Simulation in R – pompon.io</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -68,12 +102,43 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -131,10 +196,10 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">A Tool to Visualize Outdoor Climbing Performance</h1>
+      <h1 class="title">Simple Board Game Simulation in R</h1>
                                 <div class="quarto-categories">
-                <div class="quarto-category">hobbies</div>
-                <div class="quarto-category">adventure</div>
+                <div class="quarto-category">personal</div>
+                <div class="quarto-category">fun</div>
               </div>
                   </div>
   </div>
@@ -152,7 +217,7 @@ ul.task-list li input[type="checkbox"] {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">November 27, 2024</p>
+        <p class="date">August 12, 2025</p>
       </div>
     </div>
     
@@ -163,59 +228,129 @@ ul.task-list li input[type="checkbox"] {
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
 
 
 
 
 
-<section id="introduction" class="level3">
-<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
-<p>Recently, I’ve been interested in developing ways to assess my own performance as an outdoor rock climber. One classic tool for evaluating a climber’s history on routes is called the ‘pyramid’ (also known as the ‘scorecard’ on <a href="https://www.8a.nu/">other sites</a>). In this post I discuss how I built a simple web app to illustrate my own climbing pyramid as well as that of any other climber who uses MountainProject.com to track their outdoor climbing performance.</p>
-</section>
-<section id="motivation" class="level2">
-<h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
-<p>I’ve been using <a href="https://www.mountainproject.com/">Mountain Project</a> meticulously since I began outdoor rock climbing in 2019. On most of my climbing trips, I log ascents in the iPhone app, which syncs with my profile online. This has generally been something I treated as a personal journalling exercise, and I figured I would someday want to look back on my ascents to see how far I’ve come in the sport/adventure of rock climbing.</p>
-<p>Recently, I’ve been focused on physical training to improve my climbing performance outside, and the data that I’ve gathered over the past five years would seem to be an invaluable asset. It turns out that I’m not alone, and many other climbers use the same features on Mountain Project to log their ascents, also known as ‘ticks’ on the site</p>
+<p>I was at a friend’s house for game night last weekend, and I was introduced to a game called <a href="https://en.wikipedia.org/wiki/The_Mind_(card_game)#Gameplay">The Mind</a>. The premise is simple; a deck of cards is numbered one through one hundred, each player is dealt a card, and the object is to work cooperatively to play cards in ascending order, <em>without communication</em>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> For example, a hypothetical round with five players may begin like this:</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="ticks-screenshot.png" class="img-fluid figure-img"></p>
-<figcaption>The publicly-available ticks for a route called ‘Scenic Adult’ (5.11c) at the New River Gorge in West Virginia, as of this post (November 2024)</figcaption>
+<p><img src="mind.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption>An illustration of a hypothetical round of 5 players.</figcaption>
 </figure>
 </div>
-<p>There remains a challenge in leveraging this data, though, which is that metrics of historical climbing performance are not very quantifiable – and those that are quantitative are generally not sophisticated, like <em>Max Redpoint Grade</em>, or <em>Hardest Flash</em>. Those who spend a lot of time in climbing gyms will be familiar with these ideas. In essence, these metrics are akin to asking a runner what their best marathon time is, which can tell you a lot about someone’s running ability. However, it tells you less about how they’ve progressed over time and how they’ve spent their effort to arrive at their current performance level. These questions are more nuanced, and in climbing are arguably more important than just knowing someone’s maximum performance.</p>
+<p>The funny bit of this game is the dilemma that one inevitably faces when deciding whether to play one’s card because it is <em>close</em> to the current card laying face-up. Another player may silently be holding onto a card that is <em>closer</em> in number, and everyone is faced with a decision to act or not.</p>
+<p>I was allured by the question, <em>What’s the average difference between cards?</em> At this point in the night there were five of us playing, each with one card from the deck of one-hundred.</p>
+<p>For simplicity let’s assume the round has just begun and there are five cards in play. The instinctual response is that the average difference is <span class="math inline">\(20\)</span>, because there are <span class="math inline">\(N=5\)</span> players and <span class="math inline">\(K=100\)</span> cards; take <span class="math inline">\(\frac{K}{N}=\frac{100}{5}\)</span> which yields <span class="math inline">\(20\)</span>. This was the first answer I got when I posed it to the group, and the answer I think would be most common in a straw poll of casual players. I considered it at first, but then reconsidered.</p>
+<p>Here is the difficulty with that answer (and anyone familiar with <em>The Mind</em> can anecdotally attest to this), the randomly-dealt cards tend to be clustered <em>closer</em> to one another than in a uniformly-dealt deck. As counter-intuitive as that may sound, the difference between consecutive cards tends to be <em>smaller</em> than twenty.</p>
+<p>I was struggling to explain this to my friends at the game night and I wanted desperately to run a simulation in <code>R</code> to come up with an estimate of the average consecutive difference, which I’ll denote <span class="math inline">\(\bar{\Delta}_{5,1}\)</span>, with the subscript “5,1” indicating there are five players each holding one card.</p>
+<section id="pre-round-simulation" class="level2">
+<h2 class="anchored" data-anchor-id="pre-round-simulation">Pre-round Simulation</h2>
+<p>Now that I’m able to run a simulation at home, we can show that <span class="math inline">\(\bar{\Delta}_{5,1}&lt;20\)</span>, at least at the beginning of the round before any cards have been played. Our strategy is to simulate many hypothetical “rounds” and then compute <span class="math inline">\(\bar{\delta}_{5,1}\)</span> for each one until we have enough simulations to consider the average a stable estimate of <span class="math inline">\(\bar{\Delta}_{5,1}\)</span>.</p>
+<p>Let’s begin with just one round. In <code>R</code>, it is easy to code this up:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1818</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>deck <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>deal <span class="ot">&lt;-</span> <span class="fu">sample</span>(deck, <span class="at">size=</span><span class="dv">5</span>, <span class="at">replace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">printL</span>(<span class="st">"Hypothetical round of cards"</span><span class="ot">=</span><span class="fu">sort</span>(deal))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Hypothetical round of cards: 35, 80, 86, 94, 100</code></pre>
+</div>
+</div>
+<p>One can try this on their own computer and the result will be the same, as long as the random seed <code>1818</code> is used.</p>
+<p>Next, we will compute the average difference between cards in this round:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>d.bar <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">diff</span>(<span class="fu">sort</span>(deal)))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">printL</span>(<span class="st">"Average difference between cards in round"</span><span class="ot">=</span>d.bar)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Average difference between cards in round: 16.25</code></pre>
+</div>
+</div>
+<p>Remember, this is only a single round, but it corroborates the claim that <span class="math inline">\(\bar{\Delta}_{5,1}&lt;20\)</span>. To conclude this with more certainty, we must simulate many hypothetical “rounds”. In the code below I simulate 10,000 rounds of a five-player game, and compute <span class="math inline">\(\bar{\delta}_{5,1}\)</span> at the start of each round, then examine a plot of their distribution:</p>
+<div class="cell fig-cap-location-top">
+<div class="sourceCode cell-code" id="cb5" data-cap-location="top"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>d.bar<span class="fl">.51</span> <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10000</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    deal <span class="ot">&lt;-</span> <span class="fu">sample</span>(deck, <span class="at">size=</span><span class="dv">5</span>, <span class="at">replace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mean</span>(<span class="fu">diff</span>(<span class="fu">sort</span>(deal)))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>D.bar<span class="fl">.51</span> <span class="ot">&lt;-</span> <span class="fu">mean</span>(d.bar<span class="fl">.51</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(d.bar<span class="fl">.51</span>, <span class="at">xlab=</span><span class="st">"Average Consecutive Difference, 5 cards"</span>, <span class="at">main=</span><span class="cn">NA</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>D.bar<span class="fl">.51</span>, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="fu">paste0</span>(<span class="st">"Average, in blue: "</span>, <span class="fu">format</span>(D.bar<span class="fl">.51</span>, <span class="at">digits=</span><span class="dv">3</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-pre-round-histogram" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="top">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-pre-round-histogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Distribution of <span class="math inline">\(\bar{\delta}_{5,1}\)</span> over 10,000 simulations
+</figcaption>
+<div aria-describedby="fig-pre-round-histogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-pre-round-histogram-1.png" class="img-fluid figure-img" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p>The resulting average of 10,000 simulations, 16.8, is depicted with the blue vertical line. This estimate is not far off from that of the single round we simulated, though we should give more credence to the average over many simulations. It is not as sensitive to noise that might result in a single deal of the deck.</p>
 </section>
-<section id="climbing-pyramids" class="level2">
-<h2 class="anchored" data-anchor-id="climbing-pyramids">Climbing Pyramids</h2>
-<p>One tool that might help climbers address some of the above questions is called the pyramid. The pyrmaid plots the number of successful (and sometimes unsuccessful) ascents of climbs at a particular grade. Without going into too much detail, rock climbs are graded very rigorously<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, a little bit like the green/blue/black grading system of ski routes. While being subject to a fair bit of subjectivity, the grade of a rock climb is usually a reliable measure of how difficult that route will be for the average person.</p>
-<p>The pyramid tool can help visualize how a climber devotes her finite resources (e.g., time) to climbing routes of a particular grade range. It is a snapshot in time of how well-balanced a climber’s performance is, with a ‘top-heavy’ shape suggesting a climber focuses most of his time on difficult routes, and a ‘bottom-heavy’ shape suggesting he should probably try more difficult routes. There’s a lot of insight to be gained by seeing your own pyramid, and to illustrate an example here is my pyramid as of this writing:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="my-pyramid.png" class="img-fluid figure-img"></p>
-<figcaption>My climbing pyramid, as of November 2024, with ‘successful’ ascents highlighted in red and failed attempts highlighted in blue.</figcaption>
+<section id="mid-round-simulation" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="mid-round-simulation">Mid-round Simulation</h2>
+<p>Later I recognized that the answer 16.8 is not all that useful, if you are playing the game already. The reason can be seen in the spread of the distribution in <a href="#fig-pre-round-histogram" class="quarto-xref">Figure&nbsp;1</a>. Across many rounds, the average difference between cards may be as little as 5, or it may be as great as 25. The chance of a round with an average difference beyond these limits is very small, just 0.0037.</p>
+<p>However, if you have seen one of the cards dealt, you possess some information that can be useful. To illustrate this more intuitively, consider that each player only knows the value of their card at the start of the round; in a five-player game that’s just 20% of the knowledge available. After a card is played, that knowledge increases to 40% for each player. Given that we’ve seen one card, what is the average difference between the cards in play?</p>
+<p>Computing an answer to this question requires a slight modification to our code, but it is still achievable without too much difficulty. In the code below, I simulate another 10,000 rounds, only this time, I keep track of the lowest card (which would be the first card played), as well as the average difference between cards. In contrast to the earlier simulation, there are now two quantities to track: the lowest card in the round, <span class="math inline">\(\text{min}(X_i)\quad \text{for}\ i=1, ...,5\)</span> and the average difference, <span class="math inline">\(\bar{\delta}_{5,1}\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>one.card.played <span class="ot">&lt;-</span> <span class="fu">replicate</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dv">10000</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    deal <span class="ot">&lt;-</span> <span class="fu">sample</span>(deck, <span class="at">size=</span><span class="dv">5</span>, <span class="at">replace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(<span class="st">"xMin"</span><span class="ot">=</span><span class="fu">min</span>(deal), <span class="st">"dBar"</span><span class="ot">=</span><span class="fu">mean</span>(<span class="fu">diff</span>(<span class="fu">sort</span>(deal))))</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">printL</span>(<span class="st">"Lowest card, on average"</span><span class="ot">=</span><span class="fu">mean</span>(<span class="fu">unlist</span>(one.card.played[<span class="st">"xMin"</span>,])))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Lowest card, on average: 16.9117</code></pre>
+</div>
+</div>
+<div class="page-columns page-full"><p></p><div class="no-row-height column-margin column-container"><span class="margin-aside">Interestingly, the average value of the lowest card is 16.9, which is <em>also</em> the average difference between cards. This is not a coincidence; it arises from the fact that the value of the first card minus zero is a “difference” in itself.</span></div></div>
+<p>The results of the simulation require some work to visualize. Let’s examine a plot with two axes; the horizontal axis is the value of the lowest card played. The vertical axis is the average difference among the cards in the round. Each point in the plot represents one simulated “round”, out of 10,000:</p>
+<div class="cell fig-cap-location-top">
+<div class="cell-output-display">
+<div id="fig-mid-round-histogram" class="quarto-float quarto-figure quarto-figure-center anchored" data-cap-location="top">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-mid-round-histogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Lowest card versus <span class="math inline">\(\bar{\delta}_{5,1}\)</span> over 10,000 simulations
+</figcaption>
+<div aria-describedby="fig-mid-round-histogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-mid-round-histogram-1.png" class="img-fluid figure-img" width="672">
+</div>
 </figure>
 </div>
-<p>I am no expert but I have an intuition that my climbing pyramid is fairly typical of people at my ability level, with a few unique quirks such as the fact that I’ve spent a lot of time climbing routes at the grade of 5.11a. Additionally, while my max redpoint grade is currently 5.12a, I still have room to reinforce my experience at the grades just below that, namely 5.11c and 5.11d. These are just a few of the takeaways from quickly analyzing my own pyramid.</p>
+</div>
+</div>
+<p>From the above plot, looking left to right, it’s apparent that the higher the value of the lowest card, the smaller the difference between cards. This makes intuitive sense, because the remaining cards must be spread across the numbers <span class="math inline">\(\text{min}(X_i)+1, \text{min}(X_i)+2, ..., 100\)</span>.</p>
+<p>Finally, our goal is to summarize these results into a convenient form. It’s obviously not pragmatic to run a simulation after seeing the first card played during a live game. Instead, it might be useful to know the general shape of the relationship between the two variables, illustrated in <a href="#fig-mid-round-histogram" class="quarto-xref">Figure&nbsp;2</a>. To do this, we examine the average consecutive difference in cards (<span class="math inline">\(\bar{\delta}_{5,1}\)</span>), <em>conditional</em> on the knowledge that the lowest card is within some window of ten numbers:</p>
+<div class="cell">
+<div class="cell-output-display">
+<div data-pagedtable="false"> <div class="table-caption"><p>Mid-round conditioning of <span class="math inline"><em>δ̄</em><sub>5, 1</sub></span> given lowest
+card</p></div>
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["LowestCard"],"name":[1],"type":["fct"],"align":["left"]},{"label":["AvgDiff"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["StdErr"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Reliability"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1 - 10","2":"19.13","3":"0.000917","4":"6.994"},{"1":"11 - 20","2":"17.11","3":"0.001349","4":"6.608"},{"1":"21 - 30","2":"15.16","3":"0.001820","4":"6.309"},{"1":"31 - 40","2":"13.14","3":"0.002887","4":"5.847"},{"1":"41 - 50","2":"11.25","3":"0.005131","4":"5.272"},{"1":"51 - 60","2":"9.33","3":"0.010520","4":"4.554"},{"1":"61 - 70","2":"7.59","3":"0.022133","4":"3.811"},{"1":"71 - 80","2":"5.38","3":"0.053851","4":"2.922"},{"1":"81 - 90","2":"3.12","3":"0.795495","4":"0.229"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>There are a few takeaways from the results in the table above. First, the simulated average difference between cards declines from a maximum around 19, to a minimum around 3, depending on the value of the lowest card played. Therefore, at the start of the round, players can gain information from each other by interpreting the first card as a signal, despite the lack of communication.</p>
+<p>Second, the reliability of our estimates, measured as <span class="math inline">\(\text{log}(\frac{1}{\text{SE}(\bar{\delta})})\)</span>, declines with increasing values of the lowest card. This is due to the fact that fewer simulated scenarios resulted in low cards with high values; the probability of a deal with a low card of 50 is much smaller than the probability of a deal with a low card of 10. This just means that our estimates are not equally precise; we might need to simulate additional information to attain more reliable results for the rounds with a lowest cards above fifty, for instance.</p>
 </section>
-<section id="the-web-app" class="level2">
-<h2 class="anchored" data-anchor-id="the-web-app">The Web App</h2>
-<p>Using the very handy Shiny<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> package for <code>R</code>, I developed a <a href="https://rpomponio.shinyapps.io/climbing_viz_app/">web application</a> called the ‘Tick Pyramid Tool’ (subject to name change), which enables Mountain Project users to easily visualize their own climbing pyramids, just as I showed above. I also added the ability to view your progression over time, which simply tracks how your max grade has increased (hopefully by a lot!) since you started climbing.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="web-app.png" class="img-fluid figure-img"></p>
-<figcaption>Screenshot of the current web app, which is hosted by Shiny Apps at rpomponio.shinyapps.io/climbing_viz_app</figcaption>
-</figure>
-</div>
-<p>This is an active work-in-progress and I plan to add more features to the web app as I solicit feedback from other climbers. However, I figured it is worth highlighting some of the key features in this ‘beta’ version:</p>
-<ul>
-<li>Users can upload their own ticks (from MountainProject.com) or paste their profile URL.</li>
-<li>See a complete list of all the climbs you’ve logged, and apply filters for route type, dates, and whether you want to include repeated ascents of the same route.</li>
-<li>Visualize your route pyramid (click the second tab across the top, or scroll down on mobile).</li>
-<li>Visualize your climbing progression over time.</li>
-</ul>
-<p>If you are an <code>R</code> programmer and would like to contribute to the development of this tool, then I welcome you to fork the development branch on GitHub<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>.</p>
+<section id="conclusion-and-closing-thoughts" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion-and-closing-thoughts">Conclusion and Closing Thoughts</h2>
+<p>In this brief foray into board game simulation, I analyzed basic properties of a game with simple rules and cooperative strategy. I sought to quantify the expected value of the difference in numerical values of cards in play. I focused on the simplified scenario where each player only possesses one card, though the same techniques could be extended to analyze properties of other scenarios. I also simulated mid-round circumstances to analyze the effect on the average difference between consecutive cards, which I denoted <span class="math inline">\(\bar{\Delta}_{5,1}\)</span>.</p>
+<p>Further, I suspect that a complete distribution of <span class="math inline">\(\bar{\Delta}_{5,1}|\text{min}(X_i)\)</span> could be derived analytically or via more advanced simulation methods. One could generalize to many different game circumstances, although computation time may be burdensome. At the end of the day (or the round), it’s just fun to apply probability and statistics to real-world scenarios, however contrived they may be.</p>
 
 
 </section>
@@ -224,9 +359,7 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>https://en.wikipedia.org/wiki/Grade_(climbing)<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Shiny: Web Application Framework for R. https://cran.r-project.org/package=shiny<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>https://github.com/rpomponio/tick_pyramid_tool/tree/dev<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>The game increases in complexity with every round but the general premise remains the same; cards are sequentially added to each player’s hand and there is a variation where players have “lives” to use, should they mistakenly play a card out of turn.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

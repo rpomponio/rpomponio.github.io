@@ -13,11 +13,11 @@ website:
   navbar:
     right:
       - text: resume
-        href: RAY-POMPONIO_cv.pdf
+        href: portfolio/RAY-POMPONIO_cv.pdf
       - text: work sample 1
-        href: RAY-POMPONIO_power_analysis.pdf
+        href: portfolio/RAY-POMPONIO_power_analysis.pdf
       - text: work sample 2
-        href: RAY-POMPONIO_report-sample.pdf
+        href: portfolio/RAY-POMPONIO_report-sample.pdf
       - adventure.qmd
       - about.qmd
       - icon: github

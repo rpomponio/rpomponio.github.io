@@ -1,7 +1,7 @@
 ---
 title: "Rethinking Some Statistical Principles"
 author: "Ray Pomponio"
-date: today
+date: "2025-06-01"
 categories: [reading, reflections]
 format: 
    html:
