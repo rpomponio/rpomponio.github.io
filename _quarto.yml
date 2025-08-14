@@ -2,11 +2,8 @@ project:
   type: website
   output-dir: docs
   resources: 
-    - "wv-24-gallery/pages/*"
-    - "wv-24-gallery/images/*"
-    - "RAY-POMPONIO_cv.pdf"
-    - "RAY-POMPONIO_power-analysis.pdf"
-    - "RAY-POMPONIO_repoer-sample.pdf"
+    - "photos/*"
+    - "portfolio/*"
 
 website:
   title: "pompon.io"
