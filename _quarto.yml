@@ -10,7 +10,7 @@ website:
   navbar:
     right:
       - text: resume
-        href: portfolio/RAY-POMPONIO_cv.pdf
+        href: portfolio/Ray_Pomponio_Resume.pdf
       - text: work sample 1
         href: portfolio/RAY-POMPONIO_power_analysis.pdf
       - text: work sample 2

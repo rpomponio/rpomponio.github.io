@@ -12,7 +12,7 @@ I am an avid rock climber and occasional alpinist. I've climbed in 12 US states 
   <h3 class="card-header">Alpine Climbing in the North Cascades</h3>
   <div class="card-body">
     <h5 class="card-title">July 10-15, 2025</h5>
-    <h6 class="card-subtitle text-muted">Status: Soon to be published in ECP</h6>
+    <h6 class="card-subtitle text-muted">Status: Published in ECP Newsletter</h6>
   </div>
   <div class="card-body">
     <p class="card-text">
@@ -24,10 +24,10 @@ I am an avid rock climber and occasional alpinist. I've climbed in 12 US states 
     <li class="list-group-item">Routes: Beckey Route (5.6, II), Tunnel Route (5.8, II), The Hitchhiker (5.11-, IV)</li>
   </ul>
   <div class="card-body">
-    <a href="https://docs.google.com/document/d/e/2PACX-1vTFO8GqQVoCU10lR2E1Ocz_hp44hjRcGlcHlnaIjlvh2jQZiIOnjuUzgeNmoLxqq_q4oPLmpkHaYjLg/pub" class="card-link">Link to Draft</a>
+    <a href="portfolio/2025-08-ECP-Newsletter-Excerpt.pdf" class="card-link">Link to Full Trip Report</a>
   </div>
   <div class="card-footer text-muted">
-    Unpublished
+    Published
   </div>
 </div>
 ```
