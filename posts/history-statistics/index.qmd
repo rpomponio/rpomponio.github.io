@@ -1,0 +1,89 @@
+---
+title: "History of Statistics"
+author: "Ray Pomponio"
+date: today
+categories: [reading, reflections]
+format: 
+   html:
+     df-print: paged
+draft: true
+---
+
+```{r}
+#| echo: false
+#| message: false
+library(data.table)
+```
+
+
+I am reading *The History of Statistics*,[^1] which is not nearly as dry as it sounds.
+
+## Least Squares Example
+
+The concept of "least squares" repeatedly surfaces in statistics. It originated sometime around 1800, with several mathematicians covering the idea. I found the original notation to be quite confusing, so I'll introduce an example instead and then some notation accompanying it.
+
+Let's assume we conduct an experiment, timing the duration of an object in free-fall from various distances. Here's some example data on the time it took the object to fall a given distance:
+
+```{r}
+set.seed(1818)
+dat <- data.table(dist=c(0.005, 0.020, 0.040, 0.070, 0.110, 0.160))
+dat$time <- rnorm(nrow(dat), mean=sqrt(2 * dat$dist / 9.8), sd=0.018)
+dat[, .(`Distance (Meters)`=dist, `Time (seconds)`=time)]
+```
+
+The goal of our analysis is to use experimental data to estimate gravitational acceleration $a$ on Earth. Elementary physics gives us the following equation relating distance $d$ and time $t$:
+
+$$
+t=\sqrt{\frac{2d}{a}}
+$$
+So the functional form of our model is determined by the above equation. We assume our experiment includes some measurement error on the duration $t$, but we're hoping that the errors cancel out. Our errors for each observation $i=1,...,n$ can be expressed as:
+
+$$
+\epsilon_i=t_i-\sqrt{\frac{2d_i}{a}}
+$$
+The least squares algorithm says to minimize the sum of squared errors. Thus the objective function, $SS_{\epsilon}$, which depends on $a$, is:
+
+$$
+SS_{\epsilon}(a)=\sum_{i=1}^n (t_i-\sqrt{2d_i/a})^2
+$$
+When we expand the square and differentiate with respect to $a$, we have:
+
+$$
+\frac{\delta SS}{\delta a}=a^{-3/2}\sum t_i \sqrt{2 d_i}-\frac{2}{a^2}\sum d_i
+$$
+
+Setting $\frac{\delta SS}{\delta a}=0$ and solving for $a$, we have:[Here I use $\hat{a}$ instead of $a$ because we are estimating the unknown quantity. The notation distinguishes between the estimate and the true value. In reality we know this value to be about $9.8 \text{m}/\text{s}^2$, from Physics.]{.aside}
+
+$$
+\hat{a}=(\frac{2\sum d_i}{\sum t_i \sqrt{2d_i}})^2
+$$
+
+```{r}
+#| echo: false
+sqrt.a <- 2 * sum(dat$dist) / sum(dat$time * sqrt(2 * dat$dist))
+a.hat <- sqrt.a ^ 2
+```
+
+Applying this to our sample data, we estimate $a$ to be `r format(a.hat, digits=4)`. That is pretty close to the gravitational acceleration on Earth. But let's examine how well our model fits the data:[The dotted line is the "least squares" solution to fitting a model to these data. We used knowledge from physics to determine the functional form of the model ($t=\sqrt{\frac{2d}{a}}$), then we used elementary statistics to estimate $a$ given data.]{.aside}
+
+```{r}
+#| label: fig-least-squares-fit
+#| fig-cap: The fit of the least squares solution to experimental data
+#| echo: false
+plot(dat$dist, dat$time, xlab="Distance (m)", ylab="Time (s)", pch=5)
+lines(dat$dist, sqrt(2 * dat$dist / a.hat), lty=2)
+legend("bottomright", c("Data", "Least Squares"), pch=c(5, NA), lty=c(NA, 2))
+```
+
+We might be interested in quantifying the measurement errors, $\epsilon_i$. This can be done by subtracting the values predicted by least squares from the measured values of time, $t_i$. Then we can examine their distribution:[The distribution of measurement errors is centered around zero, with variability generally between $\pm 0.01$ unites (seconds). This corroborates the claim that our model is appropriate and fits the data well.]{.aside}
+
+```{r}
+#| label: fig-least-squares-resid
+#| fig-cap: The errors of the least squares algorithm
+#| echo: false
+dat$pred <- sqrt(2 * dat$dist / a.hat)
+dat$eps <- dat$time - dat$pred
+boxplot(dat$eps, xlab=NA, ylab=expression(epsilon[i]), ylim=c(-0.02, 0.02))
+```
+
+[^1]: Stigler, Stephen M. (1986). The History of Statistics: The Measurement of Uncertainty Before 1900. Cambridge, MA: Belknap Press of Harvard University Press. ISBN 978-0-674-40340-6.

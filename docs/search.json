@@ -278,5 +278,26 @@
     "title": "About",
     "section": "",
     "text": "Ray Pomponio is a data scientist at the University of Pittsburgh Children’s Hospital, with research focused on public health surveillance of respiratory viruses. He holds a master’s in biostatistics, with training in advanced statistical modeling of missing and correlated data. As an applied statistician with collaborative experience in fields ranging from neuroscience and medical imaging to clinical pulmonology, Ray’s expertise is in analyzing complex datasets under the direction of domain experts, typically principal investigators or physician scientists. Across collaborations, his skills in scientific communication and project management enable him to deliver timely, high-quality analyses that are interpretable to the relevant research audience."
+  },
+  {
+    "objectID": "posts/history-statistics/index.html",
+    "href": "posts/history-statistics/index.html",
+    "title": "History of Statistics",
+    "section": "",
+    "text": "I am reading The History of Statistics,1 which is not nearly as dry as it sounds."
+  },
+  {
+    "objectID": "posts/history-statistics/index.html#least-squares-example",
+    "href": "posts/history-statistics/index.html#least-squares-example",
+    "title": "History of Statistics",
+    "section": "Least Squares Example",
+    "text": "Least Squares Example\nThe concept of “least squares” repeatedly surfaces in statistics. It originated sometime around 1800, with several mathematicians covering the idea. I found the original notation to be quite confusing, so I’ll introduce an example instead and then some notation accompanying it.\nLet’s assume we conduct an experiment, timing the duration of an object in free-fall from various distances. Here’s some example data on the time it took the object to fall a given distance:\n\nset.seed(1818)\ndat &lt;- data.table(dist=c(0.005, 0.020, 0.040, 0.070, 0.110, 0.160))\ndat$time &lt;- rnorm(nrow(dat), mean=sqrt(2 * dat$dist / 9.8), sd=0.018)\ndat[, .(`Distance (Meters)`=dist, `Time (seconds)`=time)]\n\n\n  \n\n\n\nThe goal of our analysis is to use experimental data to estimate gravitational acceleration \\(a\\) on Earth. Elementary physics gives us the following equation relating distance \\(d\\) and time \\(t\\):\n\\[\nt=\\sqrt{\\frac{2d}{a}}\n\\] So the functional form of our model is determined by the above equation. We assume our experiment includes some measurement error on the duration \\(t\\), but we’re hoping that the errors cancel out. Our errors for each observation \\(i=1,...,n\\) can be expressed as:\n\\[\n\\epsilon_i=t_i-\\sqrt{\\frac{2d_i}{a}}\n\\] The least squares algorithm says to minimize the sum of squared errors. Thus the objective function, \\(SS_{\\epsilon}\\), which depends on \\(a\\), is:\n\\[\nSS_{\\epsilon}(a)=\\sum_{i=1}^n (t_i-\\sqrt{2d_i/a})^2\n\\] When we expand the square and differentiate with respect to \\(a\\), we have:\n\\[\n\\frac{\\delta SS}{\\delta a}=a^{-3/2}\\sum t_i \\sqrt{2 d_i}-\\frac{2}{a^2}\\sum d_i\n\\]\nSetting \\(\\frac{\\delta SS}{\\delta a}=0\\) and solving for \\(a\\), we have:Here I use \\(\\hat{a}\\) instead of \\(a\\) because we are estimating the unknown quantity. The notation distinguishes between the estimate and the true value. In reality we know this value to be about \\(9.8 \\text{m}/\\text{s}^2\\), from Physics.\n\\[\n\\hat{a}=(\\frac{2\\sum d_i}{\\sum t_i \\sqrt{2d_i}})^2\n\\]\nApplying this to our sample data, we estimate \\(a\\) to be 9.751. That is pretty close to the gravitational acceleration on Earth. But let’s examine how well our model fits the data:The dotted line is the “least squares” solution to fitting a model to these data. We used knowledge from physics to determine the functional form of the model (\\(t=\\sqrt{\\frac{2d}{a}}\\)), then we used elementary statistics to estimate \\(a\\) given data.\n\n\n\n\n\n\n\n\nFigure 1: The fit of the least squares solution to experimental data\n\n\n\n\n\nWe might be interested in quantifying the measurement errors, \\(\\epsilon_i\\). This can be done by subtracting the values predicted by least squares from the measured values of time, \\(t_i\\). Then we can examine their distribution:The distribution of measurement errors is centered around zero, with variability generally between \\(\\pm 0.01\\) unites (seconds). This corroborates the claim that our model is appropriate and fits the data well.\n\n\n\n\n\n\n\n\nFigure 2: The errors of the least squares algorithm"
+  },
+  {
+    "objectID": "posts/history-statistics/index.html#footnotes",
+    "href": "posts/history-statistics/index.html#footnotes",
+    "title": "History of Statistics",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nStigler, Stephen M. (1986). The History of Statistics: The Measurement of Uncertainty Before 1900. Cambridge, MA: Belknap Press of Harvard University Press. ISBN 978-0-674-40340-6.↩︎"
   }
 ]
