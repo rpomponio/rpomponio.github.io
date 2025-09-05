@@ -9,18 +9,13 @@ website:
   title: "pompon.io"
   navbar:
     right:
-      - text: resume
-        href: portfolio/Ray_Pomponio_Resume.pdf
-      - text: work sample 1
-        href: portfolio/RAY-POMPONIO_power_analysis.pdf
-      - text: work sample 2
-        href: portfolio/RAY-POMPONIO_report-sample.pdf
-      - adventure.qmd
       - about.qmd
       - icon: github
         href: https://github.com/rpomponio
       - icon: linkedin
         href: https://www.linkedin.com/in/ray-pomponio
+      - icon: google
+        href: https://scholar.google.com/citations?user=TxEcZMMAAAAJ&hl=en
 format:
   html:
     theme: sandstone

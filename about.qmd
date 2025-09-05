@@ -8,18 +8,16 @@ about:
     - icon: cloud-arrow-down-fill
       text: Current CV
       href: portfolio/Ray_Pomponio_Resume.pdf
-    - icon: google
-      text: Publications
-      href: https://scholar.google.com/citations?user=TxEcZMMAAAAJ&hl=en
-    - icon: github
-      text: Github
-      href: https://github.com/rpomponio
-    - icon: linkedin
-      text: LinkedIn
-      href: https://www.linkedin.com/in/ray-pomponio
+    - icon: briefcase
+      text: Work Sample 1
+      href: portfolio/RAY-POMPONIO_power_analysis.pdf
     - icon: briefcase-fill
-      text: Upwork
-      href: https://www.upwork.com/freelancers/~01bb85ee6f09078536
+      text: Work Sample 2
+      href: portfolio/RAY-POMPONIO_report-sample.pdf
 ---
 
 Ray Pomponio is a data scientist at the University of Pittsburgh Children’s Hospital, with research focused on public health surveillance of respiratory viruses. He holds a master's in biostatistics, with training in advanced statistical modeling of missing and correlated data. As an applied statistician with collaborative experience in fields ranging from neuroscience and medical imaging to clinical pulmonology, Ray's expertise is in analyzing complex datasets under the direction of domain experts, typically principal investigators or physician scientists. Across collaborations, his skills in scientific communication and project management enable him to deliver timely, high-quality analyses that are interpretable to the relevant research audience.
+
+--
+
+Ray is also an avid rock climber and part-time alpinist. He's climbed in 12 US states plus Mexico, tallying over 1,000 routes since beginning outdoor climbing in 2019.

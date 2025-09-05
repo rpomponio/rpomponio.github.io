@@ -1,0 +1,19 @@
+---
+title: "Climbing the Sharkstooth of Rocky Mountain NP"
+author: "Ray Pomponio"
+date: "2022-07-17"
+categories: [trip reports, adventure]
+image: "sharkstooth.jpg"
+---
+
+## Synopsis
+
+A day-long adventure in Colorado's most famous national park. We encountered a steep snow field on our approach to the Sharkstooth Ridge.
+
+![Staring up at the formation from the Gash (approach)](sharkstooth.jpg)
+
+Partner: Jason K.
+
+Route: Northeast Ridge (5.6, II)
+
+Status: [Published](https://www.14ers.com/php14ers/tripreport.php?trip=22485)

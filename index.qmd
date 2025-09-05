@@ -1,6 +1,6 @@
 ---
-title: "A blog & such"
-subtitle: "rpomponio.github.io"
+title: "Ray's Reflections"
+subtitle: "adventures in uncertainty"
 listing:
   contents: posts
   sort: "date desc"
