@@ -6,13 +6,13 @@ about:
   template: jolla
   links:
     - icon: cloud-arrow-down-fill
-      text: Current CV
+      text: Current Resume
       href: portfolio/Ray_Pomponio_Resume.pdf
     - icon: briefcase
-      text: Work Sample 1
+      text: Sample Power Calculation
       href: portfolio/RAY-POMPONIO_power_analysis.pdf
     - icon: briefcase-fill
-      text: Work Sample 2
+      text: Sample E-commerce Report
       href: portfolio/RAY-POMPONIO_report-sample.pdf
 ---
 

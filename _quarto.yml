@@ -4,12 +4,17 @@ project:
   resources: 
     - "photos/*"
     - "portfolio/*"
+    - "wv-24-gallery.html"
 
 website:
   title: "pompon.io"
   navbar:
     right:
       - about.qmd
+      - text: Resume
+        href: portfolio/Ray_Pomponio_Resume.pdf
+      - text: Photography
+        href: wv-24-gallery.html
       - icon: github
         href: https://github.com/rpomponio
       - icon: linkedin

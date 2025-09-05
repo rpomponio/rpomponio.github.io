@@ -1,6 +1,6 @@
 ---
 title: "Ray's Reflections"
-subtitle: "adventures in uncertainty"
+subtitle: "On adventures in uncertainty"
 listing:
   contents: posts
   sort: "date desc"
@@ -11,5 +11,3 @@ listing:
 page-layout: full
 title-block-banner: true
 ---
-
-
