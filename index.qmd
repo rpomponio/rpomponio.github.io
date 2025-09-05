@@ -1,6 +1,6 @@
 ---
 title: "Ray's Reflections"
-subtitle: "On adventures in uncertainty"
+subtitle: "on adventures in uncertainty"
 listing:
   contents: posts
   sort: "date desc"
