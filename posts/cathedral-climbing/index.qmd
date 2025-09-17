@@ -1,0 +1,115 @@
+---
+title: "Cathedrals of Climbing"
+subtitle: "Analyzing stair-climbing workouts in new mountain athletes"
+author: "Ray Pomponio"
+date: "2025-09-17"
+categories: [analysis, sports]
+execute:
+  echo: false
+  warning: false
+abstract: "For 30 years, the Explorer's Club of Pittsburgh has run a mountaineering school through the winter, guiding students in outings and exercises to build advanced skills for mountain climbing. Every student of the mountaineering school trains on the stairs of the University of Pittsburgh's Cathedral of Learning. A typical training session consists of multiple repetitions up the Cathedral's 34-story stairwell, carrying a weighted backpack to simulate real mountain ascents. I analyzed data from 10 years of training logs, including 129 students and 10,000+ repetitions of the stairs. From 2011-present, students' climbing paces exhibited consistent response to heavier packs and footwear."
+abstract-title: "Overview"
+---
+
+```{r}
+library(data.table)
+library(gtsummary)
+library(ggpubr)
+```
+
+```{r}
+dat <- readRDS("stair_reps.rds")
+```
+
+# Descriptive Statistics
+
+|   |   |
+|:------------------|:---------------------:|
+| Number of seasons | `r dat[, length(unique(EntryYear))]`|
+| Number of students | `r dat[, length(unique(StudentID))]`|
+| Number of reps | `r format(nrow(dat), big.mark=",")` |
+| Reps per student, average | `r format(nrow(dat) / dat[, length(unique(StudentID))], digits=3)` |
+| Number of workouts | `r format(dat[, length(unique(paste(StudentID, Week)))], big.mark=",")` |
+| Workouts per student, average | `r format(dat[, length(unique(paste(StudentID, Week)))] / dat[, length(unique(StudentID))], digits=3)` |
+| Number of workouts with recorded pack weights | `r format(dat[!is.na(Weight), length(unique(paste(StudentID, Week)))], big.mark=",")` |
+| Average pack weight, pounds | `r format(dat[, mean(Weight, na.rm=TRUE)], digits=3)` |
+| Number of workouts with recorded footwear | `r format(dat[!is.na(Footwear), length(unique(paste(StudentID, Week)))], big.mark=",")` |
+| Average pace, minutes per rep | `r format(dat[, mean(TimeMins)], digits=3)` |
+| Fastest pace, minutes per rep | `r format(dat[, min(TimeMins)], digits=3)` | 
+| Slowest pace, minutes per rep | `r format(dat[, max(TimeMins)], digits=3)` |
+
+# Figures
+
+```{r}
+pace.by.repnum <- dat[, .(AvgTimeMins=mean(TimeMins)), by=RepNum]
+```
+
+The following boxplot illustrates the typical pace per rep, across all students and workouts:[Across sequential reps, the average pace varied from `r format(min(pace.by.repnum$AvgTimeMins), digits=3)` to `r format(max(pace.by.repnum$AvgTimeMins), digits=3)` minutes.]{.aside}
+
+```{r}
+#| label: fig-time-by-repnum
+#| fig-cap: "Time (in minutes) taken to complete each rep of the stairs"
+#| fig-cap-location: top
+ggplot(dat, aes(x=factor(RepNum), y=TimeMins)) +
+  geom_boxplot() +
+  labs(x="Repetition Number") +
+  theme_pubr()
+```
+
+The following scatterplot illustrates the typical pack weight by week of the season, across all years:[Pack weights tended to increase gradually throughout the season; however, there is a noticeable step-up in weights after Week 10.]{.aside}
+
+```{r}
+#| label: fig-weight-by-week
+#| fig-cap: "Weight (in pounds) carried for each workout by week"
+#| fig-cap-location: top
+ggplot(dat, aes(x=Week, y=Weight)) +
+  geom_point(position=position_jitter(width=0.15, height=0.15, seed=1818)) +
+  theme_pubr()
+```
+
+# Exploratory Analyses
+
+Across all recorded reps and accounting for pack weight, I'm interested in the average difference between footwear types in terms of pace. The following footwear types were encoded numerically:
+
+1. Running shoes
+2. Hiking boots
+3. Mountaineering boots
+
+To estimate the difference in pace associated with footwear, I use linear regression. For reps $i=1, ..., N$, I treat $y_i$ as the pace (in minutes), $x_i$ as the numerical index of footwear (in the list above), and $z_i$ as pack weight (in pounds). Thus, we have:
+
+$$
+y_i=\alpha[x_i]+\beta z_i + \epsilon_i
+$$
+where $\alpha[1],..., \alpha[3]$ and $\beta$ are estimated via least-squares.
+
+```{r}
+fit.footwear.weight <- lm(TimeMins ~ factor(Footwear) - 1 + Weight, data=dat)
+```
+
+I fit the model and examine the regression coefficient summaries below:[Interpreting the regression coefficients, an additional five pounds of pack weight was associated with a slowdown in pace of `r format(5*unname(coef(fit.footwear.weight)[4]),digits=3)` minutes; this equates to roughly 20 seconds per repetition. Accounting for pack weight, the difference between mountaineering boots and running shoes was a slowdown in pace of `r format(unname(coef(fit.footwear.weight)[3]-coef(fit.footwear.weight)[1]),digits=3)` minutes.]{.aside}
+
+```{r}
+#| label: tbl-fit-reg1
+#| tbl-cap: "Regression coefficients from least-squares estimation"
+tbl_regression(
+  fit.footwear.weight,
+  label=list(`factor(Footwear)`="Footwear index")) %>%
+  modify_header(label="**Effect**", estimate="**Estimate (Mins)**") %>%
+  modify_column_hide(columns=p.value)
+```
+
+# Discussion
+
+Across the population of mountaineering school students, the average pace of climbing one rep of the Cathedral stairs was 12.6 minutes, with a vertcial elevation gain of about `r format(535 * (34/42) * 0.3048, digits=2)` meters per repetition.
+
+Any rep measured in minutes is easily expressed as the number of meters climbed in one hour, assuming a constant pace. The formula for this conversion is below:
+
+$$
+\text{Meters per hour (mph)}=60\times \frac{132}{\text{Minutes per rep}}
+$$
+
+The average pace for the students was `r format(60 * 132 / 12.6, digits=2)` mph. A [2004 study of hikers](https://doi.org/10.1080/15438620490497332) found a typical climbing pace of 317 mph in the Austrian Alps, with variation between 180 and 480 mph.[The study was published in *Research in Sports Medicine*, and titled "Exercise Capacity for Mountaineering: How Much Is Necessary?", by Martin Burtscher.]{.aside} Thus, the typical climbing pace observed in this dataset was exceptionally fast by alpine standards, but also occurred in a controlled training environment near sea-level.
+
+Additionally, student climbing paces exhibited negative responses to heavier footwear and pack weights, as would be expected given the endurance aspect of the training exercise. Extrapolating from the regression results in @tbl-fit-reg1, an increase in pack weight from 20 to 30 pounds would be expected to slow the average student by 42 seconds per rep. In climbing terms, this would potentially slow the pace from `r format(60 * 132 / 12.6, digits=2)` to `r format(60 * 132 / (12.6 + 0.7), digits=2)` mph.
+
+One noteworthy limitation of this analysis is that the results demonstrate *average* tendencies; however, it is likely that students responded differently to increased loads. Therefore a revised analysis ought to account for student-level heterogeneity in the efefcts of footwear and packweight. A multi-level model via Bayesian methods would offer means to address this limitation.
