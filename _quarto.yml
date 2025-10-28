@@ -5,6 +5,7 @@ project:
     - "wv-24-gallery/pages/*"
     - "wv-24-gallery/images/*"
     - "wv-24-gallery.html"
+    - "portfolio/*"
 
 website:
   title: "pompon.io"
