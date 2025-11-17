@@ -6,15 +6,9 @@ categories: [trip reports, adventure]
 image: "gt08.jpg"
 ---
 
-## Synopsis
+## Overview
 
-My first real mountaineering trip, in which I summitted the Grand Teton using a classic rock climbing route (Exum Ridge 5.5, III).
-
-Dates: August 12-13, 2021
-
-Partner: Donnie K.
-
-Total car-to-car time: 32 hours, 20 mins
+My first real mountaineering trip, climbed overnight between August 12-13, 2021. Donnie and I I summitted the Grand Teton using a classic rock climbing route (Exum Ridge 5.5, III). We were on-route/bivying for a total car-to-car time of 32 hours and 20 minutes. Amazingly, this same feat has been accomplished in a record-setting 2 hours and 53 minutes (FKT: Andy Anderson).
 
 ![At the summit of the Grand Teton in Jackson, Wyoming (2021)](gt01.jpg)
 
