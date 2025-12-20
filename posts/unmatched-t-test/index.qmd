@@ -1,0 +1,250 @@
+---
+title: "Analyzing paired data with unknown pairings"
+subtitle: "Summary of progress towards a better test procedure"
+author: "Ray Pomponio"
+date: "2025-12-20"
+categories: [analysis, statistics]
+number-sections: true
+number-depth: 1
+execute:
+  echo: false
+  warning: false
+bibliography: references.bib
+abstract: "Concerns about anonymity in experimental design sometimes preclude the pairing of observations within a pre-versus-post intervention study. Such schemes result in paired data with unknown pairings, an issue for practitioners who wish to test for the difference between pre- and post-intervention means, commonly accomplished with the paired t-test. Reliance on a lower-bound estimate of the sample correlation, such as zero, is sensible when pairings are entirely unknown and positive correlation is suspected; this assumption yields the classic two-sample t-test. However, when limited information is available through partially-known pairings, one can improve statistical power by relaxing the assumption of independence. I demonstrate substantial improvement in power attained through an estimate of the sample correlation using partial information, and provide rationale that a test constructed from this estimate would not yield greater-than-nominal type I error probability."
+abstract-title: "Overview"
+---
+
+
+```{r}
+library(Hmisc)
+library(data.table)
+library(MASS)
+library(ggplot2)
+library(ggpubr)
+theme_set(theme_pubclean())
+set.seed(1818)
+```
+
+# Exposition of the Unknown Pairings Problem
+
+We let $(x_i, y_i)$ be a single sample from a bivariate normal distribution.[For an approach to non-normally distributed data, see @Montgomery25012019.]{.aside} Our random sample consists of independent and identically distributed samples $(x_1,y_1),...,(x_n,y_n)$.
+
+$$
+(x_i, y_i) \sim \text{Normal}(\mu, \Sigma)
+$$
+where $\mu=\pmatrix{\mu_x \\ \mu_y}$ and $\Sigma=\pmatrix{\sigma_x^2 & \rho\sigma_x\sigma_y \\ \rho\sigma_x\sigma_y & \sigma_y^2}$.
+
+We are often interested in comparing population means $\mu_x, \mu_y$ using inferential methods; one such approach is the paired t-test, which employs the following test statistic:
+
+$$
+t_p=\sqrt{n}\frac{\bar{x}-\bar{y}}{\sqrt{s_x^2+s_y^2-2rs_xs_y}}
+$$
+where $\bar{x},\bar{y}$ are sample means, $s_x,s_y$ are sample standard deviations, and $r$ is the sample correlation of $x, y$.[Formally, under the null hypothesis $H_0:\delta=\mu_x-\mu_y=0$, $t_p$ is t-distributed with $\nu_p=n-1$ degrees of freedom.]{.aside}
+
+As pointed out in @Grabchak03042023 and @bedeian2002assessing, we cannot compute $r$ when individual samples are scrambled, such that we do not know the pairings of elements in $x, y$. This is plainly seen from the formula for $r$, which includes the sum of cross-product terms, $\sum x_iy_i$. [Note, $r=\frac{\sum_{i=1}^nx_iy_i-n\bar{x}\bar{y}}{(n-1)s_xs_y}$]{.aside} The issue of unknown pairings does not preclude the computation of any other parameter in the formula for $t_p$, namely, $\bar{x},\bar{y}, s_x,s_y$.
+
+We let $r'$ denote some plug-in estimate or approximation of $r$, which is not directly observable. Briefly, practitioners may possess domain knowledge about the likely value of $r$, in which case they proceed with the paired t-test using the plug-in value. Otherwise, an 'estimate' may be possible under conditions we explore below.
+
+I posit the following theorem about $r'$:
+
+$$
+\text{if}\quad r'\rightarrow r,\quad \text{then}\quad t_p' \rightarrow t_p
+$$
+where $t_p'$ is a modified test statistic using the directly observed parameters $\bar{x},\bar{y}, s_x,s_y$ and the substitute parameter $r'$.
+
+# Shortcomings of Grabchak's Procedure
+
+The solution put forth in @Grabchak03042023 entails a lower-bound estimate for $r'$. This can either be data-driven, which results in a negative lower-bound near $-1$, or simply $0$, if one assumes data are non-negatively correlated.
+
+Briefly, the minimum possible correlation given a random sample is:
+
+$$
+r_s=\frac{\sum_{i=1}^nx_{(i)}y_{(n+1-i)}-n\bar{x}\bar{y}}{(n-1)s_xs_y}
+$$
+where $x_{(i)},y_{(i)}$ are the $i^{th}$ sample order statistics.[Note, $r_s$ was previously introduced in @bedeian2002assessing.]{.aside}
+
+Alternatively, if one is willing to assume strictly non-negative sample correlations, as is plausible in most pre-versus-post intervention studies, then the use of $r'=0$ is a sensible lower-bound and will avoid inflation of the test's type I error rate. This is true so long as the assumption of non-negative correlation is valid; this assumption is fundamentally untestable.
+
+In either case, we have an estimate of $r'$, and we can compute a bounded test statistic as follows:
+
+$$
+t_p'=\sqrt{n}\frac{\bar{x}-\bar{y}}{\sqrt{s_x^2+s_y^2-2r's_xs_y}}
+$$
+
+I demonstrate in the following simulation that the use of $r'=0$ will result in a test procedure that is underpowered compared to that of $t_p$. Here, I simulate bivariate normal datasets of size $n=20$, with a population correlation of $\rho=0.2$, and a standardized population difference in means of $\delta=0.5$. I examine the power of the proposed test based on $t_p'$ relative to that of the paired t-test, $t_p$.[I don't delve into the choice of degrees of freedom of the proposed test procedure here, for brevity's sake, but it is discussed in @Grabchak03042023.]{.aside}
+
+```{r}
+#| echo: true
+ALPHA <- 0.05
+n <- 20
+rho <- 0.2
+delta <- 0.5
+sim.pwr <- replicate(1000, {
+  sim <- mvrnorm(n, mu=c(0, delta), Sigma=matrix(c(1, rho, rho, 1), nrow=2))
+  x <- sim[, 1]
+  y <- sim[, 2]
+  t.p <- t.test(x, y, paired=TRUE, var.equal=TRUE)
+  t.ind <- t.test(x, y, paired=FALSE, var.equal=TRUE)
+  reject <- c("paired"=t.p$p.value < ALPHA, "proposed"=t.ind$p.value < ALPHA)
+  reject})
+printL("Power relative to paired t-test"=
+         mean(sim.pwr["proposed",]) / mean(sim.pwr["paired",]), dec=3)
+```
+
+The results demonstrate that a test based on $t_p'$ where $r'=0$ is underpowered compared to that of $t_p$, the traditional paired t-test. We note that a test based on $r'=r_s$ will exhibit even lower power, because $r_s<0$. Thus we do not illustrate a comparison here, as $r'=0$ gives us the more-powerful version of Grabchak's test procedure.
+
+# Modification for Partially-known Pairings
+
+I now relax the constraints of the problem of unknown pairings to include partially-known pairings for a subset, $m$, of samples, where $m\leq n$. Let us compute a new estimate of $r'$ using information available from the known pairings, $i=1, ..., m$:
+
+$$
+r'=\frac{\sum_{i=1}^mx_iy_i-n\bar{x}\bar{y}}{(n-1)s_xs_y}
+$$
+where $\bar{x},\bar{y}, s_x,s_y$ are computed using all samples $i=1, ..., n$.
+
+The rationale of $r'$ is that it approaches $r$ as $m\rightarrow n$. As the number of known pairings increases, we get closer to approximating $r$ as it would be estimated under fully-known pairings.
+
+We hope that reliance on $r'$ will not induce greater-than-nominal type I error. This can be checked in the following simulation code.
+
+```{r}
+#| echo: true
+n <- 20
+m <- 10
+rho <- 0.2
+delta <- 0
+sim.t1err <- replicate(1000, {
+  sim <- mvrnorm(n, mu=c(0, delta), Sigma=matrix(c(1, rho, rho, 1), nrow=2))
+  x <- sim[, 1]
+  y <- sim[, 2]
+  x.bar <- mean(x)
+  y.bar <- mean(y)
+  s.x <- sd(x)
+  s.y <- sd(y)
+  r.prime.denom <- (n - 1) * s.x * s.y
+  r.prime <- (sum(x[1:m] * y[1:m]) - n * x.bar * y.bar) / r.prime.denom
+  se.prime <- sqrt(s.x^2 + s.y^2 - 2 * r.prime * s.x * s.y) / sqrt(n)
+  pval <- 2 * pt(-abs(x.bar - y.bar) / se.prime, df=n - 1)
+  pval < ALPHA})
+printL("Type I error compared to nominal rate"=mean(sim.t1err) / ALPHA, dec=3)
+```
+The results demonstrate that a test based on partially-known pairings to inform $r'$ does not exhibit higher-than-nominal type I error.
+
+I proceed with a simulation to assess the power of the proposed test procedure.
+
+# Simulation of Proposed Procedure
+
+I simulate the performance of the proposed test procedure under the following conditions:
+
+| Simulation Parameter | Possible Values |
+|----------------------|-----------------|
+| $\rho$ | 0, 0.2, 0.5, 0.9 |
+| $n,m$ | (20, 10), (30, 10), (10, 5), (30, 20) |
+| $\delta$ | 0.25, 0.5 |
+
+```{r}
+# initialize container for results
+rho <- c(0, 0.2, 0.5, 0.9)
+n.m <- list(c(20, 10), c(30, 10), c(10, 5), c(30, 20))
+delta <- c(0.25, 0.5)
+res <- expand.grid(RHO=rho, NM=n.m, DELTA=delta, rep=1:1000)
+res$N <- as.numeric(lapply(res$NM, function(e) e[1]))
+res$M <- as.numeric(lapply(res$NM, function(e) e[2]))
+res <- data.table(res[, c("N", "M", "RHO", "DELTA")])
+```
+
+For each set of conditions, we replicate 1,000 datasets and apply the paired t-test, the proposed test procedure based on partially-known pairings, and Grabchak's procedure for fully-unknown pairings.
+
+```{r}
+#| echo: true
+#| output: false
+source("proposed-t-tests.R")
+for (i in 1:nrow(res)){
+  if (i %% 1000==0) cat("ITERATION: ", i, " / ", nrow(res), "\n")
+  n <- res$N[i]
+  m <- res$M[i]
+  rho <- res$RHO[i]
+  sim <- mvrnorm(n, mu=c(0, res$DELTA[i]), Sigma=matrix(c(1, rho, rho, 1), nrow=2))
+  x <- sim[, 1]
+  y <- sim[, 2]
+  x.bar <- mean(x)
+  y.bar <- mean(y)
+  s.x <- sd(x)
+  s.y <- sd(y)
+  r.prime.denom <- (n - 1) * s.x * s.y
+  r.prime <- (sum(x[1:m] * y[1:m]) - n * x.bar * y.bar) / r.prime.denom
+  se.prime <- sqrt(s.x^2 + s.y^2 - 2 * r.prime * s.x * s.y) / sqrt(n)
+  pval <- 2 * pt(-abs(x.bar - y.bar) / se.prime, df=n - 1)
+  t.p <- t.test(x, y, paired=TRUE, var.equal=TRUE)
+  t.u <- unk.paired.t.test(x, y, positive.rho=TRUE)
+  res[i, reject_paired:=t.p$p.value < ALPHA]
+  res[i, reject_grabchak:=t.u$p.value[1] < ALPHA]
+  res[i, reject_proposed:=pval < ALPHA]
+}
+```
+
+Next I analyze the results of the simulation to assess the performance of the three tests.[The results demonstrate several desirable aspects of the proposed t-test with partially-known pairings (blue). Compared to Grabchak's test (green), the proposed test exhibits greater power at all sample sizes, and the relative gain in power can be substantial with higher values of correlation, or larger sample sizes. Compared to the paired t-test (red), which is unattainable given the construct of the problem, the proposed test exhibits only a modest loss in power, except at higher values of correlation.]{.aside}
+
+```{r}
+#| label: fig-sim-power-comparison
+#| fig-cap: "Power comparison among methods for paired difference testing"
+#| fig-height: 6
+lng <- melt(res, id.vars=c("N", "M", "RHO", "DELTA"), variable.name="test",
+            value.name="reject", variable.factor=FALSE)
+perf <- lng[!is.na(reject), .(PWR=mean(reject)), by=.(test, N, M, RHO, DELTA)]
+perf[, test:=factor(gsub("reject_", "", test), c("paired", "grabchak", "proposed"))]
+ggplot(perf[order(DELTA, RHO, N, M)], aes(x=RHO, y=PWR, col=test)) +
+  facet_wrap(~ paste0("n=", N) + paste0("m=", M)) +
+  geom_point() +
+  geom_path(aes(linetype=factor(DELTA, c(0.5, 0.25), c("Large", "Small")))) +
+  labs(x="Correlation", y="Power", col="Method", linetype="Eff. Size")
+```
+
+The superior performance of the proposed test over that of Grabchak is apparent in @fig-sim-power-comparison. Additionally, Grabchak's test tends to suffer in performance via reduced power when correlations increase. In contrast, our proposed test at least maintains power with higher values of correlation. The loss in power compared to the paired t-test is expected, because pairings are partially unknown, and also exacerbated as $\rho\rightarrow 1$. This phenomenon can be explained by the limited information available when a subset of pairings are known; in such cases, the subset tends to yield a correlation estimate $r'$ that is less extreme than $r$.
+
+# Summary and Next Steps
+
+I have shown that an estimate of $r$ using partially-known pairings can improve statistical power beyond an assumption of independence (i.e., $r=0$), when testing for paired differences in bivariate normally-distributed data. We also demonstrated the appropriate type I error control of the proposed test procedure.
+
+Next, I consider alternatives to $r'$. For example, one may be interested in a 'shrunken' estimate of $r$ conditional on a prior distribution and partially-known pairings. In the case of a  noninformative prior, such an estimator would be unlikely to yield much value beyond our proposed $r'$. However, if one is willing to specify an informative prior, representing beliefs about the plausible values of correlation in the sample, then a shrunken estimator may lead to improved power when testing for paired differences.
+
+## Going Further
+
+```{r}
+n <- 20
+m <- 10
+rho <- 0.2
+delta <- 0.5
+sim <- mvrnorm(n, mu=c(0, delta), Sigma=matrix(c(1, rho, rho, 1), nrow=2))
+```
+
+
+In the above estimate of $r'$, the cross-product $\sum_{i=1}^mx_iy_i$ is an approximation to $\sum_{i=1}^nx_iy_i$. Recall we cannot compute the latter summation due to partially unknown pairings. We can, however, derive boundaries for the term via order statistics:
+
+$$
+\sum_{i=1}^nx_{(i)}y_{(n+1-i)} \leq \sum_{i=1}^nx_iy_i \leq \sum_{i=1}^nx_{(i)}y_{(i)}
+$$
+
+Let us then suppose a prior on the value of $z=\sum_{i=1}^nx_iy_i$. We begin with the following noninformative prior:
+
+$$
+p(z)\propto \textbf{1}_{z\in (z_{min}, z_{max})}
+$$
+where $z_{min}=\sum x_{(i)}y_{(n+1-i)}$ and $z_{max}=\sum x_{(i)}y_{(i)}$.
+
+We recognize that this noninformative prior places equal chance on every possible value of $z$, including negative values. If we adopt a vague-but-informative prior, we can formally represent the expectation that $z$ tends to be positive and non-extreme. For example:
+
+$$
+p(z) \sim \text{Normal}(\frac{1}{3}z_{max}, (\frac{z_{max}}{6})^2)
+$$
+Such a prior would place most of its probability mass between zero and sub-maximal $z$ values. I defer several critical details to later discussion; namely, whether this prior is appropriate for most datasets, and whether it is bounded or unbounded, as the normal distribution is unbounded.
+
+Below, I illustrate the shape of our hypothetical vague prior on $z$:
+
+```{r}
+#| label: fig-prior-vague
+#| fig-cap: "Hypothetical prior on unknown summation term"
+curve(dnorm(x, 1/3, 1/6), xlab=expression(z), xlim=c(-1, 1), xaxt="n", ylab=NA)
+axis(1, at=c(-1, 0, 1),labels=c(expression(z[min]), 0, expression(z[max])))
+```
+
+The procedure I outlined would compute a shrunken estimate, $r''$, incorporating the prior and the data which contain partially-known pairings. Note, when the approximation to $z$ is less than the expected value of $p(z)$, the updated estimate will be shrunken towards the mean; this is by design. It is essentially a technique to regularize extreme values of $\sum_{i=1}^mx_iy_i$ when $m$ is small.
