@@ -1,23 +1,12 @@
 ---
 title: "About"
-subtitle: "Ray Pomponio, MS"
+subtitle: "Ray Pomponio"
 image: profile.jpg
 about:
   template: jolla
-  links:
-    - icon: cloud-arrow-down-fill
-      text: Current Resume
-      href: portfolio/Ray_Pomponio_Resume.pdf
-    - icon: briefcase
-      text: Sample Power Calculation
-      href: portfolio/RAY-POMPONIO_power_analysis.pdf
-    - icon: briefcase-fill
-      text: Sample E-commerce Report
-      href: portfolio/RAY-POMPONIO_report-sample.pdf
 ---
 
-Ray Pomponio is a data scientist at the University of Pittsburgh Children’s Hospital, with research focused on public health surveillance of respiratory viruses. He holds a master's in biostatistics, with training in advanced statistical modeling of missing and correlated data. As an applied statistician with collaborative experience in fields ranging from neuroscience and medical imaging to clinical pulmonology, Ray's expertise is in analyzing complex datasets under the direction of domain experts, typically principal investigators or physician scientists. Across collaborations, his skills in scientific communication and project management enable him to deliver timely, high-quality analyses that are interpretable to the relevant research audience.
+If you're on this page, you're probably wondering who I am. The answer may depend on what you're looking for... I am a biostatistician and data scientist by training. I work on medical research focused on children's health and vaccine effectiveness. For the past two years I've lived with my partner in Pittsburgh and supported a research team at UMPC Children's. See my [LinkedIn](https://www.linkedin.com/in/ray-pomponio) page for more details on what I'm currently up to in my career. You can also find a full bibliography of my published research on [NCBI](https://www.ncbi.nlm.nih.gov/myncbi/raymond.pomponio.1/bibliography/public/).
 
---
+I also rock climb, a lot. I've published a few trip reports from various alpine climbing trips across the United States, including in Wyoming, Washington, and Colorado. I am an active member of the [Explorers Club of Pittsburgh](https://pittecp.org/History), which has been an integral part of my adventure life while living in Pittsburgh. I recently became the Rock Climbing Activity Coordinator for the club. I also help out with the Mountaineering School, an advanced instructional course on mountain climbing skills and high-elevation camping.
 
-Ray is also an avid rock climber and part-time alpinist. He's climbed in 12 US states plus Mexico, tallying over 1,000 routes since beginning outdoor climbing in 2019. In 2025, Ray became the Rock Climbing Coordinator for the Explorer's Club of Pittsburgh (ECP). The ECP has been active since 1947 in both local Appalachian adventures as well as international expeditions in the Andes and Himalayas. More information is available on the [ECP website](https://pittecp.org/History). Ray's new position involves keeping the club's 400+ membership body aware of climbing-related news and industry developments, and planning annual trips to popular climbing desintaions on the East Coast (i.e., Seneca Rocks, the New River Gorge, or the Gunks in upstate NY).
