@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outdoor Photography by Ray Pomponio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background-color: #333;
+            color: white;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .gallery-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 20px;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 20px;
+        }
+        .gallery-item {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        .caption {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            text-align: center;
+            padding: 70px;
+            font-size: 18px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover .caption {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+  <header>Winter in El Potrero Chico, Mexico</header>
+    <div class="gallery-container">
+      <div class="gallery">
+        <div class="gallery-item">
+            <a href="mex-25-gallery/pages/image1.html">
+                <img src="mex-25-gallery/images/IMG_3006.JPG" alt="Image">
+                <div class="caption">Saul on the Mota Wall</div>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <a href="mex-25-gallery/pages/image2.html">
+                <img src="mex-25-gallery/images/IMG_3014.JPG" alt="Image">
+                <div class="caption">Eric on the Mota Wall</div>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <a href="mex-25-gallery/pages/image3.html">
+                <img src="mex-25-gallery/images/IMG_3043.JPG" alt="Image">
+                <div class="caption">Malini on the Mota Wall</div>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <a href="mex-25-gallery/pages/image4.html">
+                <img src="mex-25-gallery/images/IMG_3056.JPG" alt="Image">
+                <div class="caption">Monica on the Mota Wall</div>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <a href="mex-25-gallery/pages/image5.html">
+                <img src="mex-25-gallery/images/IMG_3065.JPG" alt="Image">
+                <div class="caption">Midway up the TNT Wall, Agua de Coco</div>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <a href="mex-25-gallery/pages/image6.html">
+                <img src="mex-25-gallery/images/IMG_3100.JPG" alt="Image">
+                <div class="caption">Drew on Mexico in Flames</div>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <a href="mex-25-gallery/pages/image7.html">
+                <img src="mex-25-gallery/images/IMG_3123.JPG" alt="Image">
+                <div class="caption">Lora, working moves on Don Quixote</div>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <a href="mex-25-gallery/pages/image8.html">
+                <img src="mex-25-gallery/images/IMG_3154.JPG" alt="Image">
+                <div class="caption">Monica, Lora, and Drew all climbing</div>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <a href="mex-25-gallery/pages/image9.html">
+                <img src="mex-25-gallery/images/IMG_3194.JPG" alt="Image">
+                <div class="caption">Ray and Lora at the notch of The Spires</div>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <a href="mex-25-gallery/pages/image10.html">
+                <img src="mex-25-gallery/images/IMG_3211.JPG" alt="Image">
+                <div class="caption">Anna whipping at Wonderwall</div>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <a href="mex-25-gallery/pages/image11.html">
+                <img src="mex-25-gallery/images/IMG_3227.JPG" alt="Image">
+                <div class="caption">Malini eyeing the next move</div>
+            </a>
+        </div>
+        <div class="gallery-item">
+            <a href="mex-25-gallery/pages/image12.html">
+                <img src="mex-25-gallery/images/IMG_3236.JPG" alt="Image">
+                <div class="caption">Malini on lead, slabs of Virgin Canyon</div>
+            </a>
+        </div>
+    </div>
+  </div>
+</body>
+</html>

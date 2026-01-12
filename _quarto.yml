@@ -5,6 +5,9 @@ project:
     - "wv-24-gallery/pages/*"
     - "wv-24-gallery/images/*"
     - "wv-24-gallery.html"
+    - "mex-25-gallery/pages/*"
+    - "mex-25-gallery/images/*"
+    - "mex-25-gallery.html"
     - "portfolio/*"
 
 website:
@@ -13,7 +16,17 @@ website:
     right:
       - about.qmd
       - text: Photography
-        href: wv-24-gallery.html
+        menu: 
+          - text: West Virginia
+            href: wv-24-gallery.html
+          - text: Mexico
+            href: mex-25-gallery.html
+      - text: Work Samples
+        menu: 
+          - text: Power Analysis
+            href: portfolio/RAY-POMPONIO_power_analysis.pdf
+          - text: Marketing Insights 
+            href: portfolio/RAY-POMPONIO_report-sample.pdf
       - icon: github
         href: https://github.com/rpomponio
       - icon: linkedin
