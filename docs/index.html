@@ -78,9 +78,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description","listing-categories"],
+      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -131,10 +131,10 @@ window.Quarto = {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -147,7 +147,11 @@ window.Quarto = {
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Home</span></a>
+  </li>  
   <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
@@ -156,7 +160,7 @@ window.Quarto = {
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-photography" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Photography</span>
     </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-photography">    
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-photography">    
         <li>
     <a class="dropdown-item" href="./wv-24-gallery.html">
  <span class="dropdown-text">West Virginia</span></a>
@@ -167,30 +171,13 @@ window.Quarto = {
   </li>  
     </ul>
   </li>
-  <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-work-samples" role="link" data-bs-toggle="dropdown" aria-expanded="false">
- <span class="menu-text">Work Samples</span>
-    </a>
-    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-work-samples">    
-        <li>
-    <a class="dropdown-item" href="./portfolio/RAY-POMPONIO_power_analysis.pdf">
- <span class="dropdown-text">Power Analysis</span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/rpomponio"> 
+<span class="menu-text">github</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="./portfolio/RAY-POMPONIO_report-sample.pdf">
- <span class="dropdown-text">Marketing Insights</span></a>
-  </li>  
-    </ul>
-  </li>
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/rpomponio"> <i class="bi bi-github" role="img">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://www.linkedin.com/in/ray-pomponio"> <i class="bi bi-linkedin" role="img">
-</i> 
-<span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.linkedin.com/in/ray-pomponio"> 
+<span class="menu-text">linkedin</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -200,34 +187,31 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Ray’s Reflections</h1>
-            <p class="subtitle lead">on adventures in uncertainty</p>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta column-page-left">
-
-      
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(10)</span></div><div class="category" data-category="adventure">adventure <span class="quarto-category-count">(5)</span></div><div class="category" data-category="analysis">analysis <span class="quarto-category-count">(2)</span></div><div class="category" data-category="fun">fun <span class="quarto-category-count">(1)</span></div><div class="category" data-category="hobbies">hobbies <span class="quarto-category-count">(1)</span></div><div class="category" data-category="personal">personal <span class="quarto-category-count">(2)</span></div><div class="category" data-category="reading">reading <span class="quarto-category-count">(1)</span></div><div class="category" data-category="reflections">reflections <span class="quarto-category-count">(2)</span></div><div class="category" data-category="sports">sports <span class="quarto-category-count">(1)</span></div><div class="category" data-category="statistics">statistics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="trip reports">trip reports <span class="quarto-category-count">(4)</span></div></div></div>
+    
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Ray’s Reflections</h1>
+<p class="subtitle lead">on adventures in uncertainty</p>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
 
 
 
@@ -248,14 +232,6 @@ window.Quarto = {
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/unmatched-t-test/index.html" class="no-external">Summary of progress towards a better test procedure</a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('analysis'); return false;">
-analysis
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('statistics'); return false;">
-statistics
-</div>
 </div>
 <div class="listing-description">
 <a href="./posts/unmatched-t-test/index.html" class="no-external">Concerns about anonymity in experimental design sometimes preclude the pairing of observations within a pre-versus-post intervention study. Such schemes result in paired data with unknown pairings, an issue for practitioners who wish to test for the difference between pre- and post-intervention means, commonly accomplished with the paired t-test. Reliance on a lower-bound estimate of the sample correlation, such as zero, is sensible when pairings are entirely unknown and positive correlation is suspected; this assumption yields the classic two-sample t-test. However, when limited information is available through partially-known pairings, one can improve statistical power by relaxing the assumption of independence. I demonstrate substantial improvement in power attained through an estimate of the sample correlation using partial information, and provide rationale that a test constructed from this estimate would not yield greater-than-nominal type I error probability.</a>
@@ -285,14 +261,6 @@ Ray Pomponio
 <div class="listing-subtitle">
 <a href="./posts/cathedral-climbing/index.html" class="no-external">Analyzing stair-climbing workouts in new mountain athletes</a>
 </div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('analysis'); return false;">
-analysis
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('sports'); return false;">
-sports
-</div>
-</div>
 <div class="listing-description">
 <a href="./posts/cathedral-climbing/index.html" class="no-external">For 30 years, the Explorer’s Club of Pittsburgh has run a mountaineering school through the winter, guiding students in outings and exercises to build advanced skills for mountain climbing. Every student of the mountaineering school trains on the stairs of the University of Pittsburgh’s Cathedral of Learning. A typical training session consists of multiple repetitions up the Cathedral’s 34-story stairwell, carrying a weighted backpack to simulate real mountain ascents. I analyzed data from 10 years of training logs, including 129 students and 10,000+ repetitions of the stairs. From 2011-present, students’ climbing paces exhibited consistent response to heavier packs and footwear.</a>
 </div>
@@ -320,14 +288,6 @@ Ray Pomponio
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/game-night-simulation/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('personal'); return false;">
-personal
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('fun'); return false;">
-fun
-</div>
 </div>
 <div class="listing-description">
 <a href="./posts/game-night-simulation/index.html" class="no-external">I was at a friend’s house for game night last weekend, and I was introduced to a game called The Mind. The premise is simple; a deck of cards is numbered one through one…<em></em><sup></sup></a>
@@ -357,14 +317,6 @@ Ray Pomponio
 <div class="listing-subtitle">
 <a href="./posts/north-cascades-2025/index.html" class="no-external"></a>
 </div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('trip reports'); return false;">
-trip reports
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('adventure'); return false;">
-adventure
-</div>
-</div>
 <div class="listing-description">
 <a href="./posts/north-cascades-2025/index.html" class="no-external">Over a long weekend in July 2025, six ECP’ers convened for an alpine climbing trip in the Washington Pass area of North Cascades National Park. While other ECP’ers were in…</a>
 </div>
@@ -392,14 +344,6 @@ Ray Pomponio
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/statistical-rethinking/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('reading'); return false;">
-reading
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('reflections'); return false;">
-reflections
-</div>
 </div>
 <div class="listing-description">
 <a href="./posts/statistical-rethinking/index.html" class="no-external">I’ve begun reading <em>Statistical Rethinking</em> by Richard McElreath,<sup>1</sup> and I wanted to log some of my thoughts that come to mind while working through his ideas on modern…</a>
@@ -429,14 +373,6 @@ Ray Pomponio
 <div class="listing-subtitle">
 <a href="./posts/climbing-pyramids/index.html" class="no-external"></a>
 </div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('hobbies'); return false;">
-hobbies
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('adventure'); return false;">
-adventure
-</div>
-</div>
 <div class="listing-description">
 <a href="./posts/climbing-pyramids/index.html" class="no-external">Recently, I’ve been interested in developing ways to assess my own performance as an outdoor rock climber. One classic tool for evaluating a climber’s history on routes is…</a>
 </div>
@@ -464,14 +400,6 @@ Ray Pomponio
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/research-summary/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('personal'); return false;">
-personal
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('reflections'); return false;">
-reflections
-</div>
 </div>
 <div class="listing-description">
 <a href="./posts/research-summary/index.html" class="no-external">In this post, I review progress in my research so far, and distill my work into three themes spanning topics in biomedical sciences and applied statistics.</a>
@@ -501,14 +429,6 @@ Ray Pomponio
 <div class="listing-subtitle">
 <a href="./posts/seneca-winter-2024/index.html" class="no-external"></a>
 </div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('trip reports'); return false;">
-trip reports
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('adventure'); return false;">
-adventure
-</div>
-</div>
 <div class="listing-description">
 <a href="./posts/seneca-winter-2024/index.html" class="no-external">In one of my first Winter Mountaineering outings with the Explorer’s Club of Pittsbugh (ECP), we hiked through the night to simulate an alpine rock climbing objective–only…</a>
 </div>
@@ -537,14 +457,6 @@ Ray Pomponio
 <div class="listing-subtitle">
 <a href="./posts/sharkstooth-rmnp/index.html" class="no-external"></a>
 </div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('trip reports'); return false;">
-trip reports
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('adventure'); return false;">
-adventure
-</div>
-</div>
 <div class="listing-description">
 <a href="./posts/sharkstooth-rmnp/index.html" class="no-external">On July 17, 2022, on a clear day in Rocky Mountain National Park, Jason and I succesfully climbed the Northeast Ridge of Sharkstooth (5.6, II). The spire stands tall behind…</a>
 </div>
@@ -572,14 +484,6 @@ Ray Pomponio
 </h3>
 <div class="listing-subtitle">
 <a href="./posts/grand-teton-2021/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('trip reports'); return false;">
-trip reports
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('adventure'); return false;">
-adventure
-</div>
 </div>
 <div class="listing-description">
 <a href="./posts/grand-teton-2021/index.html" class="no-external">My first real mountaineering trip, climbed overnight between August 12-13, 2021. Donnie and I I summitted the Grand Teton using a classic rock climbing route (Exum Ridge…</a>

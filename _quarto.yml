@@ -12,26 +12,29 @@ project:
 
 website:
   title: "pompon.io"
-  navbar:
-    right:
-      - about.qmd
+  navbar:     # very 90s to not have a navbar
+    left:
+      - text: Home
+        href: index.qmd
+      - text: About
+        href: about.qmd
       - text: Photography
-        menu: 
+        menu:
           - text: West Virginia
             href: wv-24-gallery.html
           - text: Mexico
             href: mex-25-gallery.html
-      - text: Work Samples
-        menu: 
-          - text: Power Analysis
-            href: portfolio/RAY-POMPONIO_power_analysis.pdf
-          - text: Marketing Insights 
-            href: portfolio/RAY-POMPONIO_report-sample.pdf
-      - icon: github
+      # - text: Work Samples
+      #   menu:
+      #     - text: Power Analysis
+      #       href: portfolio/RAY-POMPONIO_power_analysis.pdf
+      #     - text: Marketing Insights
+      #       href: portfolio/RAY-POMPONIO_report-sample.pdf
+      - text: github
         href: https://github.com/rpomponio
-      - icon: linkedin
+      - text: linkedin
         href: https://www.linkedin.com/in/ray-pomponio
 format:
   html:
-    theme: sandstone
+    theme: default
     css: styles.css
