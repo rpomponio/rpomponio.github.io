@@ -12,7 +12,8 @@ project:
 
 website:
   title: "pompon.io"
-  navbar:     # very 90s to not have a navbar
+  navbar:
+    collapse: true
     left:
       - text: Home
         href: index.qmd
@@ -30,11 +31,13 @@ website:
       #       href: portfolio/RAY-POMPONIO_power_analysis.pdf
       #     - text: Marketing Insights
       #       href: portfolio/RAY-POMPONIO_report-sample.pdf
-      - text: github
+      - text: GitHub
         href: https://github.com/rpomponio
-      - text: linkedin
+        icon: github
+      - text: LinkedIn
         href: https://www.linkedin.com/in/ray-pomponio
+        icon: linkedin
 format:
   html:
-    theme: default
+    theme: litera
     css: styles.css
