@@ -25,18 +25,21 @@ website:
             href: wv-24-gallery.html
           - text: Mexico
             href: mex-25-gallery.html
-      # - text: Work Samples
-      #   menu:
-      #     - text: Power Analysis
-      #       href: portfolio/RAY-POMPONIO_power_analysis.pdf
-      #     - text: Marketing Insights
-      #       href: portfolio/RAY-POMPONIO_report-sample.pdf
       - text: GitHub
         href: https://github.com/rpomponio
         icon: github
       - text: LinkedIn
         href: https://www.linkedin.com/in/ray-pomponio
         icon: linkedin
+      - text: CV
+        href: "portfolio/Pomponio Ray CV 2026.pdf"
+        icon: file-earmark-text
+      # - text: Work Samples
+      #   menu:
+      #     - text: Power Analysis
+      #       href: portfolio/RAY-POMPONIO_power_analysis.pdf
+      #     - text: Marketing Insights
+      #       href: portfolio/RAY-POMPONIO_report-sample.pdf
 format:
   html:
     theme: litera

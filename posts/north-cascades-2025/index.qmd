@@ -3,7 +3,6 @@ title: "Alpine Climbing in the North Cascades"
 author: "Ray Pomponio"
 date: "2025-07-15"
 categories: [trip reports, adventure]
-image: "drew.JPG"
 ---
 
 ## Overview
@@ -12,7 +11,7 @@ Over a long weekend in July 2025, six ECP’ers convened for an alpine climbing 
 
 [Published in ECP Newsletter](../../portfolio/2025-08-ECP-Newsletter-Excerpt.pdf) (August 2025)
 
-![Drew G., halfway up 'The Hitchhiker'](drew.JPG)
+![Early Morning Alpenglow in Washington Pass](WA Pass Alpenglow.JPG)
 
 Partners: Drew G., Monica D., Scott C.
 
