@@ -1,2 +1,859 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"></html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ray Pomponio">
+<meta name="dcterms.date" content="2026-03-11">
+
+<title>Counting Customers (Part I of CLV Models) – pompon.io</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">pompon.io</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-photography" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Photography</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-photography">    
+        <li>
+    <a class="dropdown-item" href="../../wv-24-gallery.html">
+ <span class="dropdown-text">West Virginia</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../mex-25-gallery.html">
+ <span class="dropdown-text">Mexico</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/rpomponio"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text">GitHub</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://www.linkedin.com/in/ray-pomponio"> <i class="bi bi-linkedin" role="img">
+</i> 
+<span class="menu-text">LinkedIn</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../portfolio/Pomponio Ray CV 2026.pdf"> <i class="bi bi-file-earmark-text" role="img">
+</i> 
+<span class="menu-text">CV</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Counting Customers (Part I of CLV Models)</h1>
+            <p class="subtitle lead">Modeling churn dynamics with BTYD models</p>
+                                <div class="quarto-categories">
+                <div class="quarto-category">analysis</div>
+                <div class="quarto-category">clv</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Ray Pomponio </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 11, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
+
+
+
+
+<p>In this series of blog posts, I will be visiting some classic marketing concepts from a technical, data-informed perspective. My interest is in developing a better communication style to convey complex, quantitative insights to decision-makers such as marketing professionals. Most practitioners are familiar with customer lifetime value (CLV)–yet the implementation and interpretation of statistical models of CLV are poorly understood. It is my belief (among the many who mentored me) that such models can tell rich stories about customer behavior. This post sets the stage with a basic question for any retail marketing channel: how many customers do we have? In addressing this foundational question, I introduce a class of models known as ‘buy-till-you-die’ (BTYD). I steer clear of any convoluted equations and instead explain the core elements of these models in layperson’s terms–then, I walkthrough a practical example using the free and open source programming language, <code>R</code>. Readers will leave this post with greater familiarity of the capabilities of BTYD models, particularly in estimating churn and in predicting future purchasing behaviors.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages and dataset (anonymized retailer transaction log)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CLVTools)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">"orders_anon.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="the-health-of-our-customer-base" class="level2">
+<h2 class="anchored" data-anchor-id="the-health-of-our-customer-base">The Health of Our Customer Base</h2>
+<p>Here’s a question that many marketing professionals ponder: <em>How many active customers do we have?</em> The keyword here is <em>active</em>, meaning a customer who is likely to make a future purchase.</p>
+<p>Imagine we’re an ecommerce retailer. We’ve historically served thousands of customers, some of whom never made more than one purchase. Do we have any sense of how many customers have <em>churned</em>, or effectively left our business?</p>
+<p>Managerial instinct might lead us to define a window, say 6 months, within which any customer making a purchase is considered active. But there’s a problem with this approach: customers don’t all churn at identical rates. Many customers make infrequent, but regular purchases. Others might make irregular, sporadic purchases for a short period of time and then churn immediately (maybe as soon as they find a better deal). Any operational definition such as the 6-month window is too rigid for this kind of consumer behavior.</p>
+</section>
+<section id="the-challenge-of-the-non-contractual-setting" class="level2">
+<h2 class="anchored" data-anchor-id="the-challenge-of-the-non-contractual-setting">The Challenge of the Non-contractual Setting</h2>
+<p>The problem we faced above is inherent in any non-contractual setting. Here I am using <em>non-contractual</em> to mean the arrangement of a marketing channel that allows purchases at any time. Compare this setting with the contractual setting, for example a Netflix subscription. Even if you are Netflix’s best customer, you only pay for the service once per month, <em>per contract</em>. Moreover, it’s very easy for Netflix to tell how many customers are active–they simply add up the ones who haven’t cancelled their subscription.</p>
+<p>Of course, customers can come and go in either setting. But in the non-contractual setting it’s uniquely difficult to tell when a customer has churned. This is where a particular class of probabilistic model proves essential–these are academically referred to as ‘buy-till-you-die’ (BTYD) models.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+</section>
+<section id="an-example-of-btyd-in-the-non-contractual-setting" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="an-example-of-btyd-in-the-non-contractual-setting">An Example of BTYD in the Non-contractual Setting</h2>
+<p>BTYD models come in many flavors. Let’s walkthrough a simple example for one customer at an ecommcerce retailer, since this will highlight the essential characteristics of the model. We’ll refer to this individual as “Customer 101”.</p>
+<p>Customer 101 makes their first purchase on January 1, 2024–they spent $24. Six months go by, and we still have not heard from Customer 101. But they return to our website and make their second purchase on August 31, 2024–again spending $24–almost nine months later. Between January 1 and August 31, we did not know whether Customer 101 was active, or whether they had churned.</p>
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
+<p><img src="two_coins.png" class="img-fluid figure-img"></p>
+<figcaption class="margin-caption">A story of two coins–one coin governs purchasing behaviors, another governs churn. Each customer’s coins are uniquely biased towards these outcomes. Some customers may be extremely prone to churn, others may stick around for years. BTYD models bring this story to life in a variety of mathematical implementations.</figcaption>
+</figure>
+</div>
+<p>BTYD models offer an intuitive explanation for the phenomenon of Customer 101’s behavior. Imagine Customer 101 flipped a biased coin at the start of every week after January 1, 2024. If this coin landed heads, they would churn and never return to make a repeat purchase. But as long as the coin kept coming up tails (and in this example, we know that it did), Customer 101 would remain active and begin flipping a <em>second coin</em>…</p>
+<p>If during the week the second coin landed tails, they would remain dormant and not make any purchases. However, if the second coin came up heads, as it did the week of August 31, then Customer 101 would make a purchase in our marketing channel. The phenomenon of coin-flipping is just a narrative device, meant to illustrate a probability model without requiring much math. But what is important is that Customer 101 operates in an <em>as-if-random</em> manner. With lots of customers and tools from statistics and probability, randomness can be explained in highly convincing ways.</p>
+</section>
+<section id="data-preparation-for-btyd-modeling" class="level2">
+<h2 class="anchored" data-anchor-id="data-preparation-for-btyd-modeling">Data Preparation for BTYD Modeling</h2>
+<p>Fortunately, BTYD models are becoming ubiquitous and ever easier to run. Multiple <code>R</code> packages exist for this exact application–an ecommerce retailer wants to turn their transaction log into an estimate of the active customer base.</p>
+<p>Below, I present some anonymous data from an ecommerce retailer selling skin care products. The transactions are ordered from the beginning to the end of the 18-month period starting in January 2024.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># format dates properly, create "training" dataset</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>dat[, date<span class="sc">:</span><span class="er">=</span><span class="fu">as.IDate</span>(date, <span class="st">"%d/%m/%Y"</span>)]</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> dat[date <span class="sc">&lt;=</span> <span class="fu">as.IDate</span>(<span class="st">"2025-06-30"</span>)]</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(train[<span class="fu">order</span>(orderid)])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["custid"],"name":[1],"type":["int"],"align":["right"]},{"label":["orderid"],"name":[2],"type":["int"],"align":["right"]},{"label":["date"],"name":[3],"type":["IDate"],"align":["right"]},{"label":["price"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["qty"],"name":[5],"type":["int"],"align":["right"]}],"data":[{"1":"118752","2":"700001","3":"2024-01-01","4":"47.94","5":"1"},{"1":"129998","2":"700002","3":"2024-01-01","4":"163.02","5":"3"},{"1":"130296","2":"700003","3":"2024-01-01","4":"47.94","5":"1"},{"1":"131129","2":"700004","3":"2024-01-01","4":"68.28","5":"2"},{"1":"105402","2":"700008","3":"2024-01-01","4":"179.82","5":"3"},{"1":"125572","2":"700009","3":"2024-01-01","4":"41.94","5":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Next, I want to isolate a <em>cohort</em> of customers who were acquired during the first quarter of the period. This is a component of all BTYD models; we focus on a cohort window and follow every customer until the end of the period. The period should extend well beyond the cohort window. Here’s a summary of our cohort by customer:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># isolate Q1 cohort</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>trainQ1 <span class="ot">&lt;-</span> train[date <span class="sc">&lt;=</span> <span class="fu">as.IDate</span>(<span class="st">"2024-03-31"</span>)]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>cohortQ1 <span class="ot">&lt;-</span> train[</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  custid <span class="sc">%in%</span> trainQ1<span class="sc">$</span>custid,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  .(<span class="at">purchases=</span>.N, <span class="at">totalspend=</span><span class="fu">sum</span>(price), <span class="at">initdate=</span><span class="fu">min</span>(date)), by<span class="ot">=</span>custid]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(cohortQ1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["custid"],"name":[1],"type":["int"],"align":["right"]},{"label":["purchases"],"name":[2],"type":["int"],"align":["right"]},{"label":["totalspend"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["initdate"],"name":[4],"type":["IDate"],"align":["right"]}],"data":[{"1":"100001","2":"3","3":"117.42","4":"2024-03-10"},{"1":"100024","2":"2","3":"101.82","4":"2024-01-10"},{"1":"100028","2":"1","3":"34.74","4":"2024-02-20"},{"1":"100045","2":"1","3":"74.28","4":"2024-01-27"},{"1":"100048","2":"1","3":"41.94","4":"2024-01-30"},{"1":"100055","2":"1","3":"28.80","4":"2024-02-10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>The final step of data preparation is to create what is called a <code>clv.data</code> object in the package <code>CLVTools</code>. For more on this package’s utilities, see the open-source GitHub page.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Data preparation is made simple via a single command:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>clvQ1 <span class="ot">&lt;-</span> <span class="fu">clvdata</span>(train[custid <span class="sc">%in%</span> cohortQ1<span class="sc">$</span>custid], <span class="do">## Q1 customers</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">date.format=</span><span class="st">"ymd"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">time.unit=</span><span class="st">"week"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">estimation.split=</span><span class="dv">40</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">name.id=</span><span class="st">"custid"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">name.date=</span><span class="st">"date"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">name.price=</span><span class="st">"price"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="fitting-and-interpreting-the-btyd-model" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-and-interpreting-the-btyd-model">Fitting and Interpreting the BTYD Model</h2>
+<p>I mentioned there are several flavors of BTYD models. The flavor I am using is known as the Pareto/NBD model, referring to the underlying probabilitity distributions that govern the churn and purchasing behaviors.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> Below I fit the model and print the four key parameters which will be used in interpretation:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fitQ1 <span class="ot">&lt;-</span> <span class="fu">pnbd</span>(clvQ1)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(fitQ1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>         r      alpha          s       beta 
+ 0.3039241 23.8260269  0.5736703  6.4789710 </code></pre>
+</div>
+</div>
+<p>These parameters have direct influences on the underlying probability distributions. Let’s start with churn, which is governed by <span class="math inline">\(s\)</span> and <span class="math inline">\(\beta\)</span>. The model assumes every customer has their own unique churn propensity, and that they can churn at any time between purchases. When the value of <span class="math inline">\(s\)</span> is small, as it is in this case, then customers are very heterogeneous with respect to churn propensities. In other words, some customers are quick to churn, but others will endure very long tenures. We can also derive the average churn rate with <span class="math inline">\(s/\beta\)</span>. Based on these parameters, the churn rate is about 0.09.</p>
+<p>Once the parameters are estimated, we can begin to interrogate the model for insights about the cohort. Returning to the central question of this post, we want to know how many customers are active. Because the end of the period is halfway through 2025, we might expect a substantial number of customers to have churned by now. The beauty of BTYD models is that we can actually quantify this expectation. Here’s a summary of our cohort at the end of the period:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>resQ1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fitQ1)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Q1.SIZE <span class="ot">&lt;-</span> <span class="fu">nrow</span>(cohortQ1)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>Q1.ACTIVE <span class="ot">&lt;-</span> <span class="fu">sum</span>(resQ1<span class="sc">$</span>PAlive)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>Q1.CHURN <span class="ot">&lt;-</span> (Q1.SIZE <span class="sc">-</span> Q1.ACTIVE) <span class="sc">/</span> Q1.SIZE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Original Cohort Size: 5129 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>End-of-period Cohort Size: 1809.611 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Effective Churn Rate: 0.6471806</code></pre>
+</div>
+</div>
+<p>You may be wondering how we went from a whole number of customers to a decimal number–that is simply based on an expected value. Because each customer now has a <em>probability</em> of being active, we sum across probabilities and end up with a decimal (the precise decimal values are unimportant in this context). What we’re really interested in is comparing the size of the active customer base to its original size and calculating churn. The model estimates that effective churn was about 65%, meaning we lost roughly 2 in 3 customers to attrition over the period.</p>
+<p>Contrast these estimates with the alternative definition I introduced at the beginning of this post. Let’s say we define the active customer base by those who made purchases within the last six months of the period. Here’s a summary of our Q1 cohort based on that alternate approach:</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>Q1.ALT <span class="ot">&lt;-</span> train[date <span class="sc">&gt;=</span> <span class="fu">as.IDate</span>(<span class="st">"2025-01-01"</span>), <span class="fu">sum</span>(custid <span class="sc">%in%</span> cohortQ1<span class="sc">$</span>custid)]</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>Q1.CHURN2 <span class="ot">&lt;-</span> (Q1.SIZE <span class="sc">-</span> Q1.ALT) <span class="sc">/</span> Q1.SIZE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>Alternate Approach to Estimating Churn... </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>End-of-period Cohort Size: 441 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Effective Churn Rate: 0.9140183</code></pre>
+</div>
+</div>
+<p>The resulting interpretation is hugely different. Based on our alternative definition, we only expect a few hundred customers to remain active at the end of the period, and churn to be 91%! This is instructive: BTYD models adapt to purchasing frequencies observed in the population, not arbitrarily-defined frequencies. If customers make purchases less frequently than every six months, of course a definition based on this assumption will vastly <em>underestimate</em> the size of the cohort. That is exactly what happened in the alternative definition.</p>
+</section>
+<section id="visualizing-the-btyd-model" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="visualizing-the-btyd-model">Visualizing the BTYD Model</h2>
+<p>One of the great utilities of BTYD models is their ability to make predictions. Specifically, the model can tell us about the number of expected purchases for customers belonging to our cohort, and we can compare this to actual data:</p>
+<div class="cell page-columns page-full">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fitQ1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-weekly-tracking" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-weekly-tracking-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-weekly-tracking-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-weekly-tracking-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Weekly Tracking Plot. Actual number of repeat transactions (black) versus expected (red). The vertical dotted line is the end of the model estimation period.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>In <a href="#fig-weekly-tracking" class="quarto-xref">Figure&nbsp;1</a>, we see several trends worth unpacking. First, the average number of transactions grows steadily during the first quarter of the calendar year; this is due largely to customer acquisition. At the end of Q1, our cohort window “closes” and we begin observing churn dynamics. From the start of Q2 through the end of the period, the average number of transactions declines, although the decline is more rapid at first. As customers become inactive, we expect fewer transactions, but the customers that remain by the end of the period are among our most valuable. Earlier I demonstrated how we expect roughly 1 in 3 customers from this cohort to remain active by the end of the period.</p>
+<p>It’s important to remember that the company will continue to grow its customer base. Imagine each quarter is a new cohort; we acquire totally new customers in each cohort, which will lead to higher sales. But counting customers is tricky business–it’s not just the sales dollars that are informative. Because every business eventually finds it difficult to acquire new customers, <em>retention</em> should be the focus of any long-term strategy.</p>
+</section>
+<section id="conclusion-and-next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion-and-next-steps">Conclusion and Next Steps</h2>
+<p>In this example, I demonstrated how BTYD models can inform an estimate of churn within a customer cohort, even in a non-contractual setting such as ecommerce or retail. By the end of an 18-month period, about 35% of the original cohort remained active.</p>
+<p>But some customers spend more than others, therefore it may be worthwhile to market to short-term customers with high spending tendencies. The best way to evaluate differences across these types of customers is with customer lifetime value (CLV). CLV is in every introductory marketing course, and it sets an important cap on what should be spent in acquiring a new customer. Think of it as a dollar value (either profit, or revenue) placed on a customer.</p>
+<p>BTYD models offer a highly granularized picture of customers. Not only does each customer have their own purchasing and churning propensities, but by extension, each customer has a forward-looking CLV. This highly-informative figure can be used to guide many marketing choices. In the next post in this series, I will extend the application of BTYD models beyond churn to include CLV estimation.</p>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>The earliest of BTYD models in scientific literature is <em>Counting Your Customers: Who Are They and What Will They Do Next?</em> by David C. Schmittlein, Donald G. Morrison and Richard Colombo (1987). Find it at <a href="https://www.jstor.org/stable/2631608" class="uri">https://www.jstor.org/stable/2631608</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The CLVTools Package. <a href="https://github.com/bachmannpatrick/CLVTools" class="uri">https://github.com/bachmannpatrick/CLVTools</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>For more on Pareto/NBD, see the original paper by David C. Schmittlein, Donald G. Morrison and Richard Colombo (1987). See also a very helpful technical note by Peter Fader and Bruce Hardie (2005): <a href="https://www.brucehardie.com/notes/009/pareto_nbd_derivations_2005-11-05.pdf" class="uri">https://www.brucehardie.com/notes/009/pareto_nbd_derivations_2005-11-05.pdf</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
