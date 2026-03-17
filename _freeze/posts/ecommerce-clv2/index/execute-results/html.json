@@ -1,0 +1,15 @@
+{
+  "hash": "10c862d27ff382e4653b24ea67e60acf",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Predicting Customer Spend (Part II of CLV Models)\"\nauthor: \"Ray Pomponio\"\ndate: \"2026-03-17\"\ncategories: [analysis, clv]\ndraft: true\n---\n\n\n\nIn the previous blog post in this series, I fit a case of 'buy-till-you-die' (BTYD) models to a transaction log from an ecommerce retailer. The model provided insight into customer churn dynamics, even though the setting was non-contractual (customers were free to make purchases at any time). In this post, I build upon that model by introducing the spending component, formalizing the application to customer lifetime value (CLV).\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(data.table)\nlibrary(CLVTools)\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

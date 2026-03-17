@@ -1,0 +1,15 @@
+---
+title: "Predicting Customer Spend (Part II of CLV Models)"
+author: "Ray Pomponio"
+date: "2026-03-17"
+categories: [analysis, clv]
+draft: true
+---
+
+In the previous blog post in this series, I fit a case of 'buy-till-you-die' (BTYD) models to a transaction log from an ecommerce retailer. The model provided insight into customer churn dynamics, even though the setting was non-contractual (customers were free to make purchases at any time). In this post, I build upon that model by introducing the spending component, formalizing the application to customer lifetime value (CLV).
+
+```{r}
+library(data.table)
+library(CLVTools)
+```
+
