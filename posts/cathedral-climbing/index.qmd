@@ -18,7 +18,7 @@ library(ggpubr)
 ```
 
 ```{r}
-dat <- readRDS("stair_reps.rds")
+dat <- readRDS("../../data/stair_reps.rds")
 ```
 
 # Descriptive Statistics

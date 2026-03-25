@@ -17,7 +17,7 @@ In this series of blog posts, I will be visiting some classic marketing concepts
 # load packages and dataset (anonymized retailer transaction log)
 library(data.table)
 library(CLVTools)
-dat <- fread("orders_anon.csv")
+dat <- fread("../../data/orders_anon.csv")
 ```
 
 ## The Health of Our Customer Base
