@@ -11,17 +11,67 @@ fig-cap-location: margin
 draft: true
 ---
 
-## Recap
-
-[In my previous post](../ecommerce-clv/index.qmd) on counting customers, I fit an example of a 'buy-till-you-die' (BTYD) model to a transaction log from an ecommerce retailer. The model provided insight into customer churn dynamics, even though the setting was non-contractual (customers were free to make purchases or churn at any time). In this post, I build upon that model by introducing the spending component, expanding the application beyond just churn to include customer lifetime value (CLV).
-
 ```{r}
-# load packages, dataset, and re-run data preparation
+#| echo: false
 library(data.table)
 library(CLVTools)
+```
+
+## Recap
+
+[In my previous post](../ecommerce-clv/index.qmd) on counting customers, I fit an example of a 'buy-till-you-die' (BTYD) model to a transaction log from an ecommerce retailer. The model offered insight into customer churn dynamics, even though attrition was latent (customers were free to churn at any time). In this next post in the series, I build upon the former model by introducing a spending component, capturing the monetary value of each customer's transactional behaviors.
+
+I previously explained the mechanics of BTYD models in an extended analogy. In a few words, these models provide mathematical architecture for two statistical processes. The first is churn: customers are continuously able to end their relationship with the company (or marketing channel), because relationships are not contractually structured. The second is purchasing: customers are able to make purchases at any time; these are the orders we directly observe in the company's transaction log.
+
+It is appropriate to ask questions of a BTYD model such as the size of the active customer base, relative to the original *cohort*. It is important when dealing with cohorts to note, they are defined by an acquisition window--for example, a week, a month, or a quarter. In the example I modeled, I considered the single cohort acquired during Q1 of 2024. I used the anonymous transaction log of an ecommerce retailer.
+
+## Conceptualizing Customer Spend
+
+The questions posed above pertain to customer churn and purchasing tendencies. However, another very relevant question is what the value of purchases tend to be, monetarily. This is where we introduce a third process. Consider that from the perspective of a marketing manager, customers who spend little are worth less than those who spend more at each opportunity--airline companies frequently exploit this strategy when marketing to their cardholders and frequent flyers.
+
+The spending process is different from the former two processes. Whereas churn and purchasing occur at intervals between events, making them *timing*-related processes, the spend process occurs on a scale of *magnitude*. We're specifically interested in the quantity of spending, measured in dollars, at each opportunity.
+
+## Introducing the Gamma-Gamma Model
+
+Models of magnitude are ubiquitous across statistics and machine learning. Popular approaches include linear regression, random forest, and deep learning-based methods, all estimating continuous quantities from a set of important predictors. A classic example is Zillow's home price estimate; this model takes into account many characteristics about a property and outputs an expected sale price based on am exemplary set of home sales data.
+
+But in the literature of marketing science, customers tend to be treated as distinct units. The difference between is subtle but important. Customers are not like homes--customers have unique spending patterns, homes prices are the sum of many predictable factors (i.e., proximity to schools, square footage, number of bedrooms). Each time a customer places an order, we learn more about them. This kind of feedback loop allows for serial *updating* of our expectations about each customer; the same is not true of home values.
+
+The spending model devised by the marketing scientists who developed the BTYD model is called the gamma-gamma.[^1] It is named--quite literally--for the statistical distribution known as the *gamma* distribution. The gamma distrbution is mathematically convenient and flexible. For example, the following curves are all gamma distributions with differences in a single *parameter*:
+
+```{r}
+#| label: fig-gamma-examples
+#| fig-cap: "Examples of the Gamma Distribution in the context of customer spending tendencies."
+#| echo: false
+curve(dgamma(x, shape=5, rate=0.5), col="red", to=200,
+      ylab="gamma density", xlab="spend ($)")
+curve(dgamma(x, shape=5, rate=0.1), add=TRUE)
+curve(dgamma(x, shape=5, rate=0.05), add=TRUE, col="blue")
+legend("topright", c("Low spend", "Med. spend", "High spend"),
+       col=c("red", "black", "blue"), lty=1)
+```
+
+In @fig-gamma-examples, we can think of each curve as governing the spending values of an individual customer. The customer in blue has high spending tendencies; they spend, on average, \$100. In contrast, the customer in red has low spend; they spend \$10 on average. These are just hypothetical customers, though. The gamma-gamma model will yield realistic curves for each customer.
+
+More important than predicting individual customers' spending is describing the cohort in its enirety, by acknowledging *heretogeneity*. Heterogeneity is a model layer that assumes each customer's spending is governed by a common distribution. How can that be? Consider these two statements:
+
+1. Each customer has her own average transaction value, and actual spending varies systematically around that average (see @fig-gamma-examples for three customer examples).
+2. The distribution of average transaction values *across* customers is statistically independent of the purchasing/churn process.
+
+Together these two assumptions make the gamma-gamma model estimable. In the next section I will demonstrate estimation using the open-source `CLVtools` package.[^2]
+
+[^1]: This model is described in detail by Peter Fader and Bruce Hardie on their website: <https://www.brucehardie.com/notes/025/gamma_gamma.pdf>.
+[^2]: The CLVTools Package. <https://github.com/bachmannpatrick/CLVTools>.
+
+## Estimating the Gamma-Gamma
+
+I wont belabor points about data preparation again because I covered them in my previous post. However, one key difference in this pipeline is that I attempt to exclude commercial orders (any transactions with a quantity greater than 30).
+
+```{r}
+# re-run data preparation, remove corportate purchases (quantity >= 30)
 dat <- fread("../../data/orders_anon.csv")
 dat[, date:=as.IDate(date, "%d/%m/%Y")]
-train <- dat[date <= as.IDate("2025-06-30")]
+train <- dat[date <= as.IDate("2025-06-30") & qty < 30]
 trainQ1 <- train[date <= as.IDate("2024-03-31")]
 cohortQ1 <- train[
   custid %in% trainQ1$custid,
@@ -35,62 +85,42 @@ clvQ1 <- clvdata(train[custid %in% cohortQ1$custid], ## Q1 customers
                  name.price="price")
 ```
 
-Through the analogy of two coins, I previously explained the mechanics of BTYD models. In a few words, these models provide the mathematical architecture for two statistical processes. First, the churn process: customers are continuously able to sever their relationship with the company or marketing channel, because we are in a non-contractual setting. Second, the purchasing process: customers are also able to make purchases with the company at any time, and these are the orders we directly observe in the company transaction log.
-
-By the end of fitting a BTYD model, it is appropriate to ask questions such as the size of the active customer base, relative to the original *cohort* size. It is important when dealing with cohorts to note, they are defined by a customer acquisition window--for example, a week, a month, or a quarter. In the previous post I considered a single cohort acquired during Q1 of 2024, using anonymous data from an ecommerce retailer.
-
-## Modeling Customer Spending
-
-The questions posed above pertain to customer churn and purchasing tendencies. However, another very relevant question is how much each customer spends--their monetary value. This is where we introduce a third process to the story. Consider that the customers who spend little are worth less than those who spend more at each transaction. Recall we are viewing this from the perspective of a marketing manager, not the customer herself (who might argue this is unfair). However it is perfectly natural that company's would focus on their higher-value customers and cater to their interests--airline companies frequently employ this strategy when marketing to their cardholders and frequent flyers.
-
-The spending process is different from the former two processes. Whereas churn and purchasing are generally *timing* processes, meaning they occur at intervals between key events, the spend process is instead a *magnitude* process. We're specifically interested in the quantity of spending, measured in dollars, at each instance of purchasing.
-
-## Introducing the Gamma-Gamma Approach
-
-Models of magnitude are ubiquitous across statistics and machine learning. Popular approaches include the linear regression, random forest, and deep learning-based methods, all estimating continuous quantities from a set of important predictors. A classic example is Zillow's home price estimate; this model takes into account many characteristics about a property and outputs an expected sale price based on a huge set of training data.
-
-But in the literature of marketing science, academics have proposed an approach to modeling spending that treats each customer as a distinct unit. The difference between this approach and aforementioned methods is subtle but important. Customers are not like homes, they each have their own unique tendencies to spend on transactions. Moreover, we learn more about each customer every time they make a purchase with the company. This kind of feedback is not so common in the world of home buying--typically homes are sold once every few years, if that.
-
-The approach taken by marketing scientists who developed the BTYD model is called the gamma-gamma model.[^1] It is named for the statistical distribution known as the *gamma* distribution. The gamma distrbution can take many forms, such as the following shapes:
-
-```{r}
-#| label: fig-gamma-examples
-#| fig-cap: Examples of the Gamma Distribution
-curve(dgamma(x, shape=1, rate=1/2), to=50, ylab="gamma density", xlab="spend ($)")
-curve(dgamma(x, shape=1/10, rate=1/2), to=50, add=TRUE, col="red")
-curve(dgamma(x, shape=10, rate=1/2), to=50, add=TRUE, col="blue")
-legend("topright", c("Low spend", "Med. spend", "High spend"),
-       col=c("red", "black", "blue"), lty=1)
-```
-
-In @fig-gamma-examples, we can think of each curve as representing the spending value of an individual customer. The customer in blue has high spend; they tend to spend anywhere from \$10 to \$30 per order. In contrast, the customer in red has low spend; they often spend less that \$5 per order. These are just hypothetical customers, though. The gamma-gamma model will generate realistic curves for each customer, if we ask it to do so.
-
-More important that predicting the individual customers' tendencies is describing the cohort in its enirety--acknowledging *heretogeneity*. This model layer assumes that each customer's spending is governed by a hierarchical distribution, which is another gamma distribution, hence the name of the method. While it is not critical to understand the mathematics of the underlying model at this stage, it is important to note the most restrictive assumptions:
-
-1. Each customer has her own average transaction value, and actual spend varies systematically around that average.
-2. The distribution of average transaction values across customers is statistically independent of the purchasing/churn process, described previously.
-
-Together these assumptions make the model estimable. In the next section I will demonstrate estimation using the freely-available `CLVtools` package.[^2]
-
-[^1]: This model is described in detail by Peter Fader and Bruce Hardie on their website: <https://www.brucehardie.com/notes/025/gamma_gamma.pdf>.
-[^2]: The CLVTools Package. <https://github.com/bachmannpatrick/CLVTools>.
-
-## Combining Models to Estimate CLV
-
-I wont belabor points about data preparation again. If interested, see my previous post.
-
 Assuming we have a transaction log and adequately prepared our cohort data, we wish to estimate a gamma-gamma model for the monetary spending process at the customer level. This is easily achieved with the following `R` code:
 
 ```{r}
 #| message: false
 #| code-fold: show
-spendQ1 <- gg(clvQ1)
-coef(spendQ1)
+spendQ1 <- gg(clvQ1, optimx.args=list(method="Nelder-Mead"))
+format(coef(spendQ1), digits=1, scientific=99)
 ```
 
-The printed parameters govern the spend process. It is most useful to examine an illustration of this model's spending estimates.
+The printed parameters govern the entire spend model, but they are not easily interpretable. It is more useful to examine an illustration of this model's estimates:
 
 ```{r}
+#| label: fig-spend-avg
+#| fig-cap: "Distribution of average transaction values across customers, with Gamma-Gamma model overlay (red)."
 plot(spendQ1)
 ```
 
+The $x$-axis of @fig-spend-avg is the average spend per customer, across all transactions in the 18-month period (recall this cohort was acquired in Q1 2024 and followed until the end of Q2 2025). The $y$-axis is probability density; in other words, most customers have an average spend less than $100. This is reflected in both the emirical density (raw data, in black) and in the model density (gamma-gamma, in red). Generally speaking, this is a pretty good model fit, especially considering the parsimony of parameters (only three parameters to estimate).
+
+## Combining Models to Obtain CLV
+
+Once we arrive at a working spend model, we can combine it with our earlier BTYD components, because we assumed the spend process to be independent. 
+
+```{r}
+#| message: false
+#| code-fold: show
+fitQ1 <- pnbd(clvQ1)
+print(fitQ1)
+```
+
+Our goal is to obtain individual CLV estimates for each customer.
+
+```{r}
+predict(fitQ1)
+```
+
+## Ranking Customers
+
+## Limitations
