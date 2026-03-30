@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ray Pomponio">
-<meta name="dcterms.date" content="2026-03-17">
+<meta name="dcterms.date" content="2026-03-30">
 
 <title>Predicting Customer Spend (Part II of CLV Models) – pompon.io</title>
 <style>
@@ -106,6 +106,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 <meta name="quarto:status" content="draft">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
@@ -197,7 +226,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 17, 2026</p>
+        <p class="date">March 30, 2026</p>
       </div>
     </div>
     
@@ -221,51 +250,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="recap" class="level2">
 <h2 class="anchored" data-anchor-id="recap">Recap</h2>
 <p><a href="../../posts/ecommerce-clv/index.html">In my previous post</a> on counting customers, I fit an example of a ‘buy-till-you-die’ (BTYD) model to a transaction log from an ecommerce retailer. The model offered insight into customer churn dynamics, even though attrition was latent (customers were free to churn at any time). In this next post in the series, I build upon the former model by introducing a spending component, capturing the monetary value of each customer’s transactional behaviors.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages, dataset, and re-run data preparation</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CLVTools)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">"../../data/orders_anon.csv"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>dat[, date<span class="sc">:</span><span class="er">=</span><span class="fu">as.IDate</span>(date, <span class="st">"%d/%m/%Y"</span>)]</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> dat[date <span class="sc">&lt;=</span> <span class="fu">as.IDate</span>(<span class="st">"2025-06-30"</span>)]</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>trainQ1 <span class="ot">&lt;-</span> train[date <span class="sc">&lt;=</span> <span class="fu">as.IDate</span>(<span class="st">"2024-03-31"</span>)]</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>cohortQ1 <span class="ot">&lt;-</span> train[</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  custid <span class="sc">%in%</span> trainQ1<span class="sc">$</span>custid,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  .(<span class="at">purchases=</span>.N, <span class="at">totalspend=</span><span class="fu">sum</span>(price), <span class="at">initdate=</span><span class="fu">min</span>(date)), by<span class="ot">=</span>custid]</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>clvQ1 <span class="ot">&lt;-</span> <span class="fu">clvdata</span>(train[custid <span class="sc">%in%</span> cohortQ1<span class="sc">$</span>custid], <span class="do">## Q1 customers</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">date.format=</span><span class="st">"ymd"</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">time.unit=</span><span class="st">"week"</span>,</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">estimation.split=</span><span class="dv">40</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">name.id=</span><span class="st">"custid"</span>,</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>                 <span class="at">name.date=</span><span class="st">"date"</span>,</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>                 <span class="at">name.price=</span><span class="st">"price"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
 <p>I previously explained the mechanics of BTYD models in an extended analogy. In a few words, these models provide mathematical architecture for two statistical processes. The first is churn: customers are continuously able to end their relationship with the company (or marketing channel), because relationships are not contractually structured. The second is purchasing: customers are able to make purchases at any time; these are the orders we directly observe in the company’s transaction log.</p>
 <p>It is appropriate to ask questions of a BTYD model such as the size of the active customer base, relative to the original <em>cohort</em>. It is important when dealing with cohorts to note, they are defined by an acquisition window–for example, a week, a month, or a quarter. In the example I modeled, I considered the single cohort acquired during Q1 of 2024. I used the anonymous transaction log of an ecommerce retailer.</p>
 </section>
-<section id="modeling-customer-spend" class="level2">
-<h2 class="anchored" data-anchor-id="modeling-customer-spend">Modeling Customer Spend</h2>
+<section id="conceptualizing-customer-spend" class="level2">
+<h2 class="anchored" data-anchor-id="conceptualizing-customer-spend">Conceptualizing Customer Spend</h2>
 <p>The questions posed above pertain to customer churn and purchasing tendencies. However, another very relevant question is what the value of purchases tend to be, monetarily. This is where we introduce a third process. Consider that from the perspective of a marketing manager, customers who spend little are worth less than those who spend more at each opportunity–airline companies frequently exploit this strategy when marketing to their cardholders and frequent flyers.</p>
 <p>The spending process is different from the former two processes. Whereas churn and purchasing occur at intervals between events, making them <em>timing</em>-related processes, the spend process occurs on a scale of <em>magnitude</em>. We’re specifically interested in the quantity of spending, measured in dollars, at each opportunity.</p>
 </section>
-<section id="introducing-the-gamma-gamma-approach" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="introducing-the-gamma-gamma-approach">Introducing the Gamma-Gamma Approach</h2>
+<section id="introducing-the-gamma-gamma-model" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="introducing-the-gamma-gamma-model">Introducing the Gamma-Gamma Model</h2>
 <p>Models of magnitude are ubiquitous across statistics and machine learning. Popular approaches include linear regression, random forest, and deep learning-based methods, all estimating continuous quantities from a set of important predictors. A classic example is Zillow’s home price estimate; this model takes into account many characteristics about a property and outputs an expected sale price based on am exemplary set of home sales data.</p>
 <p>But in the literature of marketing science, customers tend to be treated as distinct units. The difference between is subtle but important. Customers are not like homes–customers have unique spending patterns, homes prices are the sum of many predictable factors (i.e., proximity to schools, square footage, number of bedrooms). Each time a customer places an order, we learn more about them. This kind of feedback loop allows for serial <em>updating</em> of our expectations about each customer; the same is not true of home values.</p>
 <p>The spending model devised by the marketing scientists who developed the BTYD model is called the gamma-gamma.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> It is named–quite literally–for the statistical distribution known as the <em>gamma</em> distribution. The gamma distrbution is mathematically convenient and flexible. For example, the following curves are all gamma distributions with differences in a single <em>parameter</em>:</p>
 <div class="cell page-columns page-full">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dgamma</span>(x, <span class="at">shape=</span><span class="dv">5</span>, <span class="at">rate=</span><span class="fl">0.5</span>), <span class="at">col=</span><span class="st">"red"</span>, <span class="at">to=</span><span class="dv">200</span>,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab=</span><span class="st">"gamma density"</span>, <span class="at">xlab=</span><span class="st">"spend ($)"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dgamma</span>(x, <span class="at">shape=</span><span class="dv">5</span>, <span class="at">rate=</span><span class="fl">0.1</span>), <span class="at">add=</span><span class="cn">TRUE</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dgamma</span>(x, <span class="at">shape=</span><span class="dv">5</span>, <span class="at">rate=</span><span class="fl">0.05</span>), <span class="at">add=</span><span class="cn">TRUE</span>, <span class="at">col=</span><span class="st">"blue"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="fu">c</span>(<span class="st">"Low spend"</span>, <span class="st">"Med. spend"</span>, <span class="st">"High spend"</span>),</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">col=</span><span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"black"</span>, <span class="st">"blue"</span>), <span class="at">lty=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
 <div class="cell-output-display page-columns page-full">
 <div id="fig-gamma-examples" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
@@ -273,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <img src="index_files/figure-html/fig-gamma-examples-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-gamma-examples-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Examples of the Gamma Distribution in the context of customer spending tendencies
+Figure&nbsp;1: Examples of the Gamma Distribution in the context of customer spending tendencies.
 </figcaption>
 </figure>
 </div>
@@ -287,26 +285,46 @@ Figure&nbsp;1: Examples of the Gamma Distribution in the context of customer spe
 </ol>
 <p>Together these two assumptions make the gamma-gamma model estimable. In the next section I will demonstrate estimation using the open-source <code>CLVtools</code> package.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 </section>
-<section id="combining-models-to-estimate-clv" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="combining-models-to-estimate-clv">Combining Models to Estimate CLV</h2>
-<p>I wont belabor points about data preparation again. If interested, see my previous post.</p>
+<section id="estimating-the-gamma-gamma" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="estimating-the-gamma-gamma">Estimating the Gamma-Gamma</h2>
+<p>I wont belabor points about data preparation again because I covered them in my previous post. However, one key difference in this pipeline is that I attempt to exclude commercial orders (any transactions with a quantity greater than 30).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># re-run data preparation, remove corportate purchases (quantity &gt;= 30)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">fread</span>(<span class="st">"../../data/orders_anon.csv"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>dat[, date<span class="sc">:</span><span class="er">=</span><span class="fu">as.IDate</span>(date, <span class="st">"%d/%m/%Y"</span>)]</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>train <span class="ot">&lt;-</span> dat[date <span class="sc">&lt;=</span> <span class="fu">as.IDate</span>(<span class="st">"2025-06-30"</span>) <span class="sc">&amp;</span> qty <span class="sc">&lt;</span> <span class="dv">30</span>]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>trainQ1 <span class="ot">&lt;-</span> train[date <span class="sc">&lt;=</span> <span class="fu">as.IDate</span>(<span class="st">"2024-03-31"</span>)]</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>cohortQ1 <span class="ot">&lt;-</span> train[</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  custid <span class="sc">%in%</span> trainQ1<span class="sc">$</span>custid,</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  .(<span class="at">purchases=</span>.N, <span class="at">totalspend=</span><span class="fu">sum</span>(price), <span class="at">initdate=</span><span class="fu">min</span>(date)), by<span class="ot">=</span>custid]</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>clvQ1 <span class="ot">&lt;-</span> <span class="fu">clvdata</span>(train[custid <span class="sc">%in%</span> cohortQ1<span class="sc">$</span>custid], <span class="do">## Q1 customers</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">date.format=</span><span class="st">"ymd"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">time.unit=</span><span class="st">"week"</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">estimation.split=</span><span class="dv">40</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">name.id=</span><span class="st">"custid"</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">name.date=</span><span class="st">"date"</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">name.price=</span><span class="st">"price"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 <p>Assuming we have a transaction log and adequately prepared our cohort data, we wish to estimate a gamma-gamma model for the monetary spending process at the customer level. This is easily achieved with the following <code>R</code> code:</p>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>spendQ1 <span class="ot">&lt;-</span> <span class="fu">gg</span>(clvQ1)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(spendQ1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>spendQ1 <span class="ot">&lt;-</span> <span class="fu">gg</span>(clvQ1, <span class="at">optimx.args=</span><span class="fu">list</span>(<span class="at">method=</span><span class="st">"Nelder-Mead"</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(<span class="fu">coef</span>(spendQ1), <span class="at">digits=</span><span class="dv">1</span>, <span class="at">scientific=</span><span class="dv">99</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>                p                 q             gamma 
-629729.2831546174      2.7567893502      0.0002521008 </code></pre>
+<pre><code>              p               q           gamma 
+"2699868.65852" "      2.84812" "      0.00006" </code></pre>
 </div>
 </div>
-<p>The printed parameters govern the entire spend model. It is most useful to examine an illustration of this model’s estimates:</p>
+<p>The printed parameters govern the entire spend model, but they are not easily interpretable. It is more useful to examine an illustration of this model’s estimates:</p>
 <div class="cell page-columns page-full">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(spendQ1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(spendQ1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display page-columns page-full">
 <div id="fig-spend-avg" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
@@ -315,12 +333,112 @@ Figure&nbsp;1: Examples of the Gamma Distribution in the context of customer spe
 <img src="index_files/figure-html/fig-spend-avg-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-spend-avg-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Distribution of average transaction values across customers, with Gamma-Gamma model overlay (red)
+Figure&nbsp;2: Distribution of average transaction values across customers, with Gamma-Gamma model overlay (red).
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
+<p>The <span class="math inline">\(x\)</span>-axis of <a href="#fig-spend-avg" class="quarto-xref">Figure&nbsp;2</a> is the average spend per customer, across all transactions in the 18-month period (recall this cohort was acquired in Q1 2024 and followed until the end of Q2 2025). The <span class="math inline">\(y\)</span>-axis is probability density; in other words, most customers have an average spend less than $100. This is reflected in both the emirical density (raw data, in black) and in the model density (gamma-gamma, in red). Generally speaking, this is a pretty good model fit, especially considering the parsimony of parameters (only three parameters to estimate).</p>
+</section>
+<section id="combining-models-to-obtain-clv" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="combining-models-to-obtain-clv">Combining Models to Obtain CLV</h2>
+<p>Once we arrive at a working spend model, we can combine it with our earlier BTYD components, because we assumed the spend process to be independent.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fitQ1 <span class="ot">&lt;-</span> <span class="fu">pnbd</span>(clvQ1)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(fitQ1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Pareto/NBD Standard Model
+
+Call:
+pnbd(clv.data = clvQ1)
+
+Coefficients:
+      r    alpha        s     beta  
+ 0.3031  23.7508   0.5776   6.4988  
+KKT1: TRUE 
+KKT2: TRUE 
+
+Used Options:
+Correlation:     FALSE </code></pre>
+</div>
+</div>
+<p>Our goal is to obtain individual CLV estimates for each customer. This is easliy achieved using a discount rate of 10% for future transactions. The result is a continuous prediction of CLV for each customer. Note these estimates are strongly associated with the probability of being an active customer:</p>
+<div class="cell page-columns page-full">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>predQ1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fitQ1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Predicting from 2024-10-08 until (incl.) 2025-06-30 (38.00 Weeks).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Estimating gg model to predict spending...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Starting estimation...</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Estimation finished!</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The KKT optimality conditions are not both met for the fitted gg
+spending model.</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>predQ1[, <span class="fu">plot</span>(PAlive, <span class="fu">log</span>(predicted.CLV), <span class="at">xlab=</span><span class="st">"Pr. Active"</span>, <span class="at">ylab=</span><span class="st">"log(CLV)"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-clv-palive" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-clv-palive-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-clv-palive-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-clv-palive-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: The x-axis is the probability of an individual customer remaining active at the end of the period. The y-axis is the discounted residual lifetime value (CLV) for the customer’s expected future spending (note the log scale).
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="ranking-customers" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="ranking-customers">Ranking Customers</h2>
+<p>Now that we obtained an estimate of the CLV for each customer, we can begin interrogating the estimates for patterns. For example, what makes for a customer with high CLV? To answer this, I sampled randomly from the top 1% of customers by CLV. I then plotted their transaction log history over the period:</p>
+<div class="cell page-columns page-full">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>NPLOT <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1818</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>sampleQ1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(predQ1[<span class="fu">order</span>(predicted.CLV, <span class="at">decreasing=</span>T)[<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>], Id], <span class="at">size=</span>NPLOT)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>plotQ1 <span class="ot">&lt;-</span> train[custid <span class="sc">%in%</span> sampleQ1][, pid<span class="sc">:</span><span class="er">=</span><span class="fu">as.integer</span>(<span class="fu">factor</span>(custid))]</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x=</span>plotQ1<span class="sc">$</span>date, <span class="at">y=</span>plotQ1<span class="sc">$</span>pid, <span class="at">type=</span><span class="st">"n"</span>, <span class="at">xlab=</span><span class="st">"Date"</span>, <span class="at">ylab=</span><span class="cn">NA</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="at">x=</span>plotQ1<span class="sc">$</span>date, <span class="at">y=</span>plotQ1<span class="sc">$</span>pid, <span class="at">labels=</span><span class="fu">paste0</span>(<span class="st">"$"</span>, plotQ1<span class="sc">$</span>price), <span class="at">cex=</span><span class="fl">0.5</span>, <span class="at">offset=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display page-columns page-full">
+<div id="fig-clv-timeline" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
+<figure class="quarto-float quarto-float-fig figure page-columns page-full">
+<div aria-describedby="fig-clv-timeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-clv-timeline-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-clv-timeline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Customers in the top 1% by CLV tended to make either frequent, modestly-sized purchases or irregular but larger purchases. See for example the customer in the sixth row from the bottom, who tended to make regular purchases of about $108. Meanwhile the customer in the bottom row made only three purchases, but two of the three were over $400.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Customers in the top 1% by CLV had identifiable purchasing patterns. On average, they made 8.62 purchases during the period. That equates to roughly one purchase every other month. Additionally, their purchasing size tended to be large, averaging $225.9939 over the period. Looking back at <a href="#fig-spend-avg" class="quarto-xref">Figure&nbsp;2</a>, that is a lot higher than the ‘typical’ customer, who tended to make purchases of about $50.</p>
+</section>
+<section id="limitations" class="level2">
+<h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
 
 
 </section>

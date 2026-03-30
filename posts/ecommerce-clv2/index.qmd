@@ -1,7 +1,7 @@
 ---
 title: "Predicting Customer Spend (Part II of CLV Models)"
 author: "Ray Pomponio"
-date: "2026-03-17"
+date: "2026-03-30"
 categories: [analysis, clv]
 format:
   html:
@@ -35,9 +35,9 @@ The spending process is different from the former two processes. Whereas churn a
 
 Models of magnitude are ubiquitous across statistics and machine learning. Popular approaches include linear regression, random forest, and deep learning-based methods, all estimating continuous quantities from a set of important predictors. A classic example is Zillow's home price estimate; this model takes into account many characteristics about a property and outputs an expected sale price based on am exemplary set of home sales data.
 
-But in the literature of marketing science, customers tend to be treated as distinct units. The difference between is subtle but important. Customers are not like homes--customers have unique spending patterns, homes prices are the sum of many predictable factors (i.e., proximity to schools, square footage, number of bedrooms). Each time a customer places an order, we learn more about them. This kind of feedback loop allows for serial *updating* of our expectations about each customer; the same is not true of home values.
+But in the literature of marketing science, customers tend to be treated as distinct units. The difference between these two treatments is subtle but important. Customers are not like homes--customers have unique spending patterns, homes prices are the sum of many predictable factors (i.e., proximity to schools, square footage, number of bedrooms). Each time a customer places an order, we learn more about them. This kind of feedback loop allows for serial *updating* of our expectations about each customer; the same is not true of home values.
 
-The spending model devised by the marketing scientists who developed the BTYD model is called the gamma-gamma.[^1] It is named--quite literally--for the statistical distribution known as the *gamma* distribution. The gamma distrbution is mathematically convenient and flexible. For example, the following curves are all gamma distributions with differences in a single *parameter*:
+The spending model devised by the marketing scientists who developed the BTYD model is called the gamma-gamma.[^1] It is literally named after the statistical distribution known as the *gamma* distribution. The gamma distrbution is mathematically convenient and flexible. For example, the following curves are all gamma distributions with differences in a single *parameter*:
 
 ```{r}
 #| label: fig-gamma-examples
@@ -115,12 +115,31 @@ fitQ1 <- pnbd(clvQ1)
 print(fitQ1)
 ```
 
-Our goal is to obtain individual CLV estimates for each customer.
+Our goal is to obtain individual CLV estimates for each customer. This is easliy achieved using a discount rate of 10% for future transactions. The result is a continuous prediction of CLV for each customer. Note these estimates are strongly associated with the probability of being an active customer:
 
 ```{r}
-predict(fitQ1)
+#| message: false
+#| label: fig-clv-palive
+#| fig-cap: "The x-axis is the probability of an individual customer remaining active at the end of the period. The y-axis is the discounted residual lifetime value (CLV) for the customer's expected future spending (note the log scale). We can easily see that customers with higher probability of active status tend to have higher CLV, but there is some variability within customers of a similar probability neighborhood."
+predQ1 <- predict(fitQ1)
+plot(predQ1$PAlive, log(predQ1$predicted.CLV), xlab="Pr. Active", ylab="log(CLV)")
 ```
 
 ## Ranking Customers
+
+Now that we obtained an estimate of the CLV for each customer, we can begin interrogating the estimates for patterns. For example, what makes for a customer with high CLV? To answer this, I sampled randomly from the top 1% of customers by CLV. I then plotted their transaction log history over the period:
+
+```{r}
+#| label: fig-clv-timeline
+#| fig-cap: "Customers in the top 1% by CLV tended to make either frequent, modestly-sized purchases or irregular but larger purchases. See for example the customer in the sixth row from the bottom, who tended to make regular purchases of about $108. Meanwhile the customer in the bottom row made only three purchases, but two of the three were over $400."
+NPLOT <- 10
+set.seed(1818)
+sampleQ1 <- sample(predQ1[order(predicted.CLV, decreasing=T)[1:50], Id], size=NPLOT)
+plotQ1 <- train[custid %in% sampleQ1][, pid:=as.integer(factor(custid))]
+plot(x=plotQ1$date, y=plotQ1$pid, type="n", xlab="Date", ylab=NA)
+text(x=plotQ1$date, y=plotQ1$pid, labels=paste0("$", plotQ1$price), cex=0.5, offset=0)
+```
+
+Customers in the top 1% by CLV had identifiable purchasing patterns. On average, they made `r train[custid %in% predQ1[order(predicted.CLV, decreasing=T)[1:50], Id], .N] / 50` purchases during the period. That equates to roughly one purchase every other month. Additionally, their purchasing size tended to be large, averaging \$`r format(train[custid %in% predQ1[order(predicted.CLV, decreasing=T)[1:50], Id], mean(price), by=custid][, mean(V1)], digits=5)` over the period. Looking back at @fig-spend-avg, that is a lot higher than the 'typical' customer, who tended to make purchases of about \$50.
 
 ## Limitations
