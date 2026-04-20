@@ -1,14 +1,13 @@
 ---
 title: "Predicting Customer Spend (Part II of CLV Models)"
 author: "Ray Pomponio"
-date: "2026-03-30"
+date: "2026-04-20"
 categories: [analysis, clv]
 format:
   html:
     code-fold: true
     df-print: paged
 fig-cap-location: margin
-draft: true
 ---
 
 ```{r}
@@ -119,6 +118,7 @@ Our goal is to obtain individual CLV estimates for each customer. This is easliy
 
 ```{r}
 #| message: false
+#| warning: false
 #| label: fig-clv-palive
 #| fig-cap: "The x-axis is the probability of an individual customer remaining active at the end of the period. The y-axis is the discounted residual lifetime value (CLV) for the customer's expected future spending (note the log scale). We can easily see that customers with higher probability of active status tend to have higher CLV, but there is some variability within customers of a similar probability neighborhood."
 predQ1 <- predict(fitQ1)
@@ -143,3 +143,5 @@ text(x=plotQ1$date, y=plotQ1$pid, labels=paste0("$", plotQ1$price), cex=0.5, off
 Customers in the top 1% by CLV had identifiable purchasing patterns. On average, they made `r train[custid %in% predQ1[order(predicted.CLV, decreasing=T)[1:50], Id], .N] / 50` purchases during the period. That equates to roughly one purchase every other month. Additionally, their purchasing size tended to be large, averaging \$`r format(train[custid %in% predQ1[order(predicted.CLV, decreasing=T)[1:50], Id], mean(price), by=custid][, mean(V1)], digits=5)` over the period. Looking back at @fig-spend-avg, that is a lot higher than the 'typical' customer, who tended to make purchases of about \$50.
 
 ## Limitations
+
+The assumption of independent spending/purchasing tendencies may not be well-founded. For example, customers who spend more on each transaction may tend to make purchases less frequently. The modeling assumption of independence is generally a mathematical convenience making parameters easier to estimate. Yet many extensions exist. We could, for example, introduce customer-level covariates that explain part of the heterogeneity in behaviors (currently captured by gamma distributions). This is a bit beyond the scope of this blog post, but is computationally possible in the `CLVTools` package.

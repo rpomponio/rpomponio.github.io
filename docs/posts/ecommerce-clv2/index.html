@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ray Pomponio">
-<meta name="dcterms.date" content="2026-03-30">
+<meta name="dcterms.date" content="2026-04-20">
 
 <title>Predicting Customer Spend (Part II of CLV Models) – pompon.io</title>
 <style>
@@ -104,7 +104,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 <link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
 <script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
-<meta name="quarto:status" content="draft">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -142,7 +141,7 @@ window.Quarto = {
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner"><div id="quarto-draft-alert" class="alert alert-warning"><i class="bi bi-pencil-square"></i>Draft</div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
@@ -226,7 +225,7 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">March 30, 2026</p>
+        <p class="date">April 20, 2026</p>
       </div>
     </div>
     
@@ -261,8 +260,8 @@ window.Quarto = {
 <section id="introducing-the-gamma-gamma-model" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="introducing-the-gamma-gamma-model">Introducing the Gamma-Gamma Model</h2>
 <p>Models of magnitude are ubiquitous across statistics and machine learning. Popular approaches include linear regression, random forest, and deep learning-based methods, all estimating continuous quantities from a set of important predictors. A classic example is Zillow’s home price estimate; this model takes into account many characteristics about a property and outputs an expected sale price based on am exemplary set of home sales data.</p>
-<p>But in the literature of marketing science, customers tend to be treated as distinct units. The difference between is subtle but important. Customers are not like homes–customers have unique spending patterns, homes prices are the sum of many predictable factors (i.e., proximity to schools, square footage, number of bedrooms). Each time a customer places an order, we learn more about them. This kind of feedback loop allows for serial <em>updating</em> of our expectations about each customer; the same is not true of home values.</p>
-<p>The spending model devised by the marketing scientists who developed the BTYD model is called the gamma-gamma.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> It is named–quite literally–for the statistical distribution known as the <em>gamma</em> distribution. The gamma distrbution is mathematically convenient and flexible. For example, the following curves are all gamma distributions with differences in a single <em>parameter</em>:</p>
+<p>But in the literature of marketing science, customers tend to be treated as distinct units. The difference between these two treatments is subtle but important. Customers are not like homes–customers have unique spending patterns, homes prices are the sum of many predictable factors (i.e., proximity to schools, square footage, number of bedrooms). Each time a customer places an order, we learn more about them. This kind of feedback loop allows for serial <em>updating</em> of our expectations about each customer; the same is not true of home values.</p>
+<p>The spending model devised by the marketing scientists who developed the BTYD model is called the gamma-gamma.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> It is literally named after the statistical distribution known as the <em>gamma</em> distribution. The gamma distrbution is mathematically convenient and flexible. For example, the following curves are all gamma distributions with differences in a single <em>parameter</em>:</p>
 <div class="cell page-columns page-full">
 <div class="cell-output-display page-columns page-full">
 <div id="fig-gamma-examples" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
@@ -370,31 +369,9 @@ Correlation:     FALSE </code></pre>
 <div class="cell page-columns page-full">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>predQ1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fitQ1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>predQ1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fitQ1)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(predQ1<span class="sc">$</span>PAlive, <span class="fu">log</span>(predQ1<span class="sc">$</span>predicted.CLV), <span class="at">xlab=</span><span class="st">"Pr. Active"</span>, <span class="at">ylab=</span><span class="st">"log(CLV)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stderr">
-<pre><code>Predicting from 2024-10-08 until (incl.) 2025-06-30 (38.00 Weeks).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Estimating gg model to predict spending...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Starting estimation...</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Estimation finished!</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The KKT optimality conditions are not both met for the fitted gg
-spending model.</code></pre>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>predQ1[, <span class="fu">plot</span>(PAlive, <span class="fu">log</span>(predicted.CLV), <span class="at">xlab=</span><span class="st">"Pr. Active"</span>, <span class="at">ylab=</span><span class="st">"log(CLV)"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>NULL</code></pre>
-</div>
 <div class="cell-output-display page-columns page-full">
 <div id="fig-clv-palive" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
 <figure class="quarto-float quarto-float-fig figure page-columns page-full">
@@ -402,7 +379,7 @@ spending model.</code></pre>
 <img src="index_files/figure-html/fig-clv-palive-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-margin quarto-float-caption quarto-float-fig margin-caption" id="fig-clv-palive-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: The x-axis is the probability of an individual customer remaining active at the end of the period. The y-axis is the discounted residual lifetime value (CLV) for the customer’s expected future spending (note the log scale).
+Figure&nbsp;3: The x-axis is the probability of an individual customer remaining active at the end of the period. The y-axis is the discounted residual lifetime value (CLV) for the customer’s expected future spending (note the log scale). We can easily see that customers with higher probability of active status tend to have higher CLV, but there is some variability within customers of a similar probability neighborhood.
 </figcaption>
 </figure>
 </div>
@@ -415,12 +392,12 @@ Figure&nbsp;3: The x-axis is the probability of an individual customer remaining
 <div class="cell page-columns page-full">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>NPLOT <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1818</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>sampleQ1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(predQ1[<span class="fu">order</span>(predicted.CLV, <span class="at">decreasing=</span>T)[<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>], Id], <span class="at">size=</span>NPLOT)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>plotQ1 <span class="ot">&lt;-</span> train[custid <span class="sc">%in%</span> sampleQ1][, pid<span class="sc">:</span><span class="er">=</span><span class="fu">as.integer</span>(<span class="fu">factor</span>(custid))]</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x=</span>plotQ1<span class="sc">$</span>date, <span class="at">y=</span>plotQ1<span class="sc">$</span>pid, <span class="at">type=</span><span class="st">"n"</span>, <span class="at">xlab=</span><span class="st">"Date"</span>, <span class="at">ylab=</span><span class="cn">NA</span>)</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="at">x=</span>plotQ1<span class="sc">$</span>date, <span class="at">y=</span>plotQ1<span class="sc">$</span>pid, <span class="at">labels=</span><span class="fu">paste0</span>(<span class="st">"$"</span>, plotQ1<span class="sc">$</span>price), <span class="at">cex=</span><span class="fl">0.5</span>, <span class="at">offset=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>NPLOT <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1818</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>sampleQ1 <span class="ot">&lt;-</span> <span class="fu">sample</span>(predQ1[<span class="fu">order</span>(predicted.CLV, <span class="at">decreasing=</span>T)[<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>], Id], <span class="at">size=</span>NPLOT)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plotQ1 <span class="ot">&lt;-</span> train[custid <span class="sc">%in%</span> sampleQ1][, pid<span class="sc">:</span><span class="er">=</span><span class="fu">as.integer</span>(<span class="fu">factor</span>(custid))]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x=</span>plotQ1<span class="sc">$</span>date, <span class="at">y=</span>plotQ1<span class="sc">$</span>pid, <span class="at">type=</span><span class="st">"n"</span>, <span class="at">xlab=</span><span class="st">"Date"</span>, <span class="at">ylab=</span><span class="cn">NA</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="at">x=</span>plotQ1<span class="sc">$</span>date, <span class="at">y=</span>plotQ1<span class="sc">$</span>pid, <span class="at">labels=</span><span class="fu">paste0</span>(<span class="st">"$"</span>, plotQ1<span class="sc">$</span>price), <span class="at">cex=</span><span class="fl">0.5</span>, <span class="at">offset=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display page-columns page-full">
 <div id="fig-clv-timeline" class="quarto-float quarto-figure quarto-figure-center anchored page-columns page-full">
@@ -435,10 +412,11 @@ Figure&nbsp;4: Customers in the top 1% by CLV tended to make either frequent, mo
 </div>
 </div>
 </div>
-<p>Customers in the top 1% by CLV had identifiable purchasing patterns. On average, they made 8.62 purchases during the period. That equates to roughly one purchase every other month. Additionally, their purchasing size tended to be large, averaging $225.9939 over the period. Looking back at <a href="#fig-spend-avg" class="quarto-xref">Figure&nbsp;2</a>, that is a lot higher than the ‘typical’ customer, who tended to make purchases of about $50.</p>
+<p>Customers in the top 1% by CLV had identifiable purchasing patterns. On average, they made 8.62 purchases during the period. That equates to roughly one purchase every other month. Additionally, their purchasing size tended to be large, averaging $225.99 over the period. Looking back at <a href="#fig-spend-avg" class="quarto-xref">Figure&nbsp;2</a>, that is a lot higher than the ‘typical’ customer, who tended to make purchases of about $50.</p>
 </section>
 <section id="limitations" class="level2">
 <h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
+<p>The assumption of independent spending/purchasing tendencies may not be well-founded. For example, customers who spend more on each transaction may tend to make purchases less frequently. The modeling assumption of independence is generally a mathematical convenience making parameters easier to estimate. Yet many extensions exist. We could, for example, introduce customer-level covariates that explain part of the heterogeneity in behaviors (currently captured by gamma distributions). This is a bit beyond the scope of this blog post, but is computationally possible in the <code>CLVTools</code> package.</p>
 
 
 </section>
