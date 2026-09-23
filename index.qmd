@@ -1,8 +1,0 @@
----
-title: "Ray's Reflections"
-subtitle: "on adventures in uncertainty"
-listing:
-  contents: posts
-  sort: "date desc"
----
-

@@ -1,0 +1,204 @@
+---
+title: "A Summary of My Research in Stats and Medicine"
+author: "Ray Pomponio"
+date: "2023-12-30"
+categories: [personal, reflections]
+---
+
+### Introduction
+
+In this post, I review progress in my research so far, and distill my work into three themes spanning topics in biomedical sciences and applied statistics.
+
+# 2018 to 2023: Five years of research, three themes
+
+As we're nearing the end of the calendar year, I found it a good opportunity to present my research in this blog post and identify three different themes across the statistical and biomedical applications that I've worked on. Those themes are **computational**, **clinical**, and **missing data** methods. I've been fortunate to co-author a number of published papers over the past five years, and I've included links to relevant articles where they fit within the above themes. I'll cover each theme in more detail below.
+
+## Theme 1: Computational Research
+
+![Figure from Pomponio et al. (2020): Age trends from selected brain volumes using a statistically harmonized dataset with 18 studies spanning the age range 3–96.](trends.jpeg){width=70%}
+
+### Computational Neuroimaging and Related Challenges
+
+In 2018, I began working at [CBICA](https://www.med.upenn.edu/cbica/), a computational neuroimaging lab at the University of Pennsylvania, led by Dr. Christos Davatzikos. At CBICA, I developed an early interest in statistical image analysis, particularly in normalizing imaging-derived features over multiple scanners and diverse geographic sites. In the imaging literature, this is referred to as [harmonization](https://www.sciencedirect.com/science/article/pii/S1053811922006851#:~:text=Harmonization%20is%20typically%20performed%20to,downstream%20application%20performance%20during%20harmonization.), and there are a growing number of techniques available to implement harmonization. My most significant contribution was in developing a tool that adapts the popular ComBat[^1] algorithm to lifespan datasets encompassing broad age ranges, with potentially complex age trends in brain volumetry. Today, that tool is available on [GitHub](https://github.com/rpomponio/neuroHarmonize) as a `python` package, and it is used by neuroimaging researchers to handle common harmonization tasks like removing site effects in regional brain volumes data.
+
+In addition to my work on harmonization, I assisted with image analysis in several other projects that resulted in peer-reviewed publications from the following first authors:
+
+* [Dr. Ilya M. Nasrallah](https://www.med.upenn.edu/apps/faculty/index.php/g20000440/p9094), Associate Professor of Radiology at the Hospital of the University of Pennsylvania
+* [Dr. Mohamad Habes](https://www.nallab.org/pi), Assistant Professor, Departments of Radiology and Epidemiology at the University of Texas Health Science Center San Antonio
+* Dr. Ganesh Chand, Assistant Professor at Washington University in St. Louis
+* Vishnu M. Bashyam, PhD student at the University of Pennsylvania
+
+### Published Papers
+
+```{=html}
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        Harmonization of large MRI datasets for the analysis of brain imaging patterns throughout the lifespan (NeuroImage 2020)
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+      <div class="accordion-body">
+        Co-Authors: <strong>Raymond Pomponio</strong>, Guray Erus, Mohamad Habes, Jimit Doshi, Dhivya Srinivasan, Elizabeth Mamourian, Vishnu Bashyam, Ilya M Nasrallah, Theodore D Satterthwaite, Yong Fan, Lenore J Launer, Colin L Masters, Paul Maruff, Chuanjun Zhuo, Henry Völzke, Sterling C Johnson, Jurgen Fripp, Nikolaos Koutsouleris, Daniel H Wolf, Raquel Gur, Ruben Gur, John Morris, Marilyn S Albert, Hans J Grabe, Susan M Resnick, R Nick Bryan, David A Wolk, Russell T Shinohara, Haochang Shou, Christos Davatzikos. <br>
+        <br>
+        DOI: <a href="https://doi.org/10.1016/j.neuroimage.2019.116450">Click to read article</a>.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        Two distinct neuroanatomical subtypes of schizophrenia revealed using machine learning (Brain, 2020)
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        Co-Authors: Ganesh B Chand, Dominic B Dwyer, Guray Erus, Aristeidis Sotiras, Erdem Varol, Dhivya Srinivasan, Jimit Doshi, <strong>Raymond Pomponio</strong>, Alessandro Pigoni, Paola Dazzan, Rene S Kahn, Hugo G Schnack, Marcus V Zanetti, Eva Meisenzahl, Geraldo F Busatto, Benedicto Crespo-Facorro, Christos Pantelis, Stephen J Wood, Chuanjun Zhuo, Russell T Shinohara, Haochang Shou, Yong Fan, Ruben C Gur, Raquel E Gur, Theodore D Satterthwaite, Nikolaos Koutsouleris, Daniel H Wolf, Christos Davatzikos. <br>
+        <br>
+        DOI: <a href="https://doi.org/10.1093/brain/awaa025">Click to read article</a>.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+        MRI signatures of brain age and disease over the lifespan based on a deep brain network and 14,468 individuals worldwide (Brain, 2020)
+      </button>
+    </h2>
+    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        Co-Authors: Vishnu M Bashyam, Guray Erus, Jimit Doshi, Mohamad Habes, Ilya M Nasrallah, Monica Truelove-Hill, Dhivya Srinivasan, Liz Mamourian, <strong>Raymond Pomponio</strong>, Yong Fan, Lenore J Launer, Colin L Masters, Paul Maruff, Chuanjun Zhuo, Henry Völzke, Sterling C Johnson, Jurgen Fripp, Nikolaos Koutsouleris, Theodore D Satterthwaite, Daniel Wolf, Raquel E Gur, Ruben C Gur, John Morris, Marilyn S Albert, Hans J Grabe, Susan Resnick, R Nick Bryan, David A Wolk, Haochang Shou, Christos Davatzikos. <br>
+        <br>
+        DOI: <a href="https://doi.org/10.1093/brain/awaa160">Click to read article</a>.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingFour">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+        The Brain Chart of Aging: Machine-learning analytics reveals links between brain aging, white matter disease, amyloid burden, and cognition in the iSTAGING consortium of 10,216 harmonized MR scans (Alzheimer's & Dementia, 2020)
+      </button>
+    </h2>
+    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        Co-Authors: Mohamad Habes, <strong>Raymond Pomponio</strong>, Haochang Shou, Jimit Doshi, Elizabeth Mamourian, Guray Erus, Ilya Nasrallah, Lenore J Launer, Tanweer Rashid, Murat Bilgel, Yong Fan, Jon B Toledo, Kristine Yaffe, Aristeidis Sotiras, Dhivya Srinivasan, Mark Espeland, Colin Masters, Paul Maruff, Jurgen Fripp, Henry Völzk, Sterling C Johnson, John C Morris, Marilyn S Albert, Michael I Miller, R Nick Bryan, Hans J Grabe, Susan M Resnick, David A Wolk, Christos Davatzikos, iSTAGING consortium, the Preclinical AD consortium, the ADNI, and the CARDIA studies. <br>
+        <br>
+        DOI: <a href="https://doi.org/10.1002/alz.12178">Click to read article</a>.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingFive">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+        Association of Intensive vs Standard Blood Pressure Control With Magnetic Resonance Imaging Biomarkers of Alzheimer Disease: Secondary Analysis of the SPRINT MIND Randomized Trial (JAMA Neurology, 2021)
+      </button>
+    </h2>
+    <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        Co-Authors: Ilya M Nasrallah, Sarah A Gaussoin, <strong>Raymond Pomponio</strong>, Sudipto Dolui, Guray Erus, Clinton B Wright, Lenore J Launer, John A Detre, David A Wolk, Christos Davatzikos, Jeff D Williamson, Nicholas M Pajewski, R Nick Bryan, Paul Whelton, Karen C Johnson, Joni Snyder, Diane Bild, Denise Bonds, Nakela Cook, Jeffrey Cutler, Lawrence Fine, Peter Kaufmann, Paul Kimmel, Lenore Launer, Claudia Moy, William Riley, Laurie Ryan, Eser Tolunay, Song Yang, David Reboussin, Walter T Ambrosius, William Applegate, Greg Evans, Capri Foy, Barry I Freedman, Dalane Kitzman, Mary Lyles, Steve Rapp, Scott Rushing, Neel Shah, Kaycee M Sink, Mara Vitolins, Lynne Wagenknecht, Valerie Wilson, Letitia Perdue, Nancy Woolard, Tim Craven, Katelyn Garcia, Sarah Gaussoin, Laura Lovato, Jill Newman, James Lovato, Lingyi Lu, Chris McLouth, Greg Russell, Bobby Amoroso, Patty Davis, Jason Griffin, Darrin Harris, Mark King, Kathy Lane, Wes Roberson, Debbie Steinberg, Donna Ashford, Phyllis Babcock, Dana Chamberlain, Vickie Christensen, Loretta Cloud, Christy Collins, Delilah Cook, Katherine Currie, Debbie Felton, Stacy Harpe, Marjorie Howard, Michelle Lewis, Pamela Nance, Nicole Puccinelli-Ortega, Laurie Russell, Jennifer Walker, Brenda Craven, Candace Goode, Margie Troxler, Janet Davis, Sarah Hutchens, Anthony A Killeen, Anna M Lukkari, Robert Ringer, Brandi Dillard, Norbert Archibeque, Stuart Warren, Mike Sather, James Pontzer, Zach Taylor, Elsayed Z Soliman, Zhu-Ming Zhang, Yabing Li, Chuck Campbell, Susan Hensley, Julie Hu, Lisa Keasler, Mary Barr, Tonya Taylor, Ilya Nasrallah, Lisa Desiderio, Mark Elliott, Ari Borthakur, Harsha Battapady, Alex Smith, Ze Wang, Jimit Doshi, Jackson T Wright Jr, Mahboob Rahman, Alan J Lerner, Carolyn H Still, Alan Wiggers, Sara Zamanian, Alberta Bee, Renee Dancie, George Thomas, Martin Schreiber Jr, Sankar Dass Navaneethan, John Hickner, Michael Lioudis, Michelle Lard, Susan Marczewski, Jennifer Maraschky, Martha Colman, Andrea Aaby, Stacey Payne, Melanie Ramos, Carol Horner, Paul E Drawz, Pratibha P Raghavendra, Scott Ober, Ronda Mourad, Muralidhar Pallaki, Peter Russo, Paul Fantauzzo, Lisa Tucker, Bill Schwing, John R Sedor, Edward J Horwitz, Jeffrey R Schellling, John F O’Toole, Lisa Humbert, Wendy Tutolo, Suzanne White, Alishea Gay, Walter Clark Jr, Robin Hughes. <br>
+        <br>
+        DOI: <a href="https://doi.org/10.1001/jamaneurol.2021.0178">Click to read article</a>.
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+[^1]: W.E. Johnson, C. Li, A. Rabinovic. Adjusting batch effects in mircoarray expression data using empirical Bayes methods. *Biostatistics*, 8 (2007), pp. 118-127. <https://doi.org/10.1093/biostatistics/kxj037>.
+
+## Theme 2: Clinical Research
+
+### Pulmonary and Critical Care Collaborations
+
+In 2021, under Dr. Ryan Peterson, I joined Colorado School of Public Health's [PTraC](https://medschool.cuanschutz.edu/pulmonary/research/ptrac) Team, which specializes in statistical research services for the Division of Pulmonary and Critical Care Medicine at Colorado. I was fortunate to work with excellent clinical collaborators at PTraC, including specialists in lung transplant, severe asthma, and pulmonary hypertension. My work was characterized by general applications of regression models to observational data, meaning data were collected by recording clinical events (as opposed to data collected from controlled experiments). Data types were highly heterogeneous and included electronic health records, insurance claims, and a national disease registry. Among the more common methods I used were survival analysis and longitudinal modeling, two popular frameworks for fitting regressions to biomedical datasets. While at PTraC, I was selected to present a lightning talk on my work at the 2022 [Symposium on Statistics and Data Science](https://ww2.amstat.org/meetings/sdss/2022/onlineprogram/AbstractDetails.cfm?AbstractID=310166) in Pittsburgh.
+
+### Published and Accepted Papers
+
+```{=html}
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2One" aria-expanded="false" aria-controls="collapse2One">
+        Impact of the COVID‐19 pandemic on chronic disease management and patient reported outcomes in patients with pulmonary hypertension: The Pulmonary Hypertension Association Registry (Pulmonary Circulation 2023)
+      </button>
+    </h2>
+    <div id="collapse2One" class="accordion-collapse collapse" aria-labelledby="heading2One" data-bs-parent="#accordionExample" style="">
+      <div class="accordion-body">
+        Co-Authors: Megan Mayer, David B Badesch, Kelly H Nielsen, Steven Kawut, Todd Bull, John J Ryan, Jeffrey Sager, Sula Mazimba, Anna Hemnes, James Klinger, James Runo, John W McConnell, Teresa De Marco, Murali M Chakinala, Delphine Yung, Jean Elwing, Adolfo Kaplan, Rahul Argula, <strong>Raymond Pomponio</strong>, Ryan Peterson, Peter Hountras. <br>
+        <br>
+        DOI: <a href="https://doi.org/10.1002/pul2.12233">Click to read article</a>.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingTwo">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2Two" aria-expanded="false" aria-controls="collapse2Two">
+        Prevalence of Alcohol Use Characterized by Phosphatidylethanol in Patients with Respiratory Failure Before and During the COVID-19 Pandemic (CHEST Critical Care, 2024)
+      </button>
+    </h2>
+    <div id="collapse2Two" class="accordion-collapse collapse" aria-labelledby="heading2Two" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>Note:</strong> This article has been accepted but is not yet published.
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingThree">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2Three" aria-expanded="false" aria-controls="collapse2Three">
+        Extraneous Load, Patient Census, and Patient Acuity Correlate with Cognitive Load during Intensive Care Unit Rounds (CHEST, 2024)
+      </button>
+    </h2>
+    <div id="collapse2Three" class="accordion-collapse collapse" aria-labelledby="heading2Three" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <strong>Note:</strong> This article has been accepted but is not yet published.
+      </div>
+    </div>
+  </div>
+```
+
+
+## Theme 3: Missing Data Methods
+
+![Figure from Pomponio et al. (2023): Diagram illustrating matched data, partially matched data, and unmatched data scenarios.](diagram.png){width=95%}
+
+The last theme of my research deals with missing data. Missing data are common yet complicated by enormous heterogeneity; missing data can arise at various stages within a study, and they present so many challenges that practitioners often ignore missing data altogether. In my time at Colorado, I encountered missing data in observational studies due to participant dropout or early mortality. When working with this kind of missing data, I often used multiple imputation by chained equations[^2] to replace missing observations with values that would be realistic given the remaining data. This technique works well when certain assumptions are met and is conveniently implemented in`R` by the [mice](https://github.com/amices/mice) package.
+
+However, another kind of missing data can arise in studies investigating pre-post differences that fail to collect unique identifiers for each participant. For my master's thesis at Colorado, I analyzed techniques to handle this particular case of paired inference, which we refer to as 'partially matched' data. My work on this subject is currently under review, but the pre-print is linked below, co-authored by the following members of my thesis committee:
+
+* [Dr. Ryan A. Peterson](https://petersonr.github.io), Assistant Professor of Biostatistics and Informatics at the Colorado School of Public Health
+* [Dr. Bailey K. Fosdick](https://www.baileyfosdick.com), Associate Professor in the Department of Biostatistics and Informatics in the Colorado School of Public Health
+* [Dr. Julia Wrobel](http://juliawrobel.com), Assistant Professor of Biostatistics at Emory University
+
+### Preprint Papers
+
+```{=html}
+<div class="accordion" id="accordionExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="headingOne">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3One" aria-expanded="false" aria-controls="collapse3One">
+        Mistaken identities lead to missed opportunities: Testing for mean differences in partially matched data (Under Review)
+      </button>
+    </h2>
+    <div id="collapse3One" class="accordion-collapse collapse" aria-labelledby="heading3One" data-bs-parent="#accordionExample" style="">
+      <div class="accordion-body">
+        Co-Authors: <strong>Raymond Pomponio</strong>, Bailey K. Fosdick, Julia Wrobel, Ryan A. Peterson. <br>
+        <br>
+        DOI: <a href="https://doi.org/10.48550/arXiv.2312.14689">Click to read preprint</a>.
+      </div>
+    </div>
+  </div>
+  </div>
+```
+
+
+[^2]: Azur, M.J., Stuart, E.A., Frangakis, C. and Leaf, P.J. (2011), Multiple imputation by chained equations: what is it and how does it work?. *Int. J. Methods Psychiatr. Res.*, 20: 40-49. <https://doi.org/10.1002/mpr.329>.
+
+## Conclusions and Next Steps
+
+Looking back at the past five years, it's clear that I've primarily worked on academic research projects focusing on biomedical diseases and health interventions. Broadly, I've developed an expertise as a biostatistician and data scientist in the medical research context.
+
+If I am to speculate on the direction of the next five years, I would predict much of the same kind of work, but with expansions into new contexts such as business and sports analytics. These areas excite me by presenting an opportunity to integrate my undergraduate business experience with cutting-edge data science methods. I've begun to work a little in these areas as an independent consultant through Upwork (a freelancing platform), and I hope that I can continue to find work with clients who value my insight in diverse and wide-ranging projects.
+
+In 2024, I look forward to beginning a new position as a data scientist at [SygnaMap](https://www.sygnamap.com), a bio-tech startup based in San Antonio. At SygnaMap I will be helping to develop novel biomarkers using metabolomic profiles, which will draw on many of my past experiences including the three themes of computational complexity, clinical utility, and challenges arising from missing data.
+

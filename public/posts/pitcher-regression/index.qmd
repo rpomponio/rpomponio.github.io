@@ -1,0 +1,17 @@
+---
+title: "Starting Pitcher Replacements in the Postseason: Regression Approach"
+author: "Ray Pomponio"
+date: "2024-01-05"
+categories: [analysis, sports]
+draft: true
+---
+
+# Outline
+
+*Focus on how this analysis works, rather than on statistical conclusions.*
+
+* [ ] Trend in baseball: earlier starting pitcher replacements
+* [ ] Cox proportional hazards model
+* [ ] Hazard ratios: interpretations
+* [ ] Hypothetical example
+* [ ] Real-world examples: Actual vs. Predicted

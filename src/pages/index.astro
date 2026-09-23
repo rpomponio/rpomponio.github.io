@@ -1,0 +1,58 @@
+---
+const directions = [
+  {
+    href: "/science/",
+    label: "Scientific Contributions",
+    text: "Research, methodology, collaborators, and publications."
+  },
+  {
+    href: "/adventures/",
+    label: "Adventures",
+    text: "Climbing reports, journeys, and places worth revisiting."
+  },
+  {
+    href: "/creative/",
+    label: "Creative",
+    text: "Photography, songwriting, film, and other experiments."
+  }
+];
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Raymond Pomponio</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="home">
+    <main>
+      <header class="intro reveal">
+        <p class="eyebrow">Raymond Pomponio</p>
+        <h1>Science, adventures,<br />and creative work.</h1>
+        <p class="lede">
+          A personal archive spanning biostatistics, climbing, photography,
+          music, and whatever comes next.
+        </p>
+      </header>
+
+      <nav class="directions" aria-label="Primary">
+        {directions.map((item) => (
+          <a class="direction reveal" href={item.href}>
+            <span class="direction-label">{item.label}</span>
+            <span class="direction-text">{item.text}</span>
+            <span class="arrow" aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </nav>
+    </main>
+    <script>
+      const observer = new IntersectionObserver(
+        entries => entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        }),
+        { threshold: 0.08 }
+      );
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+  </body>
+</html>
