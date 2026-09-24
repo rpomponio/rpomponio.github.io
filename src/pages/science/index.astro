@@ -1,5 +1,14 @@
 ---
+import '../../styles.css';
+import { getCollection } from 'astro:content';
+
+const projects = await getCollection('science');
+
+projects.sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
 ---
+
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -7,21 +16,40 @@
     <title>Scientific Contributions — Raymond Pomponio</title>
     <link rel="stylesheet" href="/styles.css" />
   </head>
+
   <body class="science">
     <main class="section-shell">
       <a class="back" href="/">← Raymond Pomponio</a>
+
       <header class="section-header">
         <p class="eyebrow">01 / Science</p>
         <h1>Scientific Contributions</h1>
         <p>Projects as the atomic units of a digital CV.</p>
       </header>
-      <section class="placeholder">
-        <h2>Content collection goes here.</h2>
-        <p>
-          Research projects will become Markdown files in
-          <code>src/content/science/</code>. Collaborators, publications,
-          dates, methods, and links will be structured in frontmatter.
-        </p>
+
+      <section class="project-list">
+        {projects.map((project) => (
+          <article class="project-card">
+            <p class="project-date">
+              {project.data.date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+              })}
+            </p>
+
+            <h2>
+              <a href={`/science/${project.id.replace(/\.md$/, '')}/`}>
+                {project.data.title}
+              </a>
+            </h2>
+
+            <p>{project.data.description}</p>
+
+            <p class="project-category">
+              {project.data.category}
+            </p>
+          </article>
+        ))}
       </section>
     </main>
   </body>
