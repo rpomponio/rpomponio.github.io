@@ -20,10 +20,10 @@
 
 title: Pompon.io
 email: raypomponio@gmail.com
-description: >- # this means to ignore newlines until "baseurl:"
+description: >-
   Ray's Adventures Into Uncertainty
-baseurl: /blog
-url: https://rpompono.github.io
+url: "https://rpomponio.github.io"
+baseurl: ""
 twitter_username: jekyllrb
 github_username:  rpomponio
 
