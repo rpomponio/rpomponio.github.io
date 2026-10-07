@@ -1,29 +1,11 @@
 ---
 layout: post
-title:  "Welcome to Jekyll!"
+title:  "Adventures in Uncertainty"
 date:   2026-10-07 09:14:34 -0700
-categories: jekyll update
+categories: general update
 ---
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
+This blog is now titled *Adventures in Uncertainty* for at least two reasons. The first is that I inted to blog about adventures in the most general sense. I love to rock climb and backpack in the mountains. I've written a few reports of my past climbing and camping trips and hope to share more of those here. But adventure--as a term--is broad; sometimes I find myself on an intellectual adventure to a greater understanding. I will read parts of academic papers or textbooks to try ascertaining a concept with subject-matter literacy. These are adventures, too, that ought not be overlooked.
 
-Jekyll requires blog post files to be named according to the following format:
+The second reason for so titling this blog is that I obsess about uncertainty. In my professional life, I would say statistical uncertainty is the principal concern. Statistics as a discipline is about measuring things and quantifying uncertainty.[^1] But also in my recreational life, uncertainty looms large. When I find myself in the excitement of a multipitch rock climb, for example, much of my cognitive energy is steered towards acknowledging and accepting uncertainty. "Does our intended route lead us straight up that crack system, or are we meant to travserse along a ledge to an alternate weakness?" ... is often the type of reasoning I engage in, while climbing.
 
-`YEAR-MONTH-DAY-title.MARKUP`
-
-Where `YEAR` is a four-digit number, `MONTH` and `DAY` are both two-digit numbers, and `MARKUP` is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.
-
-Jekyll also offers powerful support for code snippets:
-
-{% highlight ruby %}
-def print_hi(name)
-  puts "Hi, #{name}"
-end
-print_hi('Tom')
-#=> prints 'Hi, Tom' to STDOUT.
-{% endhighlight %}
-
-Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
-
-[jekyll-docs]: https://jekyllrb.com/docs/home
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+[^1]: "Statistics is both the science of uncertainty and the technology of extracting information from data." From [Wikipedia](https://en.wikipedia.org/wiki/Statistics#Introduction): Hand, David (2010). *Statistics: An Overview*. In Lovric, Miodrag (ed.). International Encyclopedia of Statistical Science. Springer. pp. 1504–1509.
