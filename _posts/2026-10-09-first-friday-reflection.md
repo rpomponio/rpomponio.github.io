@@ -3,8 +3,9 @@ layout: post
 title:  "Doubling Down on Statistical Reasoning"
 date:   2026-10-09 00:00:00 -0700
 categories: general update
+excerpt_separator: "<!--more-->"
 ---
-Throughout the summer, I relocated across the country and searched for a job in my new locale, the San Francisco Bay Area. I knew I wanted to work in-person; I knew I was going to have more traction in healthcare-adjacent industries; and finally, I knew I wanted statistical reasoning to be part of my job's core function.[^1]
+Throughout the summer, I relocated across the country and searched for a job in my new locale, the San Francisco Bay Area. I knew I wanted to work in-person; I knew I was going to have more traction in healthcare-adjacent industries; and finally, I knew I wanted statistical reasoning to be part of my job's core function.<!--more-->[^1]
 
 [^1]: For context, my only graduate-level education and most of my job experience is in biostatistics.
 

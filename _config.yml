@@ -18,12 +18,12 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: Pompon.io
+title: pompon.io
 email: raypomponio@gmail.com
 description: >-
-  Ray's blog, "Adventures in Uncertainty", hosted by GitHub Pages.
+  Ray's blog, "Adventures in Uncertainty", is hosted by GitHub Pages.
   None of the content on this site was written by generative AI.
-  This site was built with Jekyll, a software for creating static websites.
+  This site was built with Jekyll, a software package for creating static websites.
 url: "https://rpomponio.github.io"
 baseurl: ""
 twitter_username: jekyllrb
@@ -33,7 +33,7 @@ github_username:  rpomponio
 theme: minima
 plugins:
   - jekyll-feed
-
+show_excerpts: true
 # Exclude from processing.
 # The following items will not be processed, by default.
 # Any item listed under the `exclude:` key here will be automatically added to
