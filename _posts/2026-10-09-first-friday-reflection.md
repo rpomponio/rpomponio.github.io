@@ -23,7 +23,7 @@ The temporary state of ignorance is the statistican's comfort zone, metaphorical
 
 To close, I'll quote from a September 29th post I saw by James Scott.[^3] He is professor and department chair of Statistics at the University of Texas. He was writing to parents and students who asked him whether AI makes statistics obselete. On this question, he and I align quite a bit:
 
-> If you’re making a claim about how some [predictions, content, or automated workflows enabled by AI], that's ultimately a claim about what the evidence supports and how much uncertainty remains. Those are exactly the kinds of claims statisticians are trained to evaluate.
+> If you’re making a claim about how some [AI-enabled] system performed, that's ultimately a claim about what the evidence supports and how much uncertainty remains. Those are exactly the kinds of claims statisticians are trained to evaluate.
 
 Scott is urging parents to see the value in preparing their children for uncertainty. My thesis, on a similar line of thinking, is that companies are temporarily distracted by generating insights through cleaner datasets and faster analysis, but that they are overlooking the reasoning skills required for real knowledge growth.
 
