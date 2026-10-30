@@ -3,15 +3,16 @@ layout: post
 title:  "Good Visualizations are Rare Gems"
 date:   2026-10-16 00:00:00 -0700
 categories: general techniques
+excerpt_separator: "<!--more-->"
 ---
 
-In data analysis, good visualizations are hard to come by. Mediocre visualizations are ubiquitous, though, and from them we can learn how to improve our own technique. I'm trying to become a better visualizer, for one because it's never been easier to create elaborate charts or figures with the assistance of coding agents. But secondly, visualization is a key element in storytelling, and I believe that analysts ought to prioritize this more, since so many non-technical audiences will have an easier time grasping a concept through visual aid rather than through direct model interpretation. This assumes the visualization is well-designed, though.[^1]
+In data analysis, good visualizations are hard to come by. Mediocre visualizations are ubiquitous, though, and from them we can learn how to improve our own technique. I'm trying to become a better visualizer, for one because it's never been easier to create elaborate charts or figures with the assistance of coding agents.<!--more--> But secondly, visualization is a key element in storytelling, and I believe that analysts ought to prioritize this more, since so many non-technical audiences will have an easier time grasping a concept through visual aid rather than through direct model interpretation. This assumes the visualization is well-designed, though.[^1]
 
 [^1]: Background aside, I just listened to a podcast where a designer described the modern world through her eyes, articulating why it often feels drab or monotonous: <https://podcasts.apple.com/us/podcast/is-the-world-getting-uglier/id1548604447?i=1000792723814>.
 
 Recently, I've been jogging on the treadmill for exercise, and keeping track of my heart rate while doing so. I'm sure anyone who's used wearable or heart rate tools during workouts asks the question, *What should my heart rate be?*... Well, the treadmill in my gym has an answer to that question in the form of a visualization. I'm just going to show a picture of it below and then elaborate:
 
-![The heart rate visualization on my gym's treadmill. My heart rate at the time of taking this phot was 122 beats per minute.](treadmill-heart-rate-tool.jpg)
+![The heart rate visualization on my gym's treadmill. My heart rate at the time of taking this phot was 122 beats per minute.](/assets/images/treadmill-heart-rate-tool.jpg)
 
 The data visualization (data "viz", for short) to which I'm referring is the graph in the center of the photo, titled, *HEART RATE ZONES*. Note the color-coded labels for *ATHLETIC CONDITIONING* (red) through to *LOW INTENSITY* (dark gray). Outside of the title, axis label, and internal labels of the chart, this viz offers very little context. I think that's the starting point for the critique, actually. I think any analyst producing a visualization such as this ought to pose the question:
 
@@ -27,7 +28,7 @@ But moving past the labels and the axes and onto the internal chart content, we 
 
 Let me conclude by providing two examples, labeling them on the viz itself:
 
-![The heart rate visualization, now labelled for two hypothetical users.](treadmill-heart-rate-tool.jpg)
+![The heart rate visualization, now labelled for two hypothetical users.](/assets/images/treadmill-heart-rate-labelled.jpg)
 
 - The user represented by the blue star is of age thirty years, targeting her workout as endurance training, and therefore striving for a heart rate of 140-160 bpm.
 
